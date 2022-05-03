@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class SaveData
+﻿public class SaveData
 {
     public string level; // Store level season
 

@@ -1,7 +1,5 @@
-﻿using Mechanics.Feedback;
-using UnityEngine;
+﻿using UnityEngine;
 using Utility.Audio.Managers;
-using Yarn.Unity;
 
 public class PauseMenu : MonoBehaviour
 {

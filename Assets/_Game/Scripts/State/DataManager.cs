@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Mechanics.Level_Mechanics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utility.Buttons;

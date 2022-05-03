@@ -1,10 +1,7 @@
-﻿using Game;
-using Mechanics.Level_Mechanics;
+﻿using Mechanics.Level_Mechanics;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Utility.Audio.Clips;
 using Utility.Audio.Managers;
 

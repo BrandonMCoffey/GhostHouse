@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace Mechanics.Player
 {
-    public class ObjectClickerTest : MonoBehaviour
+    public class ObjectClicker : MonoBehaviour
     {
         private Camera _mainCamera;
         private IInteractable _previousInteractable;

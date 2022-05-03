@@ -2,7 +2,6 @@
 using TMPro;
 using UnityEngine;
 using Game;
-using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
 
 public class DataManagerDebug : MonoBehaviour

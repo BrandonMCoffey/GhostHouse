@@ -1,11 +1,8 @@
 ﻿#if UNITY_EDITOR
 
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using UnityEditor;
 using UnityEngine;
 using UnityEditor.Animations;
-using UnityEditor.VersionControl;
 using Utility.Buttons;
 
 [RequireComponent(typeof(Animator))]

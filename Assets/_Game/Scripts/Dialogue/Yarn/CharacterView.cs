@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
-using System.Linq;
-using Yarn.Unity;
 
 namespace Mechanics.Dialog
 {
