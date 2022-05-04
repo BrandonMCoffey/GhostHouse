@@ -4,12 +4,9 @@ using Yarn.Unity;
 public class InteractableYarn : InteractableBase
 {
     private static DialogueRunner _dialogueRunner;
-    private static DialogueRunner DialogueRunner
-    {
-        get
-        {
-            if (_dialogueRunner == null)
-            {
+    private static DialogueRunner DialogueRunner {
+        get {
+            if (_dialogueRunner == null) {
                 _dialogueRunner = FindObjectOfType<DialogueRunner>();
             }
             return _dialogueRunner;
@@ -18,8 +15,7 @@ public class InteractableYarn : InteractableBase
 
     [SerializeField] private string yarnNode = "";
 
-    public override void OnLeftClick()
-    {
+    public override void OnLeftClick(Vector3 pos) {
         DialogueRunner.StartDialogue(yarnNode);
     }
 }

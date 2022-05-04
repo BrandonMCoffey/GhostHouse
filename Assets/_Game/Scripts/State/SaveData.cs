@@ -32,7 +32,10 @@
         public int textFont;
         public bool vsync;
         public int graphicsQuality;
+        public bool mouseMotivated;
+        public bool controllerBorder;
     }
+
     public Settings settings;
 
     // Boolean array of journal unlocks
@@ -40,8 +43,7 @@
     public bool[] journalUnlocks;
 
     // Constructor to initialize arrays
-    public SaveData()
-    {
+    public SaveData() {
         interactionNames = new string[200];
         interactionStates = new bool[200];
         journalInteractionNames = new string[200];

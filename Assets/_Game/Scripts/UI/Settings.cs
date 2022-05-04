@@ -25,6 +25,8 @@ public class Settings : MonoBehaviour
     public bool useArrowKeys = true;
     public bool useClickNDrag;
     public int dragSpeed = 75;
+    public bool mouseMotivatedMovement = false;
+    public bool controllerBorderMovement = true;
 
     //Audio Settings
     public int music = 75;
@@ -93,6 +95,8 @@ public class Settings : MonoBehaviour
         useWASD = DataManager.Instance.settingsCameraWASD;
         useArrowKeys = DataManager.Instance.settingsCameraArrowKeys;
         useClickNDrag = DataManager.Instance.settingsClickDrag;
+        mouseMotivatedMovement = DataManager.Instance.settingsMouseMotivatedMovement;
+        controllerBorderMovement = DataManager.Instance.settingsControllerBorderMovement;
         dragSpeed = DataManager.Instance.settingsSensitivity;
         music = DataManager.Instance.settingsMusicVolume;
         SFX = DataManager.Instance.settingsSFXVolume;
@@ -117,7 +121,7 @@ public class Settings : MonoBehaviour
 
     [Button(Spacing = 10, Mode = ButtonMode.NotPlaying)]
     public void SaveControlSettings() {
-        DataManager.Instance.SaveControlSettings(leftClickInteract, useWASD, useArrowKeys, useClickNDrag, dragSpeed);
+        DataManager.Instance.SaveControlSettings(leftClickInteract, useWASD, useArrowKeys, useClickNDrag, dragSpeed, mouseMotivatedMovement, controllerBorderMovement);
         SetControlSettings();
     }
 
@@ -134,22 +138,22 @@ public class Settings : MonoBehaviour
     }
 
     // Update the camera controller with the new settings
-    private void SetControlSettings()
-    {
+    private void SetControlSettings() {
         // Set Control settings on camera controller
         //if (CameraController == null) {
-            //Debug.LogWarning("No Camera Controller", gameObject);
-            //return;
+        //Debug.LogWarning("No Camera Controller", gameObject);
+        //return;
         //}
         //CameraController._enableWASDMovement = useWASD;
         if (CameraController.Singleton != null) {
             CameraController.Singleton.SetClickDragEnabled(useClickNDrag);
+            CameraController.Singleton.SetMouseMotivatedEnabled(mouseMotivatedMovement);
+            CameraController.Singleton.SetControllerMovement(controllerBorderMovement);
         }
     }
 
     // Update audio mixer controller with audio values
-    private void SetAudioSettings()
-    {
+    private void SetAudioSettings() {
         if (audioMixerController == null) {
             //Debug.LogWarning("No Audio Mixer Controller", gameObject);
             return;
@@ -162,8 +166,7 @@ public class Settings : MonoBehaviour
     }
 
     // Update visual settings in the font manager and elsewhere
-    private void SetVisualSettings()
-    {
+    private void SetVisualSettings() {
         // set font
         FontManager fontManager = FontManager.Instance;
         fontManager.UpdateAllText((FontMode)textFont);

@@ -282,16 +282,21 @@ MonoBehaviour:
   _controllerSpeed: 400
   _controllerSprint: 1
   _controllerSprintMultiplier: 2
+  _controllerBorder: 1
   _controllerBorderMultiplier: 1.5
+  _controllerJoystick: 0
+  _controllerJoystickSpeed: 20
+  _controllerJoystickSprint: 0
+  _controllerJoystickSprintMultiplier: 1.5
   _wasdMovement: 1
   _wasdSpeed: 20
   _wasdSprint: 0
   _wasdSprintMultiplier: 1.5
   _sprintKeyHeld: 0
   _mouseMotivatedMovement: 0
-  _mouseMotivatedBorderMin: 50
-  _mouseMotivatedBorderMax: 250
-  _mouseMotivatedSpeed: 25
+  _mouseMotivatedBorderMin: 100
+  _mouseMotivatedBorderMax: 200
+  _mouseMotivatedSpeed: 20
   _mouseMotivatedSprint: 0
   _mouseMotivatedSprintMultiplier: 1.4
   _clickAndDrag: 0
@@ -301,7 +306,8 @@ MonoBehaviour:
     m_Bits: 1048576
   _dragging: 0
   _smoothCameraMovement: 1
-  _smoothSpeed: 20
+  _smoothSpeed: 10
+  _smoothStopSpeed: 20
   _maxXValue: 44
   _minXValue: -37
   _maxZValue: 35

@@ -18,22 +18,27 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _camZoomOutMax = 6.37f;
 
     [Header("Controller Movement")]
-    [SerializeField] private float _controllerSpeed = 100f;
+    [SerializeField] private float _controllerSpeed = 400f;
     [SerializeField] private bool _controllerSprint = true;
     [SerializeField, Range(0, 5)] private float _controllerSprintMultiplier = 2f;
-    [SerializeField, Range(0, 5)] private float _controllerBorderMultiplier = 2f;
+    [SerializeField] private bool _controllerBorder = true;
+    [SerializeField, Range(0, 5)] private float _controllerBorderMultiplier = 1.5f;
+    [SerializeField] private bool _controllerJoystick = true;
+    [SerializeField] private float _controllerJoystickSpeed = 20f;
+    [SerializeField] private bool _controllerJoystickSprint = true;
+    [SerializeField] private float _controllerJoystickSprintMultiplier = 1.5f;
 
     [Header("WASD Movement")]
     [SerializeField] private bool _wasdMovement = true;
-    [SerializeField] private float _wasdSpeed = 10f;
+    [SerializeField] private float _wasdSpeed = 20f;
     [SerializeField] private bool _wasdSprint = false;
-    [SerializeField, Range(0, 5)] private float _wasdSprintMultiplier = 2f;
+    [SerializeField, Range(0, 5)] private float _wasdSprintMultiplier = 1.5f;
     [SerializeField, ReadOnly] private bool _sprintKeyHeld;
 
     [Header("Mouse Motivated Movement")]
-    [SerializeField] private bool _mouseMotivatedMovement = false;
+    [SerializeField] private bool _mouseMotivatedMovement;
     [SerializeField] private float _mouseMotivatedBorderMin = 50f;
-    [SerializeField] private float _mouseMotivatedBorderMax = 200f;
+    [SerializeField] private float _mouseMotivatedBorderMax = 250f;
     [SerializeField] private float _mouseMotivatedSpeed = 25f;
     [SerializeField] private bool _mouseMotivatedSprint = false;
     [SerializeField, Range(0, 5)] private float _mouseMotivatedSprintMultiplier = 1.4f;
@@ -46,7 +51,8 @@ public class CameraController : MonoBehaviour
 
     [Header("Smooth Camera Movement")]
     [SerializeField] private bool _smoothCameraMovement = true;
-    [SerializeField] private float _smoothSpeed = 5f;
+    [SerializeField] private float _smoothSpeed = 20f;
+    [SerializeField] private float _smoothStopSpeed = 30f;
 
     [Header("Camera Bounds")]
     [SerializeField] private float _maxXValue = 44f;
@@ -64,9 +70,10 @@ public class CameraController : MonoBehaviour
     private Vector3 _mousePos;
 
     public Camera Camera => _cam;
-    public bool UsingController { get; private set; }
+    public static bool UsingController { get; private set; }
     public static bool Dragging => Singleton._dragging;
     public Vector3 MousePos => UsingController ? (Vector3)_controllerPos : UserInput.MousePosition;
+    private static Vector2 ScreenCenter => new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
 
     // Input Lock Variables
     public static bool Interacting { get; set; }
@@ -76,6 +83,7 @@ public class CameraController : MonoBehaviour
     private bool DialoguePlaying => _dialogueRunner.IsDialogueRunning;
 
     // Camera Transform Data
+    private Vector3 _prevGoalPosition;
     private Vector3 _goalPosition;
     private Vector3 _forward;
     private Vector3 _right;
@@ -123,6 +131,11 @@ public class CameraController : MonoBehaviour
         _forward = Vector3.Normalize(_forward);
         _right = Vector3.Normalize(_right);
         _goalPosition = transform.position;
+
+        if (UsingController) {
+            _controllerPos = ScreenCenter;
+            _playerHud.SetCursorPosition(ScreenCenter);
+        }
     }
 
     private void Update() {
@@ -130,6 +143,7 @@ public class CameraController : MonoBehaviour
             LerpToPosition();
             return;
         }
+        CheckInputType();
         if (Interacting || GamePaused || FadeToBlackPlaying || DialoguePlaying || IsTransitioning) {
             return;
         }
@@ -139,6 +153,12 @@ public class CameraController : MonoBehaviour
         }
         if (UsingController) {
             HandleControllerMovement();
+            if (_controllerBorder) {
+                HandleBorderMotivatedMovement(_controllerPos, _controllerBorderMultiplier);
+            }
+            if (_controllerJoystick) {
+                HandleControllerJoystickMovement();
+            }
         }
         else {
             if (_clickAndDrag) {
@@ -153,12 +173,11 @@ public class CameraController : MonoBehaviour
                 }
             }
         }
-        _goalPosition = CameraBounds(_goalPosition);
+        HandleGoalMovement();
     }
 
     private void LateUpdate() {
-        var smoothed = Vector3.Lerp(transform.position, _goalPosition, _smoothSpeed * Time.deltaTime);
-        transform.position = _smoothCameraMovement && !_dragging ? smoothed : _goalPosition;
+        HandleMovement();
     }
 
     private void OnDrawGizmos() {
@@ -172,6 +191,9 @@ public class CameraController : MonoBehaviour
         _finalLerpTime += Time.deltaTime;
         float movementPercentage = _finalLerpTime / _finalLerpEndTime;
         _goalPosition = Vector3.Lerp(_goalPosition, _finalLerpPosition, movementPercentage);
+        if (UsingController) {
+            _controllerPos = Vector2.Lerp(_controllerPos, ScreenCenter, movementPercentage);
+        }
 
         if (_goalPosition == _finalLerpPosition) {
             _finalLerpTime = 0f;
@@ -179,36 +201,26 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    private void GatherInput() {
-        _mouseWheel = UserInput.MouseScrollWheel;
-        _sprintKeyHeld = UserInput.Sprinting;
+    private void CheckInputType() {
         var mousePos = UserInput.MousePosition;
         bool mouseMoved = mousePos != _mousePos;
         _mousePos = mousePos;
 
         if (UsingController) {
-            _horizontal = UserInput.Horizontal;
-            _vertical = UserInput.Vertical;
+            var horz = UserInput.Horizontal;
+            var vert = UserInput.Vertical;
 
-            if (_horizontal + _vertical != 0 || mouseMoved) {
-                // Now using keyboard / mouse
+            if (horz + vert != 0 || mouseMoved) {
                 ToggleController(false);
-                return;
             }
-            _horizontal = UserInput.HorizontalController;
-            _vertical = UserInput.VerticalController;
         }
         else {
-            _horizontal = UserInput.HorizontalController;
-            _vertical = UserInput.VerticalController;
+            var horz = UserInput.HorizontalController + (_controllerJoystick ? UserInput.HorizontalController2 : 0);
+            var vert = UserInput.VerticalController + (_controllerJoystick ? UserInput.VerticalController2 : 0);
 
-            if (_horizontal + _vertical != 0) {
-                // Now using controller
+            if (horz + vert != 0) {
                 ToggleController(true);
-                return;
             }
-            _horizontal = UserInput.Horizontal;
-            _vertical = UserInput.Vertical;
         }
     }
 
@@ -222,6 +234,19 @@ public class CameraController : MonoBehaviour
             }
         }
         UsingController = controller;
+    }
+
+    private void GatherInput() {
+        _mouseWheel = UserInput.MouseScrollWheel;
+        _sprintKeyHeld = UserInput.Sprinting;
+        if (UsingController) {
+            _horizontal = UserInput.HorizontalController;
+            _vertical = UserInput.VerticalController;
+        }
+        else {
+            _horizontal = UserInput.Horizontal;
+            _vertical = UserInput.Vertical;
+        }
     }
 
     private void HandleCameraZoom() {
@@ -245,14 +270,32 @@ public class CameraController : MonoBehaviour
         _controllerPos.x = Mathf.Clamp(_controllerPos.x, 0, Screen.width);
         _controllerPos.y = Mathf.Clamp(_controllerPos.y, 0, Screen.height);
 
-        HandleBorderMotivatedMovement(_controllerPos, _controllerBorderMultiplier);
-
         _playerHud.SetCursorPosition(_controllerPos);
     }
 
+    private void HandleControllerJoystickMovement() {
+        Vector2 movement = new Vector2(UserInput.HorizontalController2, UserInput.VerticalController2);
+        if (movement.magnitude > 1) {
+            movement = movement.normalized;
+        }
+        Vector3 rightMovement = movement.x * _right * _controllerJoystickSpeed * Time.deltaTime;
+        Vector3 upMovement = movement.y * _forward * _controllerJoystickSpeed * Time.deltaTime;
+
+        if (_controllerJoystickSprint && _sprintKeyHeld) {
+            rightMovement *= _controllerJoystickSprintMultiplier;
+            upMovement *= _controllerJoystickSprintMultiplier;
+        }
+
+        _goalPosition += rightMovement + upMovement;
+    }
+
     private void HandleWasdMovement() {
-        Vector3 rightMovement = _horizontal * _right * _wasdSpeed * Time.deltaTime;
-        Vector3 upMovement = _vertical * _forward * _wasdSpeed * Time.deltaTime;
+        Vector2 movement = new Vector2(_horizontal, _vertical);
+        if (movement.magnitude > 1) {
+            movement = movement.normalized;
+        }
+        Vector3 rightMovement = movement.x * _right * _wasdSpeed * Time.deltaTime;
+        Vector3 upMovement = movement.y * _forward * _wasdSpeed * Time.deltaTime;
 
         if (_wasdSprint && _sprintKeyHeld) {
             rightMovement *= _wasdSprintMultiplier;
@@ -333,10 +376,23 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    private void HandleGoalMovement() {
+        _goalPosition = CameraBounds(_goalPosition);
+        if (_prevGoalPosition == _goalPosition) {
+            _goalPosition = Vector3.Lerp(_goalPosition, transform.position, _smoothStopSpeed * Time.deltaTime);
+        }
+        _prevGoalPosition = _goalPosition;
+    }
+
     private Vector3 CameraBounds(Vector3 location) {
         var x = Mathf.Clamp(location.x, _minXValue, _maxXValue);
         var z = Mathf.Clamp(location.z, _minZValue, _maxZValue);
         return new Vector3(x, 0, z);
+    }
+
+    private void HandleMovement() {
+        var smoothed = Vector3.Lerp(transform.position, _goalPosition, _smoothSpeed * Time.deltaTime);
+        transform.position = _smoothCameraMovement && !_dragging ? smoothed : _goalPosition;
     }
 
     private static void InteractStarted() {
@@ -356,6 +412,15 @@ public class CameraController : MonoBehaviour
 
     public void SetClickDragEnabled(bool enable) {
         _clickAndDrag = enable;
+    }
+
+    public void SetMouseMotivatedEnabled(bool enable) {
+        _mouseMotivatedMovement = enable;
+    }
+
+    public void SetControllerMovement(bool border) {
+        _controllerBorder = border;
+        _controllerJoystick = !border;
     }
 
     public static bool IsMouseOverUi {

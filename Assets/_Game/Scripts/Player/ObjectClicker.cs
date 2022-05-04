@@ -7,6 +7,7 @@ namespace Mechanics.Player
     {
         private CameraController _controller;
         private IInteractable _previousInteractable;
+        private Vector3 _previousPosition;
 
         #region Properties
 
@@ -26,19 +27,27 @@ namespace Mechanics.Player
 
         #region Unity Functions
 
+        private void OnEnable() {
+            UserInput.Interact += OnUserClick;
+        }
+
+        private void OnDisable() {
+            UserInput.Interact -= OnUserClick;
+        }
+
         private void Start() {
             _controller = CameraController.Singleton;
         }
 
         private void Update() {
-            RaycastCheck(_controller.MousePos);
+            RaycastCheck();
         }
 
         #endregion
 
         #region Hovering and Clicking
 
-        private void RaycastCheck(Vector3 mousePos) {
+        private void RaycastCheck() {
             // Ignore raycast if mouse is over UI
             if (IsMouseOverUi) {
                 ResetHover();
@@ -46,31 +55,25 @@ namespace Mechanics.Player
             }
 
             // Get mouse position and raycast
-            Ray ray = _controller.Camera.ScreenPointToRay(mousePos);
+            Ray ray = _controller.Camera.ScreenPointToRay(_controller.MousePos);
 
             // Raycast and hit
             if (Physics.Raycast(ray, out var hit)) {
-                OnHover(hit);
-                if (LeftClick) OnClick(hit, true);
-                if (RightClick) OnClick(hit, false);
+                // Get Interactable
+                var interactable = hit.transform.GetComponent<IInteractable>();
+                if (interactable == null && hit.transform.parent != null) {
+                    interactable = hit.transform.parent.GetComponent<IInteractable>();
+                }
+                _previousPosition = hit.point;
+                OnHover(interactable);
             }
             // Raycast failed to hit anything
             else {
                 ResetHover();
             }
-
-            // Note: While Hovering is also called immediately after OnHoverEnter()
-            //_previousInteractable?.WhileHovering();
         }
 
-        private void OnHover(RaycastHit hit) {
-            IInteractable interactable = hit.transform.GetComponent<IInteractable>();
-
-            if (interactable == null) {
-                interactable = hit.transform.GetComponentInParent<IInteractable>();
-            }
-
-            // If a new object is hovered, reset hover to the new object
+        private void OnHover(IInteractable interactable) {
             if (interactable != _previousInteractable) {
                 ResetHover(interactable);
             }
@@ -87,34 +90,12 @@ namespace Mechanics.Player
             _previousInteractable = newInteractable;
         }
 
-        private static void OnClick(RaycastHit hit, bool left) {
-            IInteractable interactable = hit.transform.GetComponent<IInteractable>();
+        private void OnUserClick() {
+            OnClick(_previousInteractable, _previousPosition);
+        }
 
-            // Interactable clicked
-            if (interactable != null) {
-                if (left) {
-                    interactable.OnLeftClick();
-                    interactable.OnLeftClick(hit.transform.position);
-                }
-                else {
-                    interactable.OnRightClick();
-                    interactable.OnRightClick(hit.transform.position);
-                }
-            }
-            else if (interactable == null) {
-                IInteractable parentInteractable = hit.transform.GetComponentInParent<IInteractable>();
-
-                if (parentInteractable != null) {
-                    if (left) {
-                        parentInteractable.OnLeftClick();
-                        parentInteractable.OnLeftClick(hit.point);
-                    }
-                    else {
-                        parentInteractable.OnRightClick();
-                        parentInteractable.OnRightClick(hit.point);
-                    }
-                }
-            }
+        private static void OnClick(IInteractable interactable, Vector3 position) {
+            interactable?.OnLeftClick(position);
         }
 
         #endregion

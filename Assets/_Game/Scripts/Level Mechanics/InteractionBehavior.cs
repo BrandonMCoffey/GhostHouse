@@ -92,32 +92,14 @@ public class InteractionBehavior : InteractableBase
 
     #region Clicking Methods
 
-    public override void OnLeftClick() {
-        Debug.Log("Left Clicked On: " + gameObject.name);
+    public override void OnLeftClick(Vector3 mousePosition) {
+        //Debug.Log("Left Clicked On: " + gameObject.name);
         //When the mouse clicks on the object. Left Mouse button cannot be held down as this only runs once per click.
 
         //Brandon's Story Interactable Code:
         if (_sfxOnClick) {
             SoundManager.Instance.PlaySfx(_sfx);
         }
-    }
-
-    public override void OnLeftClick(Vector3 mousePosition) {
-        //Same thing as the function above, but this one also contains the mouse's position when it clicks.
-    }
-
-    public override void OnRightClick() {
-        Debug.Log("Right Clicked On: " + gameObject.name);
-        //When the mouse right clicks on the object. Right Mouse button cannot be held down as this only runs once per click.
-
-        //Brandon's Story Interactable Code:
-        if (_sfxOnClick) {
-            SoundManager.Instance.PlaySfx(_sfx);
-        }
-    }
-
-    public override void OnRightClick(Vector3 mousePosition) {
-        //Same thing as the function above, but this one also contains the mouse's position when it clicks.
     }
 
     #endregion

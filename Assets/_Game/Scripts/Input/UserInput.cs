@@ -11,8 +11,11 @@ public class UserInput : MonoBehaviour
     // Right Arrow Key or Right Bumper
     public static event Action TurnPageRight = delegate { };
 
-    // Enter or A
+    // Enter, Space, or A
     public static event Action ConfirmOrInteract = delegate { };
+
+    // Left Click or A
+    public static event Action Interact = delegate { };
 
     // Backspace or X
     public static event Action InteractAlt = delegate { };
@@ -23,15 +26,20 @@ public class UserInput : MonoBehaviour
     // Escape or B
     public static event Action Cancel = delegate { };
 
+    // B
+    public static event Action CancelController = delegate { };
+
     // End or Back
     public static event Action CheatMenu = delegate { };
 
     public static bool Sprinting;
 
-    public static float Horizontal => Input.GetAxis("Horizontal");
-    public static float Vertical => Input.GetAxis("Vertical");
+    public static float Horizontal => Input.GetAxisRaw("HorizontalKeyboard");
+    public static float Vertical => Input.GetAxisRaw("VerticalKeyboard");
     public static float HorizontalController => Input.GetAxis("HorizontalController");
     public static float VerticalController => Input.GetAxis("VerticalController");
+    public static float HorizontalController2 => Input.GetAxis("HorizontalController2");
+    public static float VerticalController2 => Input.GetAxis("VerticalController2");
     public static float MouseScrollWheel => Input.GetAxis("Mouse ScrollWheel");
     public static Vector3 MousePosition => Input.mousePosition;
 
@@ -40,6 +48,10 @@ public class UserInput : MonoBehaviour
             ConfirmOrInteract?.Invoke();
             Log("ConfirmOrInteract");
         }
+        if (Input.GetButtonDown("Interact")) {
+            Interact?.Invoke();
+            Log("Interact");
+        }
         if (Input.GetButtonDown("InteractAlt")) {
             InteractAlt?.Invoke();
             Log("InteractAlt");
@@ -47,6 +59,10 @@ public class UserInput : MonoBehaviour
         if (Input.GetButtonDown("Cancel")) {
             Cancel?.Invoke();
             Log("Cancel");
+        }
+        if (Input.GetButtonDown("CancelController")) {
+            CancelController?.Invoke();
+            Log("CancelController");
         }
         if (Input.GetButtonDown("OpenJournal")) {
             OpenJournal?.Invoke();

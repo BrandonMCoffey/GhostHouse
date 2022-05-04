@@ -27,6 +27,9 @@ public class EventOnKey : MonoBehaviour
             case Keys.Cancel:
                 UserInput.Cancel += InvokeEvent;
                 break;
+            case Keys.CancelOnlyController:
+                UserInput.CancelController += InvokeEvent;
+                break;
         }
     }
 
@@ -50,6 +53,9 @@ public class EventOnKey : MonoBehaviour
             case Keys.Cancel:
                 UserInput.Cancel -= InvokeEvent;
                 break;
+            case Keys.CancelOnlyController:
+                UserInput.CancelController -= InvokeEvent;
+                break;
         }
     }
 
@@ -66,5 +72,6 @@ public enum Keys
     ConfirmOrInteract,
     AltInteract,
     OpenJournal,
-    Cancel
+    Cancel,
+    CancelOnlyController
 }

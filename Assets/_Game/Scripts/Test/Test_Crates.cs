@@ -13,7 +13,9 @@ public class Test_Crates : InteractableBase
     [SerializeField] private Material _normalMaterial;
 
     //These are just sample visual feedback methods.
+
     #region VisualFeedback
+
     //void MoveHorizontal()
     //{
     //    Quaternion turnOffset = Quaternion.Euler(0, 30f, 0);
@@ -23,23 +25,20 @@ public class Test_Crates : InteractableBase
     //    }
     //}
 
-    private void MoveVerticalBackwards()
-    {
+    private void MoveVerticalBackwards() {
         Quaternion turnOffset = Quaternion.Euler(-30f, 0, -20f);
-        if (_rigidbody != null)
-        {
+        if (_rigidbody != null) {
             _rigidbody.MoveRotation(_rigidbody.rotation * turnOffset);
         }
     }
 
-    private void MoveVerticalForwards()
-    {
+    private void MoveVerticalForwards() {
         Quaternion turnOffset = Quaternion.Euler(30f, 0, 20f);
-        if (_rigidbody != null)
-        {
+        if (_rigidbody != null) {
             _rigidbody.MoveRotation(_rigidbody.rotation * turnOffset);
         }
     }
+
     #endregion
 
     //This is when the mouse first hovers over the object.
@@ -58,20 +57,15 @@ public class Test_Crates : InteractableBase
     //}
 
     //This is when the mouse left clicks on the object.
-    public override void OnLeftClick()
-    {
+    public override void OnLeftClick(Vector3 pos) {
         Debug.Log("Left Clicked On" + gameObject.name);
         MoveVerticalForwards();
     }
 
     //This is when the mouse right clicks on an object.
-    public override void OnRightClick()
-    {
-        Debug.Log("Right Clicked On" + gameObject.name);
-        MoveVerticalBackwards();
-    }
-
-
-
-
+    //public override void OnRightClick()
+    //{
+    //    Debug.Log("Right Clicked On" + gameObject.name);
+    //    MoveVerticalBackwards();
+    //}
 }

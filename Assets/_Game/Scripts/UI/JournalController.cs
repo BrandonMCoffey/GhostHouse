@@ -129,6 +129,7 @@ public class JournalController : MonoBehaviour
 
     // Returns true if Journal should close
     public bool ClosePage() {
+        if (_closeRoutine != null) StopCoroutine(_closeRoutine);
         if (_quitConfirmation != null && _quitConfirmation.activeSelf) {
             _quitConfirmation.SetActive(false);
             return false;

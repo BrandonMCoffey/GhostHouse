@@ -11,8 +11,7 @@ public class PanelMediator : MonoBehaviour
     // Automatically hooks up connections
 
     [Header("Visual")]
-    [SerializeField]
-    private Button FullscreenButton = null;
+    [SerializeField] private Button FullscreenButton = null;
     [SerializeField] private Button WindowedButton = null;
     [SerializeField] private Slider ContrastSlider = null;
     [SerializeField] private TextMeshProUGUI ContrastLabel = null;
@@ -25,8 +24,7 @@ public class PanelMediator : MonoBehaviour
     [SerializeField] private Button QualityLow = null;
 
     [Header("Audio")]
-    [SerializeField]
-    private Slider MusicSlider = null;
+    [SerializeField] private Slider MusicSlider = null;
     [SerializeField] private TextMeshProUGUI MusicLabel = null;
     [SerializeField] private Slider SFXSlider = null;
     [SerializeField] private TextMeshProUGUI SFXLabel = null;
@@ -36,23 +34,24 @@ public class PanelMediator : MonoBehaviour
     [SerializeField] private TextMeshProUGUI AmbienceLabel = null;
 
     [Header("Font")]
-    [SerializeField]
-    private Button FancyFontButton = null;
+    [SerializeField] private Button FancyFontButton = null;
     [SerializeField] private Button NormalFontButton = null;
     [SerializeField] private Button DyslexiaFontButton = null;
 
-    [Header("CameraMovement")]
-    [SerializeField]
-    private Button ClickDragOn = null;
+    [Header("Controls")]
+    [SerializeField] private Button ClickDragOn = null;
     [SerializeField] private Button ClickDragOff = null;
+    [SerializeField] private Button MotivatedMovementOn = null;
+    [SerializeField] private Button MotivatedMovementOff = null;
+    [SerializeField] private Button ControllerBorderMovement = null;
+    [SerializeField] private Button ControllerJoystickMovement = null;
 
     // Update All Values from Settings
     private void OnEnable() {
         UpdateSettings();
     }
 
-    public void UpdateSettings()
-    {
+    public void UpdateSettings() {
         SetWindowed(Settings.Instance.isWindowed, false);
 
         ContrastSlider.value = Settings.Instance.contrast;
@@ -74,6 +73,8 @@ public class PanelMediator : MonoBehaviour
 
         SetFontStyle(Settings.Instance.textFont, false);
         SetClickAndDrag(Settings.Instance.useClickNDrag, false);
+        SetMotivatedMovement(Settings.Instance.mouseMotivatedMovement, false);
+        SetControllerMovement(Settings.Instance.controllerBorderMovement, false);
     }
 
     // Add Listeners to update settings when changed
@@ -102,6 +103,12 @@ public class PanelMediator : MonoBehaviour
 
         ClickDragOn.onClick.AddListener(EnableClickNDrag);
         ClickDragOff.onClick.AddListener(DisableClickNDrag);
+
+        MotivatedMovementOn.onClick.AddListener(EnableMotivatedMovement);
+        MotivatedMovementOff.onClick.AddListener(DisableMotivatedMovement);
+
+        ControllerBorderMovement.onClick.AddListener(SetControllerBorderMovement);
+        ControllerJoystickMovement.onClick.AddListener(SetControllerJoystickMovement);
     }
 
     // ---------------- Visual ----------------
@@ -109,23 +116,20 @@ public class PanelMediator : MonoBehaviour
     public void SetFullscreen() => SetWindowed(false);
     public void SetWindowed() => SetWindowed(true);
 
-    public void SetWindowed(bool windowed, bool canSave = true)
-    {
+    public void SetWindowed(bool windowed, bool canSave = true) {
         Settings.Instance.isWindowed = windowed;
         FullscreenButton.interactable = windowed;
         WindowedButton.interactable = !windowed;
         if (canSave && SaveOnChange) SaveVisuals();
     }
 
-    public void ChangeContrast(float value)
-    {
+    public void ChangeContrast(float value) {
         Settings.Instance.contrast = (int)value;
         ContrastLabel.text = ((int)value).ToString();
         if (SaveOnChange) SaveVisuals();
     }
 
-    public void ChangeBrightness(float value)
-    {
+    public void ChangeBrightness(float value) {
         Settings.Instance.brightness = (int)value;
         BrightnessLabel.text = ((int)value).ToString();
         if (SaveOnChange) SaveVisuals();
@@ -134,8 +138,7 @@ public class PanelMediator : MonoBehaviour
     public void EnableVSync() => SetVSync(true);
     public void DisableVSync() => SetVSync(false);
 
-    public void SetVSync(bool useVSync, bool canSave = true)
-    {
+    public void SetVSync(bool useVSync, bool canSave = true) {
         Settings.Instance.vSync = useVSync;
         VSyncOff.interactable = useVSync;
         VSyncOn.interactable = !useVSync;
@@ -146,8 +149,7 @@ public class PanelMediator : MonoBehaviour
     public void SetQualityMedium() => SetQuality(1);
     public void SetQualityLow() => SetQuality(2);
 
-    public void SetQuality(int graphicsQuality, bool canSave = true)
-    {
+    public void SetQuality(int graphicsQuality, bool canSave = true) {
         Settings.Instance.graphicsQuality = graphicsQuality;
         QualityHigh.interactable = graphicsQuality != 0;
         QualityMedium.interactable = graphicsQuality != 1;
@@ -157,29 +159,25 @@ public class PanelMediator : MonoBehaviour
 
     // ---------------- Audio ----------------
 
-    public void ChangeMusic(float value)
-    {
+    public void ChangeMusic(float value) {
         Settings.Instance.music = (int)value;
         MusicLabel.text = ((int)value).ToString();
         if (SaveOnChange) SaveAudio();
     }
 
-    public void ChangeSfx(float value)
-    {
+    public void ChangeSfx(float value) {
         Settings.Instance.SFX = (int)value;
         SFXLabel.text = ((int)value).ToString();
         if (SaveOnChange) SaveAudio();
     }
 
-    public void ChangeDialog(float value)
-    {
+    public void ChangeDialog(float value) {
         Settings.Instance.dialog = (int)value;
         DialogLabel.text = ((int)value).ToString();
         if (SaveOnChange) SaveAudio();
     }
 
-    public void ChangeAmbience(float value)
-    {
+    public void ChangeAmbience(float value) {
         Settings.Instance.ambience = (int)value;
         AmbienceLabel.text = ((int)value).ToString();
         if (SaveOnChange) SaveAudio();
@@ -191,8 +189,7 @@ public class PanelMediator : MonoBehaviour
     public void SetFontNormal() => SetFontStyle(1);
     public void SetFontDyslexia() => SetFontStyle(2);
 
-    public void SetFontStyle(int fontStyle, bool canSave = true)
-    {
+    public void SetFontStyle(int fontStyle, bool canSave = true) {
         Settings.Instance.textFont = fontStyle;
         FancyFontButton.interactable = fontStyle != 0;
         NormalFontButton.interactable = fontStyle != 1;
@@ -200,34 +197,50 @@ public class PanelMediator : MonoBehaviour
         if (canSave && SaveOnChange) SaveVisuals();
     }
 
-    // ----------- Camera Movement -----------
+    // -------------- Movement --------------
 
     public void EnableClickNDrag() => SetClickAndDrag(true);
     public void DisableClickNDrag() => SetClickAndDrag(false);
 
-    public void SetClickAndDrag(bool useClickNDrag, bool canSave = true)
-    {
+    public void SetClickAndDrag(bool useClickNDrag, bool canSave = true) {
         Settings.Instance.useClickNDrag = useClickNDrag;
         ClickDragOff.interactable = useClickNDrag;
         ClickDragOn.interactable = !useClickNDrag;
         if (canSave && SaveOnChange) SaveControls();
     }
 
+    public void EnableMotivatedMovement() => SetMotivatedMovement(true);
+    public void DisableMotivatedMovement() => SetMotivatedMovement(false);
+
+    public void SetMotivatedMovement(bool useMouseMotivated, bool canSave = true) {
+        Settings.Instance.mouseMotivatedMovement = useMouseMotivated;
+        MotivatedMovementOff.interactable = useMouseMotivated;
+        MotivatedMovementOn.interactable = !useMouseMotivated;
+        if (canSave && SaveOnChange) SaveControls();
+    }
+
+    public void SetControllerBorderMovement() => SetControllerMovement(true);
+    public void SetControllerJoystickMovement() => SetControllerMovement(false);
+
+    public void SetControllerMovement(bool border, bool canSave = true) {
+        Settings.Instance.controllerBorderMovement = border;
+        ControllerJoystickMovement.interactable = border;
+        ControllerBorderMovement.interactable = !border;
+        if (canSave && SaveOnChange) SaveControls();
+    }
+
 
     // ----------- Save Functions -----------
 
-    public void SaveVisuals()
-    {
+    public void SaveVisuals() {
         Settings.Instance.SaveVisualSettings();
     }
 
-    public void SaveAudio()
-    {
+    public void SaveAudio() {
         Settings.Instance.SaveAudioSettings();
     }
 
-    public void SaveControls()
-    {
+    public void SaveControls() {
         Settings.Instance.SaveControlSettings();
     }
 }
