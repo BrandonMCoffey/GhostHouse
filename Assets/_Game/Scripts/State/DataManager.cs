@@ -411,7 +411,7 @@ public class DataManager : MonoBehaviour
     }
 
     // For now, just resets interactions. Will need to clear save file eventually
-    [Button(Mode = ButtonMode.NotPlaying)]
+    [Button(Mode = ButtonMode.OnlyWhileGameRunning)]
     public void ResetData() {
         interactions.Clear();
         cousinsEndingPoints = 0;

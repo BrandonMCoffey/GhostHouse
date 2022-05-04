@@ -101,7 +101,7 @@ namespace UI
         public void SetMaxSpiritPoints(int maxPoints) {
             //Debug.Log(maxPoints);
             if (_spiritPoints.Count < maxPoints) {
-                Debug.LogError("Not enough Spirit Points in List to sustain a max of " + maxPoints, gameObject);
+                Debug.LogError("OnlyWhileGameRunning enough Spirit Points in List to sustain a max of " + maxPoints, gameObject);
                 return;
             }
             for (var i = 0; i < _spiritPoints.Count; i++) {

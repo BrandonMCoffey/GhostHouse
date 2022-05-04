@@ -12,7 +12,7 @@ public class SquashStretchAnimation : MonoBehaviour
     [SerializeField] private bool _xAxis = false;
     [SerializeField] private bool _zAxis = false;
 
-    [Header("Animation Values")] 
+    [Header("Animation Values")]
     [SerializeField] private float _squashAmount = 1f;
     [SerializeField] private float _stretchAmount = 1f;
 
@@ -27,43 +27,38 @@ public class SquashStretchAnimation : MonoBehaviour
     private AnimatorState _postInteractionState;
     private AnimatorState _onClickState;
 
-    private void Awake()
-    {
+    private void Awake() {
         if (GetComponent<Animator>() != null) _animator = GetComponent<Animator>();
     }
-    private void Start()
-    {
+
+    private void Start() {
         var controller = (AnimatorController)AssetDatabase.LoadAssetAtPath("Assets/_Game/Entities/Interactables/Temp/Controllers/_AC_" + gameObject.name +
-                                      ".controller", typeof(AnimatorController));
+                                                                           ".controller", typeof(AnimatorController));
 
         //_animator.runtimeAnimatorController = controller;
     }
 
-    private void SaveAnimation(AnimationClip clip)
-    {
+    private void SaveAnimation(AnimationClip clip) {
         string savePath = "Assets/_Game/Entities/Interactables/Temp/Animations/anim_" + gameObject.name + "_" +
                           clip.name + ".anim";
         AssetDatabase.CreateAsset(clip, savePath);
     }
 
-    private void AssignController()
-    {
+    private void AssignController() {
         var controller = (AnimatorController)AssetDatabase.LoadAssetAtPath("Assets/_Game/Entities/Interactables/Temp/Controllers/_AC_" + gameObject.name +
                                                                            ".controller", typeof(AnimatorController));
         _animator.runtimeAnimatorController = controller;
     }
 
-    [Button(Mode = ButtonMode.WhilePlaying)]
-    private void CreateControllerAndAnimation()
-    {
+    [Button(Mode = ButtonMode.OnlyInEditorNotPlaying)]
+    private void CreateControllerAndAnimation() {
         if (GetComponent<Animator>() != null) _animator = GetComponent<Animator>();
 
         string templatePath = "Assets/_Game/Entities/Interactables/AnimationControllers/_AC_Template.controller";
         string newPath = "Assets/_Game/Entities/Interactables/Temp/Controllers/_AC_" + gameObject.name +
                          ".controller";
 
-        if (AssetDatabase.LoadAssetAtPath<AnimatorController>(newPath) == null)
-        {
+        if (AssetDatabase.LoadAssetAtPath<AnimatorController>(newPath) == null) {
             AssetDatabase.CopyAsset(templatePath, newPath);
         }
 
@@ -95,9 +90,8 @@ public class SquashStretchAnimation : MonoBehaviour
         AssignController();
     }
 
-    [Button(Mode = ButtonMode.WhilePlaying)]
-    private void ClearController()
-    {
+    [Button(Mode = ButtonMode.OnlyInEditorNotPlaying)]
+    private void ClearController() {
         AnimatorStateMachine rootSm = _controller.layers[0].stateMachine;
         ChildAnimatorState[] states = rootSm.states;
 
@@ -121,8 +115,7 @@ public class SquashStretchAnimation : MonoBehaviour
         _controller.layers[0].stateMachine = rootSm;
     }
 
-    private AnimationClip CreateIdleAnimation()
-    {
+    private AnimationClip CreateIdleAnimation() {
         AnimationClip idleAnimation = new AnimationClip();
 
         Keyframe[] keys = new Keyframe[2];
@@ -135,10 +128,8 @@ public class SquashStretchAnimation : MonoBehaviour
         return idleAnimation;
     }
 
-    private AnimationClip CreateAnimation()
-    {
-        if (_squashAmount <= 0f)
-        {
+    private AnimationClip CreateAnimation() {
+        if (_squashAmount <= 0f) {
             Debug.LogError("Squash scale cannot be less than 0");
             return null;
         }
@@ -168,10 +159,8 @@ public class SquashStretchAnimation : MonoBehaviour
         return anim;
     }
 
-    public void Interact()
-    {
+    public void Interact() {
         _animator.SetTrigger("interact");
     }
-
 }
 #endif

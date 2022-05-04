@@ -26,11 +26,10 @@ public class GrandfatherClockNotice : MonoBehaviour
         }
     }
 
-    [Button(Mode = ButtonMode.NotPlaying)]
+    [Button(Mode = ButtonMode.OnlyWhileGameRunning)]
     public void SpentAllPointsNotice() {
         _noticeSound.SetActive(true);
-        if (_moveToClock)
-        {
+        if (_moveToClock) {
             //IsometricCameraController.Singleton.MoveToPosition(transform.position, _moveToClockTime);
             CameraController.Singleton.MoveToPosition(transform.position, _moveToClockTime);
         }

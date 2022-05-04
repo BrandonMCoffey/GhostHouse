@@ -60,14 +60,15 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _maxZValue = 35f;
     [SerializeField] private float _minZValue = -40f;
 
+    [Header("Debugging")]
+    [SerializeField, ReadOnly] private float _horizontal;
+    [SerializeField, ReadOnly] private float _vertical;
+    [SerializeField, ReadOnly] private float _mouseWheel;
+    [SerializeField, ReadOnly] private Vector3 _mousePos;
+    [SerializeField, ReadOnly] private Vector2 _controllerPos;
+
     private DialogueRunner _dialogueRunner;
     private PlayerHUD _playerHud;
-
-    // Input Values
-    private float _horizontal;
-    private float _vertical;
-    private float _mouseWheel;
-    private Vector3 _mousePos;
 
     public Camera Camera => _cam;
     public static bool UsingController { get; private set; }
@@ -89,14 +90,11 @@ public class CameraController : MonoBehaviour
     private Vector3 _right;
 
     // Camera Lerp to Position
+    private Vector3 _clickDragStart;
     private bool _lerpToPosition;
     private Vector3 _finalLerpPosition;
     private float _finalLerpTime;
     private float _finalLerpEndTime;
-
-    // Movement variables
-    private Vector3 _clickDragStart;
-    private Vector2 _controllerPos;
 
     private void Awake() {
         if (Singleton == null) {
@@ -144,15 +142,17 @@ public class CameraController : MonoBehaviour
             return;
         }
         CheckInputType();
+        GatherInput();
+        if (UsingController) {
+            HandleControllerMovement();
+        }
         if (Interacting || GamePaused || FadeToBlackPlaying || DialoguePlaying || IsTransitioning) {
             return;
         }
-        GatherInput();
         if (_camZoom) {
             HandleCameraZoom();
         }
         if (UsingController) {
-            HandleControllerMovement();
             if (_controllerBorder) {
                 HandleBorderMotivatedMovement(_controllerPos, _controllerBorderMultiplier);
             }

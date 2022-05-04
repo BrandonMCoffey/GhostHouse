@@ -87,7 +87,7 @@ public class Settings : MonoBehaviour
         SetVisualSettings();
     }
 
-    [Button(Spacing = 25, Mode = ButtonMode.NotPlaying)]
+    [Button(Spacing = 25, Mode = ButtonMode.OnlyWhileGameRunning)]
     public void LoadSettings() {
         // This should be called each time the settings menu is opened
 
@@ -112,26 +112,26 @@ public class Settings : MonoBehaviour
         graphicsQuality = DataManager.Instance.settingsGraphicsQuality;
     }
 
-    [Button(Spacing = 20, Mode = ButtonMode.NotPlaying)]
+    [Button(Spacing = 20, Mode = ButtonMode.OnlyWhileGameRunning)]
     public void SaveAllSettings() {
         SaveControlSettings();
         SaveAudioSettings();
         SaveVisualSettings();
     }
 
-    [Button(Spacing = 10, Mode = ButtonMode.NotPlaying)]
+    [Button(Spacing = 10, Mode = ButtonMode.OnlyWhileGameRunning)]
     public void SaveControlSettings() {
         DataManager.Instance.SaveControlSettings(leftClickInteract, useWASD, useArrowKeys, useClickNDrag, dragSpeed, mouseMotivatedMovement, controllerBorderMovement);
         SetControlSettings();
     }
 
-    [Button(Mode = ButtonMode.NotPlaying)]
+    [Button(Mode = ButtonMode.OnlyWhileGameRunning)]
     public void SaveAudioSettings() {
         DataManager.Instance.SaveAudioSettings(music, SFX, dialog, ambience);
         SetAudioSettings();
     }
 
-    [Button(Mode = ButtonMode.NotPlaying)]
+    [Button(Mode = ButtonMode.OnlyWhileGameRunning)]
     public void SaveVisualSettings() {
         DataManager.Instance.SaveVisualSettings(isWindowed, contrast, brightness, largeGUIFont, largeTextFont, textFont, vSync, graphicsQuality);
         SetVisualSettings();

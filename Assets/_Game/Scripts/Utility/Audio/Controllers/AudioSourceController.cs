@@ -61,34 +61,31 @@ namespace Utility.Audio.Controllers
             }
         }
 
-        private void ResetSfx()
-        {
+        private void ResetSfx() {
             if (_sfx == null) return;
             SetSourceProperties(_sfx.GetSourceProperties());
-            if (_overrideMixer != null)
-            {
+            if (_overrideMixer != null) {
                 Source.outputAudioMixerGroup = _overrideMixer;
             }
             _areSoundsEnabled = false;
         }
 
-        [Button(Spacing = 10, Mode = ButtonMode.NotPlaying)]
-        private void ForceUpdateSfxProperties()
-        {
+        [Button(Spacing = 10, Mode = ButtonMode.OnlyWhileGameRunning)]
+        private void ForceUpdateSfxProperties() {
             Stop();
             StopAllCoroutines();
             ResetSfx();
             CheckEnabled();
         }
 
-        [Button(Spacing = 5, Mode = ButtonMode.NotPlaying)]
+        [Button(Spacing = 5, Mode = ButtonMode.OnlyWhileGameRunning)]
         public void Enable() {
             if (_areSoundsEnabled) return;
             _areSoundsEnabled = true;
             CheckEnabled();
         }
 
-        [Button(Mode = ButtonMode.NotPlaying)]
+        [Button(Mode = ButtonMode.OnlyWhileGameRunning)]
         public void Disable() {
             if (!_areSoundsEnabled) return;
             _areSoundsEnabled = false;

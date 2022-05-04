@@ -5,8 +5,8 @@ namespace Utility.Buttons
     public enum ButtonMode
     {
         Always,
-        NotPlaying,
-        WhilePlaying
+        OnlyWhileGameRunning,
+        OnlyInEditorNotPlaying
     }
 
     [AttributeUsage(AttributeTargets.Method)]
@@ -14,8 +14,7 @@ namespace Utility.Buttons
     {
         public readonly string name;
 
-        public ButtonAttribute()
-        {
+        public ButtonAttribute() {
         }
 
         public ButtonAttribute(string name) => this.name = name;

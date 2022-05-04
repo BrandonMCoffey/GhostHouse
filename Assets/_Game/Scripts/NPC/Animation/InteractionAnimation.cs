@@ -8,7 +8,7 @@ using Utility.Buttons;
 [RequireComponent(typeof(Animator))]
 public class InteractionAnimation : MonoBehaviour
 {
-    [Header("Transform Type")] 
+    [Header("Transform Type")]
     [SerializeField] private bool _position = false;
     [SerializeField] private bool _rotation = true;
 
@@ -17,7 +17,7 @@ public class InteractionAnimation : MonoBehaviour
     [SerializeField] private bool _yAxis = false;
     [SerializeField] private bool _zAxis = false;
 
-    [Header("Choice")] 
+    [Header("Choice")]
     [SerializeField] private bool _override = false;
 
 
@@ -29,50 +29,43 @@ public class InteractionAnimation : MonoBehaviour
     private AnimatorState _interactionState;
     private AnimatorState _postInteractionState;
 
-    private void Awake()
-    {
+    private void Awake() {
         if (GetComponent<Animator>() != null) _animator = GetComponent<Animator>();
     }
-    private void Start()
-    {
-        var controller = (AnimatorController) AssetDatabase.LoadAssetAtPath("Assets/_Game/Entities/Interactables/Temp/Controllers/_AC_" + gameObject.name +
-                                      ".controller",typeof(AnimatorController));
+
+    private void Start() {
+        var controller = (AnimatorController)AssetDatabase.LoadAssetAtPath("Assets/_Game/Entities/Interactables/Temp/Controllers/_AC_" + gameObject.name +
+                                                                           ".controller", typeof(AnimatorController));
 
         //_animator.runtimeAnimatorController = controller;
     }
 
-    private void SaveAnimation(AnimationClip clip)
-    {
+    private void SaveAnimation(AnimationClip clip) {
         string savePath = "Assets/_Game/Entities/Interactables/Temp/Animations/anim_" + gameObject.name + "_" +
                           clip.name + ".anim";
-        if (AssetDatabase.LoadAssetAtPath<AnimationClip>(savePath) == null)
-        {
+        if (AssetDatabase.LoadAssetAtPath<AnimationClip>(savePath) == null) {
             AssetDatabase.CreateAsset(clip, savePath);
         }
-        else
-        {
-            if (_override) AssetDatabase.CreateAsset(clip,savePath);
+        else {
+            if (_override) AssetDatabase.CreateAsset(clip, savePath);
         }
     }
 
-    private void AssignController()
-    {
+    private void AssignController() {
         var controller = (AnimatorController)AssetDatabase.LoadAssetAtPath("Assets/_Game/Entities/Interactables/Temp/Controllers/_AC_" + gameObject.name +
                                                                            ".controller", typeof(AnimatorController));
         _animator.runtimeAnimatorController = controller;
     }
 
-    [Button(Mode = ButtonMode.WhilePlaying)]
-    private void CreateControllerAndAnimations()
-    {
+    [Button(Mode = ButtonMode.OnlyInEditorNotPlaying)]
+    private void CreateControllerAndAnimations() {
         if (GetComponent<Animator>() != null) _animator = GetComponent<Animator>();
 
         string templatePath = "Assets/_Game/Entities/Interactables/AnimationControllers/_AC_Template.controller";
         string newPath = "Assets/_Game/Entities/Interactables/Temp/Controllers/_AC_" + gameObject.name +
                          ".controller";
 
-        if (AssetDatabase.LoadAssetAtPath<AnimatorController>(newPath) == null)
-        {
+        if (AssetDatabase.LoadAssetAtPath<AnimatorController>(newPath) == null) {
             AssetDatabase.CopyAsset(templatePath, newPath);
         }
         _controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(newPath);
@@ -96,8 +89,7 @@ public class InteractionAnimation : MonoBehaviour
         AssignController();
     }
 
-    private AnimationClip CreateIdleAnimation()
-    {
+    private AnimationClip CreateIdleAnimation() {
         AnimationClip idleAnimation = new AnimationClip();
 
         Keyframe[] keys = new Keyframe[2];
@@ -110,8 +102,7 @@ public class InteractionAnimation : MonoBehaviour
         return idleAnimation;
     }
 
-    private AnimationClip CreateInteractionAnimation()
-    {
+    private AnimationClip CreateInteractionAnimation() {
         AnimationClip interactionAnimation = new AnimationClip();
 
         var geoObject = transform.GetChild(0).gameObject.transform.GetChild(0);
@@ -153,10 +144,8 @@ public class InteractionAnimation : MonoBehaviour
         interactionAnimation.SetCurve(geoObjectName, typeof(Transform), "localEulerAngles.y", curveY);
         interactionAnimation.SetCurve(geoObjectName, typeof(Transform), "localEulerAngles.z", curveZ);
 
-        if (_rotation)
-        {
-            if (_xAxis)
-            {
+        if (_rotation) {
+            if (_xAxis) {
                 Keyframe[] keys = new Keyframe[4];
                 keys[0] = new Keyframe(0f, keysXRot[0].value);
                 keys[1] = new Keyframe(0.25f, keysXRot[0].value - 25f);
@@ -166,8 +155,7 @@ public class InteractionAnimation : MonoBehaviour
                 interactionAnimation.SetCurve("Art", typeof(Transform), "localEulerAngle.x", curve);
             }
 
-            if (_yAxis)
-            {
+            if (_yAxis) {
                 Keyframe[] keys = new Keyframe[4];
                 keys[0] = new Keyframe(0f, keysYRot[0].value);
                 keys[1] = new Keyframe(0.25f, keysYRot[0].value - 25f);
@@ -177,8 +165,7 @@ public class InteractionAnimation : MonoBehaviour
                 interactionAnimation.SetCurve("Art", typeof(Transform), "localEulerAngle.y", curve);
             }
 
-            if (_zAxis)
-            {
+            if (_zAxis) {
                 Keyframe[] keys = new Keyframe[4];
                 keys[0] = new Keyframe(0f, keysZRot[0].value);
                 keys[1] = new Keyframe(0.25f, keysZRot[0].value - 25f);
@@ -188,11 +175,9 @@ public class InteractionAnimation : MonoBehaviour
                 interactionAnimation.SetCurve("Art", typeof(Transform), "localEulerAngle.z", curve);
             }
         }
-        
-        if (_position)
-        {
-            if (_xAxis)
-            {
+
+        if (_position) {
+            if (_xAxis) {
                 Keyframe[] keys = new Keyframe[4];
                 keys[0] = new Keyframe(0f, keysXPos[0].value);
                 keys[1] = new Keyframe(0.25f, keysXPos[0].value - 0.5f);
@@ -202,8 +187,7 @@ public class InteractionAnimation : MonoBehaviour
                 interactionAnimation.SetCurve(geoObjectName, typeof(Transform), "localPosition.x", curve);
             }
 
-            if (_yAxis)
-            {
+            if (_yAxis) {
                 Keyframe[] keys = new Keyframe[4];
                 keys[0] = new Keyframe(0f, keysYPos[0].value);
                 keys[1] = new Keyframe(0.25f, keysYPos[0].value - 0.5f);
@@ -213,8 +197,7 @@ public class InteractionAnimation : MonoBehaviour
                 interactionAnimation.SetCurve(geoObjectName, typeof(Transform), "localPosition.y", curve);
             }
 
-            if (_zAxis)
-            {
+            if (_zAxis) {
                 Keyframe[] keys = new Keyframe[4];
                 keys[0] = new Keyframe(0f, keysZPos[0].value);
                 keys[1] = new Keyframe(0.25f, keysZPos[0].value - 0.5f);
@@ -228,11 +211,9 @@ public class InteractionAnimation : MonoBehaviour
         return interactionAnimation;
     }
 
-    public void Interact()
-    {
+    public void Interact() {
         _animator.SetTrigger("interact");
         Debug.Log("Did it");
     }
-
 }
 #endif

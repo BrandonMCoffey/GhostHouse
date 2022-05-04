@@ -42,7 +42,7 @@ public class SimpleFadeToBlack : MonoBehaviour
         }
     }
 
-    [Button(Spacing = 10, Mode = ButtonMode.NotPlaying)]
+    [Button(Spacing = 10, Mode = ButtonMode.OnlyWhileGameRunning)]
     public void FadeOutIn() {
         FadeOutIn(_fadeOutTime, _fadeHoldTime, _fadeInTime);
     }
@@ -53,7 +53,7 @@ public class SimpleFadeToBlack : MonoBehaviour
         return _currentRoutine;
     }
 
-    [Button(Mode = ButtonMode.NotPlaying)]
+    [Button(Mode = ButtonMode.OnlyWhileGameRunning)]
     public void FadeOut() {
         FadeOut(_fadeOutTime);
     }
@@ -70,7 +70,7 @@ public class SimpleFadeToBlack : MonoBehaviour
         return _currentRoutine;
     }
 
-    [Button(Mode = ButtonMode.NotPlaying)]
+    [Button(Mode = ButtonMode.OnlyWhileGameRunning)]
     public void FadeIn() {
         FadeIn(_fadeInTime);
     }

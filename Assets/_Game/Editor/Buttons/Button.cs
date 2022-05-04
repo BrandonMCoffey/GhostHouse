@@ -33,10 +33,10 @@ namespace _Game.Editor.Buttons
                 case ButtonMode.Always:
                     _disabled = false;
                     break;
-                case ButtonMode.NotPlaying:
+                case ButtonMode.OnlyWhileGameRunning:
                     _disabled = !EditorApplication.isPlaying;
                     break;
-                case ButtonMode.WhilePlaying:
+                case ButtonMode.OnlyInEditorNotPlaying:
                     _disabled = EditorApplication.isPlaying;
                     break;
                 default:
