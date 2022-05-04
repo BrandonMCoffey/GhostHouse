@@ -19,12 +19,14 @@ public class MainMenuNavigation : MonoBehaviour
     private GameObject _current;
 
     private void Update() {
-        if (_debug) {
-            var current = EventSystem.current.currentSelectedGameObject;
-            if (_current != current) {
-                _current = current;
-                Debug.Log("Selected: " + current, current);
+        var current = EventSystem.current.currentSelectedGameObject;
+        if (_current != current) {
+            if (current == null) {
+                SetMenu(_current);
+                return;
             }
+            _current = current;
+            if (_debug) Debug.Log("Selected: " + current, current);
         }
     }
 

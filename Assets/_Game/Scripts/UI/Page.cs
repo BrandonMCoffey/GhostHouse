@@ -1,16 +1,26 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Page : MonoBehaviour
 {
-    public List<Entry> entries = new List<Entry>();
+    [SerializeField] private GameObject _firstSelected = null;
 
-    public int index;
+    public void OnEnable() {
+        SetFirstSelected();
+    }
 
-    private Journal journal;
+    public void SetFirstSelected() {
+        SetMenu(_firstSelected);
+    }
 
-    private void Start()
+    public void SetSelected(GameObject selected) {
+        SetMenu(selected);
+    }
+
+    private static void SetMenu(GameObject firstSelected)
     {
-        journal = GameObject.Find("Journal Panel").GetComponent<Journal>();
+        if (firstSelected == null) return;
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstSelected);
     }
 }

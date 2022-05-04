@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utility.Buttons;
@@ -114,7 +115,7 @@ public class DataManager : MonoBehaviour
                 return Season.Winter;
             default:
                 if (_debug) Debug.LogWarning("Season accessed on Invalid Level", gameObject);
-                return Season.Universal;
+                return Season.None;
         }
     }
 
@@ -224,7 +225,7 @@ public class DataManager : MonoBehaviour
         int ind = 0;
         saveData.interactionNames = new string[160];
         saveData.interactionStates = new bool[160];
-        foreach (KeyValuePair<string, bool> entry in interactions)
+        foreach (var entry in interactions)
         {
             if(ind >= 160)
             {
@@ -263,7 +264,7 @@ public class DataManager : MonoBehaviour
         ind = 0;
         saveData.journalInteractionNames = new string[160];
         saveData.journalUnlocks = new bool[160];
-        foreach (KeyValuePair<string, bool> entry in journalUnlocks)
+        foreach (var entry in journalUnlocks)
         {
             if (ind >= 160)
             {
@@ -398,10 +399,7 @@ public class DataManager : MonoBehaviour
         outstr += "\nSisters Ending Points: " + sistersEndingPoints.ToString();
         outstr += "\nTrue Ending Points: " + trueEndingPoints.ToString();
         outstr += "\nInteractables:";
-        foreach(KeyValuePair<string, bool> entry in interactions)
-        {
-            outstr += "\n\tInteractable " + entry.Key + ": " + entry.Value;
-        }
+        outstr = interactions.Aggregate(outstr, (current, entry) => current + ("\n\tInteractable " + entry.Key + ": " + entry.Value));
         outstr += "\nSettings:";
         outstr += "\n\tLeft Click Interact: " + settingsLeftClickInteract.ToString();
         outstr += "\n\tWASD Camera Use: " + settingsCameraWASD.ToString();
@@ -421,10 +419,7 @@ public class DataManager : MonoBehaviour
         outstr += "\n\tVSync: " + settingsVSync.ToString();
         outstr += "\n\tGraphics Quality: " + settingsGraphicsQuality.ToString();
         outstr += "\nJournal Unlocks: ";
-        foreach (KeyValuePair<string, bool> entry in journalUnlocks)
-        {
-            outstr += "\n\tJournal Entry " + entry.Key + ": " + entry.Value;
-        }
+        outstr = journalUnlocks.Aggregate(outstr, (current, entry) => current + ("\n\tJournal Entry " + entry.Key + ": " + entry.Value));
         if (_debug) Debug.Log(outstr);
     }
 

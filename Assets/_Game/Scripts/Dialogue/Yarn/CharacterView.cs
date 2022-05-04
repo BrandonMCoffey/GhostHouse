@@ -39,8 +39,6 @@ namespace Mechanics.Dialog
         #region serialized variables
 
         // CharacterViewEditor depends on serialized variable names
-        [Header("Continue Mode")]
-        [SerializeField] private KeyCode _continueKeyCode = KeyCode.None;
 
         [Header("Effects")]
         [SerializeField] private float _inBufferTime = .2f;
@@ -118,6 +116,8 @@ namespace Mechanics.Dialog
             if (!_confirmedDialogue) {
                 return;
             }
+            // Reset pressed this frame
+            _confirmedDialogue = false;
 
             // The line must not be in the middle of being dismissed.
             if ((_currentLine?.Status) == Yarn.Unity.LineStatus.Dismissed) {
