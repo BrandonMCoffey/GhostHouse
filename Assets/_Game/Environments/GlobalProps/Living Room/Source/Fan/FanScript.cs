@@ -2,7 +2,7 @@
 
 public class FanScript : MonoBehaviour
 {
-    [SerializeField] public bool _powered = false;
+    [SerializeField] public bool _powered;
 
     private void Start()
     {

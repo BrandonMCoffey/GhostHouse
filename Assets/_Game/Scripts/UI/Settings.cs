@@ -23,7 +23,7 @@ public class Settings : MonoBehaviour
     //Camera Movement
     public bool useWASD = true;
     public bool useArrowKeys = true;
-    public bool useClickNDrag = false;
+    public bool useClickNDrag;
     public int dragSpeed = 75;
 
     //Audio Settings
@@ -33,14 +33,14 @@ public class Settings : MonoBehaviour
     public int ambience = 75;
 
     //Visual Settings
-    public bool isWindowed = false;
+    public bool isWindowed;
     public int contrast;
     [SerializeField] int contrastScale = 10;
     public int brightness;
     [SerializeField] int brightnessScale = 10;
-    public bool vSync = false;
-    public bool largeGUIFont = false;
-    public bool largeTextFont = false;
+    public bool vSync;
+    public bool largeGUIFont;
+    public bool largeTextFont;
     public int graphicsQuality; // 0 = Highest, 1 = Medium, 2 = Lowest
 
     //0 - Fancy, 1 - Normal, 2 - Dyslexia Friendly
@@ -59,7 +59,7 @@ public class Settings : MonoBehaviour
     }*/
 
     // Reference to AudioMixerController to control volume levels
-    AudioMixerController audioMixerController = null;
+    AudioMixerController audioMixerController;
 
     private void Awake() {
         if (_instanceReference == null) {

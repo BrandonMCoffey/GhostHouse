@@ -10,7 +10,7 @@ public class Journal : MonoBehaviour
     public List<Page> pages = new List<Page>();
 
     [SerializeField]
-    Page activePage = null, pausePage = null, lastPage = null;
+    Page activePage, pausePage = null, lastPage = null;
 
     public Button nextBtn = null, previousBtn = null;
 

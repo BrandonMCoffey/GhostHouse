@@ -8,12 +8,12 @@ public class PauseMenu : MonoBehaviour
     public static PauseMenu Singleton;
     public static Action<bool> PauseUpdated;
 
-    [SerializeField] private JournalController _journal = null;
+    [SerializeField] private JournalController _journal;
     [SerializeField, ReadOnly] private bool _canPause = true;
 
     public static event Action<bool> UpdateCanPause = delegate { };
 
-    public bool IsPaused { get; private set; } = false;
+    public bool IsPaused { get; private set; }
 
     private void Awake() {
         Singleton = this;

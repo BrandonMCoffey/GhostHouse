@@ -25,7 +25,7 @@ namespace Mechanics.Dialog
         [SerializeField] GameObject _btn_continue = null;
         [SerializeField] Slider _sldr_progressbar = null;
 
-        Sprite _defaultBoxSprite = null;
+        Sprite _defaultBoxSprite;
         Color _defaultBoxColor = Color.white;
 
         void Awake()

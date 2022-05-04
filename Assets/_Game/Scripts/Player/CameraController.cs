@@ -31,14 +31,14 @@ public class CameraController : MonoBehaviour
     [SerializeField, Range(0, 5)] private float _mouseMotivatedSprintMultiplier = 1.4f;
 
     [Header("Click and Drag Movement")]
-    [SerializeField] private bool _clickAndDrag = false;
+    [SerializeField] private bool _clickAndDrag;
     [SerializeField, Range(0, 1)] private float _clickDragSmooth = 0.5f;
     [SerializeField] private LayerMask _groundLayer = 0;
     [SerializeField, ReadOnly] private bool _dragging;
 
     [Header("Sprinting")]
     [SerializeField] private KeyCode _sprintKey = KeyCode.LeftShift;
-    [SerializeField, ReadOnly] private bool _sprintKeyHeld = false;
+    [SerializeField, ReadOnly] private bool _sprintKeyHeld;
 
     [Header("Smooth Camera Movement")]
     [SerializeField] private bool _smoothCameraMovement = true;

@@ -10,7 +10,7 @@ namespace Mechanics.Dialog
     {
         public static DialogueAudio Instance = null;
 
-        public bool CanPlay { get; private set; } = false;
+        public bool CanPlay { get; private set; }
 
         #region private variables
         [SerializeField] private bool _debug = false;
@@ -38,18 +38,18 @@ namespace Mechanics.Dialog
                 return _characterViewInstance;
             }
         }
-        CharacterView _characterViewInstance = null;
+        CharacterView _characterViewInstance;
 
-        AudioSourceController _audioSource = null;
+        AudioSourceController _audioSource;
 
-        SOCharacterAudio _speaker = null;
+        SOCharacterAudio _speaker;
         List<TimedEffect> _timedEffects = new List<TimedEffect>();
         int _indexOfLastWord = -1;
         int _currentIndex;
 
         NextClip _nextClip = NextClip.None;
-        float _waitLength = 0;
-        float _waitAccumulator = 0;
+        float _waitLength;
+        float _waitAccumulator;
         #endregion
 
         #region Monobehaviour

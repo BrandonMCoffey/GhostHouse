@@ -8,7 +8,7 @@ public class SimpleFadeToBlack : MonoBehaviour
     public static SimpleFadeToBlack Singleton;
 
     [SerializeField] private bool _singleton = true;
-    [SerializeField] private Image _image = null;
+    [SerializeField] private Image _image;
     [SerializeField] private float _fadeOutTime = 1;
     [SerializeField] private float _fadeHoldTime = 0.2f;
     [SerializeField] private float _fadeInTime = 1;

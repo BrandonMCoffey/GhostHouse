@@ -10,7 +10,7 @@ namespace Mechanics.Dialog
     /// </summary>
     public class InterruptionFlag
     {
-        public bool Interrupted { get; private set; } = false;
+        public bool Interrupted { get; private set; }
         public void Set() => Interrupted = true;
         public void Clear() => Interrupted = false;
     }

@@ -6,8 +6,8 @@ using Utility.Buttons;
 
 public class DataManager : MonoBehaviour
 {
-    public static DataManager Instance = null;  // Singleton instance
-    [SerializeField] private SceneLoader _sceneLoader = null;
+    public static DataManager Instance;  // Singleton instance
+    [SerializeField] private SceneLoader _sceneLoader;
     public static SceneLoader SceneLoader => Instance._sceneLoader;
     public bool _debug = false;
 

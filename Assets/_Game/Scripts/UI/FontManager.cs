@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class FontManager : MonoBehaviour
 {
-    public static FontManager Instance = null;
+    public static FontManager Instance;
 
     [Header("Font Assets")]
     [SerializeField]

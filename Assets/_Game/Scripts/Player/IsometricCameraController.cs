@@ -16,7 +16,7 @@ public class IsometricCameraController : MonoBehaviour
     [Header("Camera Connections")]
     [SerializeField] Camera _mainCamera = null;
     [SerializeField] Rigidbody _rigidbody = null;
-    DialogueRunner _dialogueRunner = null;
+    DialogueRunner _dialogueRunner;
 
 
     [ReadOnly] public bool gamePaused = false;
@@ -25,7 +25,7 @@ public class IsometricCameraController : MonoBehaviour
     [Header("Traditional Camera Movement Settings")]
     [SerializeField] public bool _enableWASDMovement = true;
     [SerializeField] public float _cameraMoveSpeed = 10f;
-    public bool _interacting = false;
+    public bool _interacting;
     public bool _fadeToBlackLock = false;
     bool _clicked;
 
@@ -64,7 +64,7 @@ public class IsometricCameraController : MonoBehaviour
 
     //Traditional Movement Values
     private Vector3 forward, right;
-    private float _elapsedTime = 0f;
+    private float _elapsedTime;
 
     //Centering on Object Values
     private Vector3 _finalLerpPosition;

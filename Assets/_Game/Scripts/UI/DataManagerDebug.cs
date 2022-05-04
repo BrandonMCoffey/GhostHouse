@@ -22,14 +22,14 @@ public class DataManagerDebug : MonoBehaviour
     // Speedrun stats / fps
     private float _updateInterval = 0.5f;
     private float _fps;
-    private float _accum = 0.0f;
-    private int _frames = 0;
+    private float _accum;
+    private int _frames;
     private float _timeLeft;
     private float _currentTime;
-    private float _holdTime = 0;
+    private float _holdTime;
 
     // Perspective Shifts
-    private static int _perspLevel = 0;
+    private static int _perspLevel;
     private static Vector3 _persp0Pos = new Vector3(0, 0, -100);
     private static float _persp0Len = 60;
     private static Vector3 _persp1Pos = new Vector3(0, 0, -580);

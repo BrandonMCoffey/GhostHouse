@@ -15,7 +15,7 @@ public class InteractionView : DialogueViewBase
     OptionView _optionViewPrefab = null;
 
     [SerializeField]
-    Transform _optionViewParent = null;
+    Transform _optionViewParent;
 
     [SerializeField]
     TextMeshProUGUI _lastLineText = null;

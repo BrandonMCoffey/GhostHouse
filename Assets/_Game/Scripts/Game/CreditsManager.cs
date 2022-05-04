@@ -6,7 +6,7 @@ public class CreditsManager : MonoBehaviour
     [SerializeField]
     float _speed = 2.5f;
 
-    Animator _animator = null;
+    Animator _animator;
 
     void Awake()
     {

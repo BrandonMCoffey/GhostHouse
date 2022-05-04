@@ -7,7 +7,7 @@ public class InteractionResponseCharacterAnimation : InteractableResponseBase
     [Header("Animation To Play (only Val and Jaq have angry animations)")]
     [SerializeField] private bool _surpriseAnimation = false;
     [Tooltip("Only Val and Jaq have angry animations")]
-    [SerializeField] private bool _angryAnimation = false;
+    [SerializeField] private bool _angryAnimation;
 
     [Header("For Morgan Only")] 
     [SerializeField] private bool _sleepAnimation = false;

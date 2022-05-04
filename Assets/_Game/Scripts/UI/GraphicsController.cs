@@ -4,7 +4,7 @@ using UnityEngine.Rendering.HighDefinition;
 
 public class GraphicsController : MonoBehaviour
 {
-    public static GraphicsController Instance { get; private set; } = null;
+    public static GraphicsController Instance { get; private set; }
 
     static FullScreenMode _screenMode = FullScreenMode.FullScreenWindow;
     public static FullScreenMode ScreenMode
@@ -45,7 +45,7 @@ public class GraphicsController : MonoBehaviour
     [SerializeField]
     Vector2 _contrastBounds = new Vector2(-100, 100f);
 
-    ColorAdjustments _colorAdjustments = null;
+    ColorAdjustments _colorAdjustments;
     float _initExposure, _initContrast;
 
     void Awake()

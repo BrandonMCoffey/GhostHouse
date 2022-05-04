@@ -17,19 +17,19 @@ namespace Mechanics.Dialog
         /// (LocalizedLine line): line is the dialogue being displayed.
         /// Fires when at the beginning of a line of dialogue if <see cref="_useTypewriterEffect"/> is true.
         /// </summary>
-        public event Action<Yarn.Unity.LocalizedLine> OnLineStarted = null;
+        public event Action<Yarn.Unity.LocalizedLine> OnLineStarted;
 
         /// <summary>
         /// (int index): index is the lastest character shown.
         /// Fires every time a character is typed when <see cref="_useTypewriterEffect"/> is true.
         /// </summary>
-        public event Action<int> OnCharacterTyped = null;
+        public event Action<int> OnCharacterTyped;
 
         /// <summary>
         /// OnLineEnd.
         /// Fires when at the end of a line of dialogue if <see cref="_useTypewriterEffect"/> is true.
         /// </summary>
-        public event Action OnLineEnd = null;
+        public event Action OnLineEnd;
 
         public event Action OnLineInterrupted; 
         #endregion
@@ -78,12 +78,12 @@ namespace Mechanics.Dialog
 
         #region private variables
         InterruptionFlag _interruptionFlag = new InterruptionFlag();
-        Yarn.Unity.LocalizedLine _currentLine = null;
+        Yarn.Unity.LocalizedLine _currentLine;
 
         CanvasGroup _canvasGroup;
         Yarn.Markup.MarkupAttribute _markup;
 
-        DialogView _currentView = null;
+        DialogView _currentView;
         float _lineStartStamp = -1;
         #endregion
 
