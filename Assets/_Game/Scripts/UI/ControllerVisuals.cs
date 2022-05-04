@@ -61,8 +61,10 @@ public class ControllerVisuals : MonoBehaviour
     }
 
     private void ToggleController(bool controller) {
+        if (controller == _usingController) return;
         ToggleCustomCursor(controller);
         SetCursorPosition(_mousePos);
         _usingController = controller;
+        CameraController.UsingController = _usingController;
     }
 }

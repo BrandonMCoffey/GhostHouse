@@ -70,7 +70,7 @@ public class CameraController : MonoBehaviour
     private ControllerVisuals _controllerVisuals;
 
     public Camera Camera => _cam;
-    public static bool UsingController { get; private set; }
+    public static bool UsingController { get; set; }
     public static bool Dragging => Singleton._dragging;
     public Vector3 MousePos => UsingController ? (Vector3)_controllerPos : UserInput.MousePosition;
     private static Vector2 ScreenCenter => new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
@@ -131,7 +131,9 @@ public class CameraController : MonoBehaviour
 
         if (UsingController) {
             _controllerPos = ScreenCenter;
+            _mousePos = UserInput.MousePosition;
             if (_controllerVisuals != null) {
+                _controllerVisuals.ToggleCustomCursor(true);
                 _controllerVisuals.SetCursorPosition(ScreenCenter);
                 _controllerVisuals.SetIndependent(false);
             }
