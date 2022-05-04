@@ -13,7 +13,7 @@ public class PauseMenu : MonoBehaviour
 
     public static event Action<bool> UpdateCanPause = delegate { };
 
-    public bool IsPaused { get; private set; }
+    public static bool IsPaused { get; private set; }
 
     private void Awake() {
         Singleton = this;

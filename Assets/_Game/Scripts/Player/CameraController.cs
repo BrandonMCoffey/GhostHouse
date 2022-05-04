@@ -1,5 +1,4 @@
 ﻿using Mechanics.Level_Mechanics;
-using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Utility.ReadOnly;
@@ -68,7 +67,7 @@ public class CameraController : MonoBehaviour
     [SerializeField, ReadOnly] private Vector2 _controllerPos;
 
     private DialogueRunner _dialogueRunner;
-    private PlayerHUD _playerHud;
+    private ControllerVisuals _controllerVisuals;
 
     public Camera Camera => _cam;
     public static bool UsingController { get; private set; }
@@ -80,7 +79,7 @@ public class CameraController : MonoBehaviour
     public static bool Interacting { get; set; }
     public static bool FadeToBlackPlaying { get; set; }
     public static bool IsTransitioning { get; set; }
-    private static bool GamePaused => PauseMenu.Singleton.IsPaused;
+    private static bool GamePaused => PauseMenu.IsPaused;
     private bool DialoguePlaying => _dialogueRunner.IsDialogueRunning;
 
     // Camera Transform Data
@@ -107,7 +106,7 @@ public class CameraController : MonoBehaviour
 
     private void OnEnable() {
         if (_dialogueRunner == null) _dialogueRunner = FindObjectOfType<DialogueRunner>();
-        if (_playerHud == null) _playerHud = FindObjectOfType<PlayerHUD>();
+        if (_controllerVisuals == null) _controllerVisuals = FindObjectOfType<ControllerVisuals>();
 
         ModalWindowController.OnInteractStart += InteractStarted;
         ModalWindowController.OnInteractEnd += InteractEnded;
@@ -132,7 +131,10 @@ public class CameraController : MonoBehaviour
 
         if (UsingController) {
             _controllerPos = ScreenCenter;
-            _playerHud.SetCursorPosition(ScreenCenter);
+            if (_controllerVisuals != null) {
+                _controllerVisuals.SetCursorPosition(ScreenCenter);
+                _controllerVisuals.SetIndependent(false);
+            }
         }
     }
 
@@ -225,12 +227,11 @@ public class CameraController : MonoBehaviour
     }
 
     private void ToggleController(bool controller) {
-        Cursor.visible = !controller;
-        if (_playerHud != null) {
-            _playerHud.ToggleCustomCursor(controller);
+        if (_controllerVisuals != null) {
+            _controllerVisuals.ToggleCustomCursor(controller);
             if (controller) {
                 _controllerPos = _mousePos;
-                _playerHud.SetCursorPosition(_mousePos);
+                _controllerVisuals.SetCursorPosition(_mousePos);
             }
         }
         UsingController = controller;
@@ -270,7 +271,7 @@ public class CameraController : MonoBehaviour
         _controllerPos.x = Mathf.Clamp(_controllerPos.x, 0, Screen.width);
         _controllerPos.y = Mathf.Clamp(_controllerPos.y, 0, Screen.height);
 
-        _playerHud.SetCursorPosition(_controllerPos);
+        if (_controllerVisuals != null) _controllerVisuals.SetCursorPosition(_controllerPos);
     }
 
     private void HandleControllerJoystickMovement() {

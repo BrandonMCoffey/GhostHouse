@@ -23,9 +23,6 @@ namespace UI
         [SerializeField] private Button _journalNormal = null;
         [SerializeField] private Button _journalNotification = null;
 
-        [Header("Cursor")]
-        [SerializeField] private Transform _cursorParent = null;
-
         private Coroutine _alphaRoutine;
         private float _alpha;
         private int _maxPoints;
@@ -54,14 +51,6 @@ namespace UI
             SetJournalNotification(false);
             _lampOn.gameObject.SetActive(true);
             _lampOff.gameObject.SetActive(false);
-        }
-
-        public void ToggleCustomCursor(bool show) {
-            _cursorParent.gameObject.SetActive(show);
-        }
-
-        public void SetCursorPosition(Vector3 pos) {
-            _cursorParent.position = pos;
         }
 
         public void Hide(bool hide) {
