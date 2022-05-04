@@ -6,7 +6,7 @@ public class GraphicsController : MonoBehaviour
 {
     public static GraphicsController Instance { get; private set; }
 
-    static FullScreenMode _screenMode = FullScreenMode.FullScreenWindow;
+    private static FullScreenMode _screenMode = FullScreenMode.FullScreenWindow;
     public static FullScreenMode ScreenMode
     {
         get { return _screenMode; }
@@ -17,7 +17,7 @@ public class GraphicsController : MonoBehaviour
         }
     }
 
-    static float _exposure;
+    private static float _exposure;
     public static float Exposure
     {
         get { return _exposure; }
@@ -28,7 +28,7 @@ public class GraphicsController : MonoBehaviour
         }
     }
 
-    static float _contrast;
+    private static float _contrast;
     public static float Contrast
     {
         get { return _contrast; }
@@ -39,16 +39,14 @@ public class GraphicsController : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    Vector2 _exposureBounds = new Vector2(-100f, 100f);
+    [SerializeField] private Vector2 _exposureBounds = new Vector2(-100f, 100f);
 
-    [SerializeField]
-    Vector2 _contrastBounds = new Vector2(-100, 100f);
+    [SerializeField] private Vector2 _contrastBounds = new Vector2(-100, 100f);
 
-    ColorAdjustments _colorAdjustments;
-    float _initExposure, _initContrast;
+    private ColorAdjustments _colorAdjustments;
+    private float _initExposure, _initContrast;
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -79,7 +77,7 @@ public class GraphicsController : MonoBehaviour
         SetContrast();
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         if (Instance != this) return;
 
@@ -96,13 +94,13 @@ public class GraphicsController : MonoBehaviour
         Screen.fullScreenMode = _screenMode;
     }
 
-    void SetContrast()
+    private void SetContrast()
     {
         if (_colorAdjustments == null) return;
         _colorAdjustments.contrast.value = Mathf.Clamp(_contrast, _contrastBounds.x, _contrastBounds.y);
     }
 
-    void SetExposure()
+    private void SetExposure()
     {
         if (_colorAdjustments == null) return;
         _colorAdjustments.postExposure.value = Mathf.Clamp(_exposure, _exposureBounds.x, _exposureBounds.y);

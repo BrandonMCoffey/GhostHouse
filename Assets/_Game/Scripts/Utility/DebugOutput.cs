@@ -2,7 +2,7 @@
 
 public class DebugOutput : MonoBehaviour
 {
-    static string myLog = "";
+    private static string myLog = "";
     private string output;
     private string stack;
 

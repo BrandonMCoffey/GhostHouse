@@ -7,26 +7,23 @@ using Utility.Audio.Managers;
 
 public class EndingsManager : MonoBehaviour
 {
-    [SerializeField]
-    Ending _trueEnding = null;
+    [SerializeField] private Ending _trueEnding = null;
 
-    [SerializeField]
-    Ending _cousinEnding = null;
+    [SerializeField] private Ending _cousinEnding = null;
 
-    [SerializeField]
-    Ending _sisterEnding = null;
+    [SerializeField] private Ending _sisterEnding = null;
 
     [SerializeField]
     [Tooltip("Threshold for this ending is ignored.")]
-    Ending badEnding = null;
+    private Ending badEnding = null;
 
     [Space]
     [SerializeField]
-    Game.TransitionManager _transitionManager = null;
+    private Game.TransitionManager _transitionManager = null;
 
     public event Action<string> OnEnd = delegate { };
 
-    void Start()
+    private void Start()
     {
         DataManager data = DataManager.Instance;
         List<EndingPair> possibleChoices = new List<EndingPair>();
@@ -99,7 +96,7 @@ public class EndingsManager : MonoBehaviour
     }
 
     [Serializable]
-    class Ending
+    private class Ending
     {
         [Min(0)]
         public int Threshold = 0;
@@ -109,7 +106,7 @@ public class EndingsManager : MonoBehaviour
         public MusicTrack MusicTrack = null;
     }
 
-    class EndingPair
+    private class EndingPair
     {
         public Ending ending;
         public int index;

@@ -2,7 +2,7 @@
 
 public class NonImportantInteractable : InteractableBase
 {
-    [SerializeField] GameObject _particleEffect = null;
+    [SerializeField] private GameObject _particleEffect = null;
 
     
 

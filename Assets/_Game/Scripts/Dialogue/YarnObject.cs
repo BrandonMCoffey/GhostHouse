@@ -9,9 +9,9 @@ public class YarnObject : MonoBehaviour
     [Tooltip("The active child instance. If no default is provided before runtime, no instance will be active.")]
     public string ActiveInstance = "";
 
-    Dictionary<string, GameObject> _instances;
+    private Dictionary<string, GameObject> _instances;
 
-    void Start()
+    private void Start()
     {
         LoadInstances();
         if (ActiveInstance != "")
@@ -23,7 +23,7 @@ public class YarnObject : MonoBehaviour
     /// <summary>
     /// Caches references to child locations
     /// </summary>
-    void LoadInstances()
+    private void LoadInstances()
     {
         _instances = new Dictionary<string, GameObject>();
 

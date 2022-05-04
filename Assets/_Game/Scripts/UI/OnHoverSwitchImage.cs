@@ -5,10 +5,10 @@ public class OnHoverSwitchImage : MonoBehaviour
 {
     public Sprite regularImage;
     public Sprite hoverImage;
-    Image image;
-    
+    private Image image;
 
-    void Start()
+
+    private void Start()
     {
         image = GetComponent<Image>();
     }

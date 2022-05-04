@@ -12,51 +12,45 @@ public class InteractionView : DialogueViewBase
     #region serialized variables
     [Header("UI References")]
     [SerializeField]
-    OptionView _optionViewPrefab = null;
+    private OptionView _optionViewPrefab = null;
 
-    [SerializeField]
-    Transform _optionViewParent;
+    [SerializeField] private Transform _optionViewParent;
 
-    [SerializeField]
-    TextMeshProUGUI _lastLineText = null;
+    [SerializeField] private TextMeshProUGUI _lastLineText = null;
 
-    [SerializeField]
-    OptionView _cancelButton = null;
+    [SerializeField] private OptionView _cancelButton = null;
 
-    [SerializeField]
-    Image _itemImage = null;
+    [SerializeField] private Image _itemImage = null;
 
-    [SerializeField]
-    Transform _costParent = null;
+    [SerializeField] private Transform _costParent = null;
 
-    [SerializeField]
-    GameObject _costPrefab = null;
+    [SerializeField] private GameObject _costPrefab = null;
 
     [Header("Effects")]
     [SerializeField]
-    float fadeTime = 0.1f;
+    private float fadeTime = 0.1f;
 
     [Header("Settings")]
     [SerializeField]
     [Tooltip("Unavailable options will still be shown to user.")]
-    bool showUnavailableOptions = false;
+    private bool showUnavailableOptions = false;
     #endregion
 
     #region private variables
     // A cached pool of OptionView objects so that we can reuse them
-    List<OptionView> _optionViews = new List<OptionView>();
+    private List<OptionView> _optionViews = new List<OptionView>();
 
     // The method we should call when an option has been selected.
-    Action<int> _OnOptionSelected;
+    private Action<int> _OnOptionSelected;
 
     // The line we saw most recently.
-    LocalizedLine _lastSeenLine;
+    private LocalizedLine _lastSeenLine;
 
     // A cached pool of OptionView objects so that we can reuse them
-    List<GameObject> _costInstances = new List<GameObject>();
+    private List<GameObject> _costInstances = new List<GameObject>();
 
-    CanvasGroup _canvasGroup;
-    MarkupAttribute _markup;
+    private CanvasGroup _canvasGroup;
+    private MarkupAttribute _markup;
     #endregion
 
     public void Start()
@@ -177,7 +171,7 @@ public class InteractionView : DialogueViewBase
     /// <summary>
     /// Called by <see cref="OptionView"/> objects.
     /// </summary>
-    void OptionViewWasSelected(DialogueOption option)
+    private void OptionViewWasSelected(DialogueOption option)
     {
         StartCoroutine(Effects.FadeAlpha(_canvasGroup, 1, 0, fadeTime, () => _OnOptionSelected(option.DialogueOptionID)));
     }
@@ -186,7 +180,7 @@ public class InteractionView : DialogueViewBase
     /// Configures UI according to markup in <see cref="_lastSeenLine"/> and given DialogueOption
     /// </summary>
     /// <param name="option"> DialogueOption containing [cancel/]. Ignored if null. </param>
-    void ProcessMarkup(DialogueOption option)
+    private void ProcessMarkup(DialogueOption option)
     {
         #region MARKUP: [item_sprite=str]
         if (_lastSeenLine.Text.TryGetAttributeWithName("item_sprite", out _markup))
@@ -225,7 +219,7 @@ public class InteractionView : DialogueViewBase
     /// <summary>
     /// Finds the item sprite requested and displays it
     /// </summary>
-    void ShowItemSprite()
+    private void ShowItemSprite()
     {
         //MarkupValue val = _markup.Properties["item_sprite"];
         //Debug.Log($"Interaction sprite: {val.StringValue}");
@@ -250,7 +244,7 @@ public class InteractionView : DialogueViewBase
     /// <summary>
     /// Hides the item sprite
     /// </summary>
-    void HideItemSprite()
+    private void HideItemSprite()
     {
         if (_itemImage != null)
         {
@@ -261,7 +255,7 @@ public class InteractionView : DialogueViewBase
     /// <summary>
     /// Shows the spirit point cost and generates the UI objects necessary.
     /// </summary>
-    void ShowSpiritPointCost()
+    private void ShowSpiritPointCost()
     {
         if (_costParent != null && _costPrefab != null)
         {
@@ -297,7 +291,7 @@ public class InteractionView : DialogueViewBase
     /// <summary>
     /// Hides the spirit point cost
     /// </summary>
-    void HideSpiritPointCost()
+    private void HideSpiritPointCost()
     {
         if (_costParent != null)
         {
@@ -309,7 +303,7 @@ public class InteractionView : DialogueViewBase
     /// Shows the cancel button and provides it the DialogueOption
     /// </summary>
     /// <param name="option"></param>
-    void ShowCancelButton(DialogueOption option)
+    private void ShowCancelButton(DialogueOption option)
     {
         _cancelButton.gameObject.SetActive(true);
         _cancelButton.Option = option;
@@ -319,7 +313,7 @@ public class InteractionView : DialogueViewBase
     /// <summary>
     /// Hides the cancel button
     /// </summary>
-    void HideCancelButton()
+    private void HideCancelButton()
     {
         _cancelButton.gameObject.SetActive(false);
     }

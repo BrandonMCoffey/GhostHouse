@@ -3,13 +3,13 @@ using UnityEngine.UI;
 
 public class Tab : MonoBehaviour
 {
-    GameObject owner;
-    Image image;
+    private GameObject owner;
+    private Image image;
     public int associatedPage;
-    Journal journal;
-    Button tabBtn;
-    RectTransform rect;
-    Vector3 originalPos;
+    private Journal journal;
+    private Button tabBtn;
+    private RectTransform rect;
+    private Vector3 originalPos;
 
     private void Start()
     {

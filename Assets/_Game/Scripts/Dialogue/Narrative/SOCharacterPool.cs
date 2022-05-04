@@ -10,8 +10,7 @@ namespace Mechanics.Dialog
         [Tooltip("This may be used for notes. It is in no way used or processed by the game.")]
         public string Description = string.Empty;
 
-        [SerializeField]
-        List<SOCharacter> _characters = new List<SOCharacter>();
+        [SerializeField] private List<SOCharacter> _characters = new List<SOCharacter>();
 
         /// <summary>
         /// Provides a dictionary like interface to <see cref="_characters"/>. Returns null if unable to find the requested character.

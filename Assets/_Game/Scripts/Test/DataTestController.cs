@@ -2,20 +2,20 @@
 
 public class DataTestController : MonoBehaviour
 {
-    int level;
-    int sp;
+    private int level;
+    private int sp;
 
     public int Level => level;
  
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         level = 0;
         sp = 10;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {

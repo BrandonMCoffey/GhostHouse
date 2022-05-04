@@ -20,7 +20,7 @@ public class ObjectClicker : MonoBehaviour
     //This is just a placeholder variable that I use to switch from OnHoverEnter to OnHoverExit
     private IInteractable _previousInteractable;
 
-    void Update()
+    private void Update()
     {
         #region OnHoverScopeRayCasts
         RaycastHit hit;

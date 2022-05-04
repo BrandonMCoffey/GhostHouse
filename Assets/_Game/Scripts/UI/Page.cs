@@ -7,7 +7,7 @@ public class Page : MonoBehaviour
 
     public int index;
 
-    Journal journal;
+    private Journal journal;
 
     private void Start()
     {

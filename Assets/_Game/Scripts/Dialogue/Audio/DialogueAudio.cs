@@ -17,16 +17,15 @@ namespace Mechanics.Dialog
 
         [SerializeField]
         [Tooltip("After playing the primary audio clip, this is the chance of the secondary clip playing and 1-this is the chance of the tertiary clip playing.")]
-        float _secondaryChance = .6f;
+        private float _secondaryChance = .6f;
 
-        [SerializeField]
-        SOCharacterAudioPool _characterAudioPool = null;
+        [SerializeField] private SOCharacterAudioPool _characterAudioPool = null;
 
         [SerializeField]
         [Tooltip("")]
-        List<Playable> _toggleableSfx = new List<Playable>();
+        private List<Playable> _toggleableSfx = new List<Playable>();
 
-        CharacterView _characterView
+        private CharacterView _characterView
         {
             get
             {
@@ -38,27 +37,28 @@ namespace Mechanics.Dialog
                 return _characterViewInstance;
             }
         }
-        CharacterView _characterViewInstance;
+        private CharacterView _characterViewInstance;
 
-        AudioSourceController _audioSource;
+        private AudioSourceController _audioSource;
 
-        SOCharacterAudio _speaker;
-        List<TimedEffect> _timedEffects = new List<TimedEffect>();
-        int _indexOfLastWord = -1;
-        int _currentIndex;
+        private SOCharacterAudio _speaker;
+        private List<TimedEffect> _timedEffects = new List<TimedEffect>();
+        private int _indexOfLastWord = -1;
+        private int _currentIndex;
 
-        NextClip _nextClip = NextClip.None;
-        float _waitLength;
-        float _waitAccumulator;
+        private NextClip _nextClip = NextClip.None;
+        private float _waitLength;
+        private float _waitAccumulator;
         #endregion
 
         #region Monobehaviour
-        void Awake()
+
+        private void Awake()
         {
             _audioSource = GetComponent<AudioSourceController>();
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             if (_characterView == null)
             {
@@ -79,7 +79,7 @@ namespace Mechanics.Dialog
             PauseMenu.PauseUpdated += Pause;
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             if (_characterView == null && _characterAudioPool == null) return;
 
@@ -94,7 +94,7 @@ namespace Mechanics.Dialog
             PauseMenu.PauseUpdated -= Pause;
         }
 
-        void Update()
+        private void Update()
         {
             if (!CanPlay || _nextClip == NextClip.None) return;
 
@@ -140,7 +140,7 @@ namespace Mechanics.Dialog
         }
         #endregion
 
-        void Pause(bool paused)
+        private void Pause(bool paused)
         {
             if (paused)
             {
@@ -158,7 +158,7 @@ namespace Mechanics.Dialog
         /// Begin audio loop.
         /// </summary>
         /// <param name="line"> Line of dialogue being played. </param>
-        void OnLineStart(Yarn.Unity.LocalizedLine line)
+        private void OnLineStart(Yarn.Unity.LocalizedLine line)
         {
             if (_debug) Debug.Log("Dialogue Started");
             CanPlay = true;
@@ -206,7 +206,7 @@ namespace Mechanics.Dialog
         /// Triggered each time the dialogue display is updated. Tracks when audio loop should transition to final state.
         /// </summary>
         /// <param name="index"></param>
-        void OnLineUpdate(int index)
+        private void OnLineUpdate(int index)
         {
             _currentIndex = index;
             if (index > _indexOfLastWord && _nextClip != NextClip.Quaternary)
@@ -246,7 +246,7 @@ namespace Mechanics.Dialog
             }
         }
 
-        void OnLineInterrupted()
+        private void OnLineInterrupted()
         {
             for (int i = _timedEffects.Count - 1; i >= 0; i--)
             {
@@ -279,13 +279,13 @@ namespace Mechanics.Dialog
         /// <summary>
         /// Cleans up currently running coroutines.
         /// </summary>
-        void OnLineEnd()
+        private void OnLineEnd()
         {
             CanPlay = false;
             _nextClip = NextClip.None;
         }
 
-        void PlayClip(SfxBase clip)
+        private void PlayClip(SfxBase clip)
         {
             _audioSource.SetSourceProperties(clip.GetSourceProperties());
             _audioSource.Play();
@@ -296,13 +296,13 @@ namespace Mechanics.Dialog
             }
         }
 
-        enum NextClip
+        private enum NextClip
         {
             None, Primary, Secondary, Quaternary
         }
 
         [System.Serializable]
-        class Playable
+        private class Playable
         {
             public string Identifer = string.Empty;
             public AudioSourceController Controller = null;

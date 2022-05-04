@@ -35,9 +35,9 @@ public class Settings : MonoBehaviour
     //Visual Settings
     public bool isWindowed;
     public int contrast;
-    [SerializeField] int contrastScale = 10;
+    [SerializeField] private int contrastScale = 10;
     public int brightness;
-    [SerializeField] int brightnessScale = 10;
+    [SerializeField] private int brightnessScale = 10;
     public bool vSync;
     public bool largeGUIFont;
     public bool largeTextFont;
@@ -59,7 +59,7 @@ public class Settings : MonoBehaviour
     }*/
 
     // Reference to AudioMixerController to control volume levels
-    AudioMixerController audioMixerController;
+    private AudioMixerController audioMixerController;
 
     private void Awake() {
         if (_instanceReference == null) {

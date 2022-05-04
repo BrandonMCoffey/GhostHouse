@@ -12,8 +12,7 @@ namespace Mechanics.Dialog
         [Tooltip("This may be used a notes section. It is in now way used or processed by the game.")]
         public string Description = string.Empty;
 
-        [SerializeField]
-        List<Sprite> _sprites = null;
+        [SerializeField] private List<Sprite> _sprites = null;
 
         [Header("Options")]
         public bool ShowPortrait = true;

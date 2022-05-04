@@ -7,23 +7,27 @@ namespace NPC {
     public class NPCBase : MonoBehaviour, IInteractable
     {
         [Header("NPC Details")]
-        [SerializeField] string _name = string.Empty;
-        [SerializeField] int _age;
+        [SerializeField]
+        private string _name = string.Empty;
+        [SerializeField] private int _age;
         [Tooltip("i.e. younger sister or grandmother")]
-        [SerializeField] string _placeInFamily = string.Empty;
+        [SerializeField]
+        private string _placeInFamily = string.Empty;
 
         [Header("Animations")]
-        [SerializeField] AnimationClip _angryAnimation = null;
-        [SerializeField] AnimationClip _happyAnimation = null;
-        [SerializeField] AnimationClip _idleAnimation = null;
-        [SerializeField] AnimationClip _sadAnimation = null;
-        [SerializeField] AnimationClip _surprisedAnimation = null;
+        [SerializeField]
+        private AnimationClip _angryAnimation = null;
+        [SerializeField] private AnimationClip _happyAnimation = null;
+        [SerializeField] private AnimationClip _idleAnimation = null;
+        [SerializeField] private AnimationClip _sadAnimation = null;
+        [SerializeField] private AnimationClip _surprisedAnimation = null;
 
         [Header("Animation Override Controller")]
         [Header("Designers DO NOT TOUCH FOR NOW")]
-        [SerializeField] AnimatorOverrideController _animOverrideController;
+        [SerializeField]
+        private AnimatorOverrideController _animOverrideController;
 
-        Animator _animator;
+        private Animator _animator;
 
         public AnimationClip IdleAnimation => _idleAnimation;
         public AnimationClip SurprisedAnimation => _surprisedAnimation;

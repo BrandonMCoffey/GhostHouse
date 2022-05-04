@@ -4,7 +4,7 @@ public class PlayerCam : MonoBehaviour
 {
     public float camSpeed = 0.5f;
 
-    void Update()
+    private void Update()
     {
         float xAxisValue = Input.GetAxis("Horizontal") * -camSpeed;
         float zAxisValue = Input.GetAxis("Vertical") * -camSpeed;

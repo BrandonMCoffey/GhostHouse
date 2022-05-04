@@ -8,17 +8,15 @@ public class FontManager : MonoBehaviour
 
     [Header("Font Assets")]
     [SerializeField]
-    TMP_FontAsset _fancyFont = null;
+    private TMP_FontAsset _fancyFont = null;
 
-    [SerializeField]
-    TMP_FontAsset _normalFont = null;
+    [SerializeField] private TMP_FontAsset _normalFont = null;
 
-    [SerializeField]
-    TMP_FontAsset _dyslexiaFont = null;
+    [SerializeField] private TMP_FontAsset _dyslexiaFont = null;
 
-    FontMode _curFont = FontMode.Dyslexia;
+    private FontMode _curFont = FontMode.Dyslexia;
 
-    void Awake()
+    private void Awake()
     {
         // enforce singleton pattern
         if (Instance == null)
@@ -34,7 +32,7 @@ public class FontManager : MonoBehaviour
         SceneManager.activeSceneChanged += UpdateAllTextInScene;
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         if (Instance != this) return;
 
@@ -61,7 +59,7 @@ public class FontManager : MonoBehaviour
         }
     }
 
-    void UpdateAllTextInScene(Scene previousScene, Scene nextScene)
+    private void UpdateAllTextInScene(Scene previousScene, Scene nextScene)
     {
         // if this is the first scene loaded, let Start trigger UpdateAllText.
         if (previousScene == null) return;

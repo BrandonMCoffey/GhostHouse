@@ -11,36 +11,40 @@ public class PanelMediator : MonoBehaviour
     // Automatically hooks up connections
 
     [Header("Visual")]
-    [SerializeField] Button FullscreenButton = null;
-    [SerializeField] Button WindowedButton = null;
-    [SerializeField] Slider ContrastSlider = null;
-    [SerializeField] TextMeshProUGUI ContrastLabel = null;
-    [SerializeField] Slider BrightnessSlider = null;
-    [SerializeField] TextMeshProUGUI BrightnessLabel = null;
-    [SerializeField] Button VSyncOn = null;
-    [SerializeField] Button VSyncOff = null;
-    [SerializeField] Button QualityHigh = null;
-    [SerializeField] Button QualityMedium = null;
-    [SerializeField] Button QualityLow = null;
+    [SerializeField]
+    private Button FullscreenButton = null;
+    [SerializeField] private Button WindowedButton = null;
+    [SerializeField] private Slider ContrastSlider = null;
+    [SerializeField] private TextMeshProUGUI ContrastLabel = null;
+    [SerializeField] private Slider BrightnessSlider = null;
+    [SerializeField] private TextMeshProUGUI BrightnessLabel = null;
+    [SerializeField] private Button VSyncOn = null;
+    [SerializeField] private Button VSyncOff = null;
+    [SerializeField] private Button QualityHigh = null;
+    [SerializeField] private Button QualityMedium = null;
+    [SerializeField] private Button QualityLow = null;
 
     [Header("Audio")]
-    [SerializeField] Slider MusicSlider = null;
-    [SerializeField] TextMeshProUGUI MusicLabel = null;
-    [SerializeField] Slider SFXSlider = null;
-    [SerializeField] TextMeshProUGUI SFXLabel = null;
-    [SerializeField] Slider DialogSlider = null;
-    [SerializeField] TextMeshProUGUI DialogLabel = null;
-    [SerializeField] Slider AmbienceSlider = null;
-    [SerializeField] TextMeshProUGUI AmbienceLabel = null;
+    [SerializeField]
+    private Slider MusicSlider = null;
+    [SerializeField] private TextMeshProUGUI MusicLabel = null;
+    [SerializeField] private Slider SFXSlider = null;
+    [SerializeField] private TextMeshProUGUI SFXLabel = null;
+    [SerializeField] private Slider DialogSlider = null;
+    [SerializeField] private TextMeshProUGUI DialogLabel = null;
+    [SerializeField] private Slider AmbienceSlider = null;
+    [SerializeField] private TextMeshProUGUI AmbienceLabel = null;
 
     [Header("Font")]
-    [SerializeField] Button FancyFontButton = null;
-    [SerializeField] Button NormalFontButton = null;
-    [SerializeField] Button DyslexiaFontButton = null;
+    [SerializeField]
+    private Button FancyFontButton = null;
+    [SerializeField] private Button NormalFontButton = null;
+    [SerializeField] private Button DyslexiaFontButton = null;
 
     [Header("CameraMovement")]
-    [SerializeField] Button ClickDragOn = null;
-    [SerializeField] Button ClickDragOff = null;
+    [SerializeField]
+    private Button ClickDragOn = null;
+    [SerializeField] private Button ClickDragOff = null;
 
     // Update All Values from Settings
     private void OnEnable() {

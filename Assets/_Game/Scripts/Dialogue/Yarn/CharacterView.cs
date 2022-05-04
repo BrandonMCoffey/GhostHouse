@@ -38,53 +38,48 @@ namespace Mechanics.Dialog
         // CharacterViewEditor depends on serialized variable names
         [Header("Continue Mode")]
         [SerializeField]
-        KeyCode _continueKeyCode = KeyCode.None;
+        private KeyCode _continueKeyCode = KeyCode.None;
 
         [Header("Effects")]
         [SerializeField]
-        float _inBufferTime = .2f;
+        private float _inBufferTime = .2f;
 
-        [SerializeField]
-        bool _useFadeEffect = false;
-
-        [SerializeField]
-        [Min(0)]
-        float _fadeInTime = 0.25f;
+        [SerializeField] private bool _useFadeEffect = false;
 
         [SerializeField]
         [Min(0)]
-        float _fadeOutTime = 0.05f;
+        private float _fadeInTime = 0.25f;
 
         [SerializeField]
-        bool _useTypewriterEffect = false;
+        [Min(0)]
+        private float _fadeOutTime = 0.05f;
+
+        [SerializeField] private bool _useTypewriterEffect = false;
 
         [SerializeField]
         [Min(0)]
         [Tooltip("Typewrite effect speed in characters per second.")]
-        float _typewriterEffectSpeed = 120f;
+        private float _typewriterEffectSpeed = 120f;
 
-        [SerializeField]
-        SOCharacterPool _characterData = null;
+        [SerializeField] private SOCharacterPool _characterData = null;
 
-        [SerializeField]
-        bool _characterNameInLine = false;
+        [SerializeField] private bool _characterNameInLine = false;
 
-        [SerializeField]
-        DialogView _leftView = null;
+        [SerializeField] private DialogView _leftView = null;
 
-        [SerializeField]
-        DialogView _rightView = null;
+        [SerializeField] private DialogView _rightView = null;
         #endregion
 
         #region private variables
-        InterruptionFlag _interruptionFlag = new InterruptionFlag();
-        Yarn.Unity.LocalizedLine _currentLine;
 
-        CanvasGroup _canvasGroup;
-        Yarn.Markup.MarkupAttribute _markup;
+        private InterruptionFlag _interruptionFlag = new InterruptionFlag();
+        private Yarn.Unity.LocalizedLine _currentLine;
 
-        DialogView _currentView;
-        float _lineStartStamp = -1;
+        private CanvasGroup _canvasGroup;
+        private Yarn.Markup.MarkupAttribute _markup;
+
+        private DialogView _currentView;
+        private float _lineStartStamp = -1;
         #endregion
 
         #region Monobehaviour
@@ -406,7 +401,7 @@ namespace Mechanics.Dialog
         /// <summary>
         /// Waits till the next frame to call <see cref="OnContinueClicked"/>
         /// </summary>
-        IEnumerator ContinueNextFrame()
+        private IEnumerator ContinueNextFrame()
         {
             yield return null;
             OnContinueClicked();
@@ -424,7 +419,7 @@ namespace Mechanics.Dialog
         /// <summary>
         /// Hides UI references in scene
         /// </summary>
-        void HideView()
+        private void HideView()
         {
             _canvasGroup.interactable = false;
             _canvasGroup.alpha = 0;
@@ -442,7 +437,7 @@ namespace Mechanics.Dialog
         /// <summary>
         /// Shows UI references in scene
         /// </summary>
-        void ShowView()
+        private void ShowView()
         {
             _canvasGroup.interactable = true;
             _canvasGroup.alpha = 1;
@@ -471,7 +466,7 @@ namespace Mechanics.Dialog
             }
         }
 
-        enum Direction
+        private enum Direction
         {
             Bottom, Left, Top, Right
         }

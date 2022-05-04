@@ -3,17 +3,16 @@
 [RequireComponent(typeof(Animator))]
 public class CreditsManager : MonoBehaviour
 {
-    [SerializeField]
-    float _speed = 2.5f;
+    [SerializeField] private float _speed = 2.5f;
 
-    Animator _animator;
+    private Animator _animator;
 
-    void Awake()
+    private void Awake()
     {
         _animator = GetComponent<Animator>();
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {

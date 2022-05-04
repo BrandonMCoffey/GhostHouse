@@ -14,9 +14,10 @@ public class IsometricCameraController : MonoBehaviour
     /*This is probably the biggest class out of all the classes. This is just the camera movement controller for an isometric view.*/
 
     [Header("Camera Connections")]
-    [SerializeField] Camera _mainCamera = null;
-    [SerializeField] Rigidbody _rigidbody = null;
-    DialogueRunner _dialogueRunner;
+    [SerializeField]
+    private Camera _mainCamera = null;
+    [SerializeField] private Rigidbody _rigidbody = null;
+    private DialogueRunner _dialogueRunner;
 
 
     [ReadOnly] public bool gamePaused = false;
@@ -27,7 +28,7 @@ public class IsometricCameraController : MonoBehaviour
     [SerializeField] public float _cameraMoveSpeed = 10f;
     public bool _interacting;
     public bool _fadeToBlackLock = false;
-    bool _clicked;
+    private bool _clicked;
 
     [Header("Click And Drag Movement Settings")]
     [SerializeField] public bool _enableClickDragMovement = false;
@@ -57,10 +58,11 @@ public class IsometricCameraController : MonoBehaviour
     [SerializeField] public float _mouseMotivatedSprintSpeed = 35f;
 
     [Header("Camera Bounds")]
-    [SerializeField] float _maxXValue = 50f;
-    [SerializeField] float _minXValue = -50f;
-    [SerializeField] float _maxZValue = 50f;
-    [SerializeField] float _minZValue = -50f;
+    [SerializeField]
+    private float _maxXValue = 50f;
+    [SerializeField] private float _minXValue = -50f;
+    [SerializeField] private float _maxZValue = 50f;
+    [SerializeField] private float _minZValue = -50f;
 
     //Traditional Movement Values
     private Vector3 forward, right;
@@ -142,12 +144,12 @@ public class IsometricCameraController : MonoBehaviour
         ModalWindowController.OnInteractEnd -= InteractEnded;
     }
 
-    void InteractStarted()
+    private void InteractStarted()
     {
         _interacting = true;
     }
 
-    void InteractEnded()
+    private void InteractEnded()
     {
         _interacting = false;
         //_clicked = false;
@@ -156,9 +158,7 @@ public class IsometricCameraController : MonoBehaviour
     }
 
 
-    
-
-    void HandleInput()
+    private void HandleInput()
     {
         /*Do not look at this math. Or do and let me know how it works. I basically had no idea how to make motion work so I took a tutorial on isometric 
          player movement and frankensteined the following unholy abomination from it to make it work for the camera. Bear in mind that this script is attached
@@ -298,7 +298,7 @@ public class IsometricCameraController : MonoBehaviour
 
     //}
 
-    void CameraBounds()
+    private void CameraBounds()
     {
         if (transform.position.x > _maxXValue)
         {
@@ -318,7 +318,7 @@ public class IsometricCameraController : MonoBehaviour
         }
     }
 
-    Vector3 CameraBounds(Vector3 location)
+    private Vector3 CameraBounds(Vector3 location)
     {
         if (location.x > _maxXValue)
         {

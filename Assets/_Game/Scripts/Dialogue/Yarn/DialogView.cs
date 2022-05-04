@@ -17,18 +17,18 @@ namespace Mechanics.Dialog
         public Sprite DefaultBoxSprite => _defaultBoxSprite;
         public Color DefaultBoxColor => _defaultBoxColor;
 
-        [SerializeField] TextMeshProUGUI _txt_dialog = null;
-        [SerializeField] Image _img_dialog = null;
-        [SerializeField] Image _img_portrait = null;
-        [SerializeField] GameObject _p_characterName = null;
-        [SerializeField] TextMeshProUGUI _txt_characterName = null;
-        [SerializeField] GameObject _btn_continue = null;
-        [SerializeField] Slider _sldr_progressbar = null;
+        [SerializeField] private TextMeshProUGUI _txt_dialog = null;
+        [SerializeField] private Image _img_dialog = null;
+        [SerializeField] private Image _img_portrait = null;
+        [SerializeField] private GameObject _p_characterName = null;
+        [SerializeField] private TextMeshProUGUI _txt_characterName = null;
+        [SerializeField] private GameObject _btn_continue = null;
+        [SerializeField] private Slider _sldr_progressbar = null;
 
-        Sprite _defaultBoxSprite;
-        Color _defaultBoxColor = Color.white;
+        private Sprite _defaultBoxSprite;
+        private Color _defaultBoxColor = Color.white;
 
-        void Awake()
+        private void Awake()
         {
             if (_img_dialog != null)
             {

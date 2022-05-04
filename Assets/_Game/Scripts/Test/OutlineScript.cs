@@ -5,12 +5,12 @@ public class OutlineScript : MonoBehaviour
     [SerializeField] private Material outlineMaterial = null;
     [SerializeField] private float outlineScaleFactor = 0.0f;
     [SerializeField] private Color outlineColor = Color.yellow;
-    [SerializeField] GameObject _artObject = null;
+    [SerializeField] private GameObject _artObject = null;
     private Renderer outlineRenderer;
     private GameObject outlineObject;
     private Renderer rend;
 
-    void Start()
+    private void Start()
     {
         outlineObject = Instantiate(_artObject, transform);
         rend = outlineObject.GetComponent<Renderer>();
@@ -23,7 +23,7 @@ public class OutlineScript : MonoBehaviour
         
     //}
 
-    Renderer CreateOutline(Material outlineMat, float scaleFactor, Color color)
+    private Renderer CreateOutline(Material outlineMat, float scaleFactor, Color color)
     {
         rend.material = outlineMat;
         rend.material.SetColor("_OutlineColor", color);

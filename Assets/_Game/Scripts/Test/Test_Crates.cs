@@ -7,10 +7,10 @@ public class Test_Crates : InteractableBase
      and interactable crate.*/
 
     //This is not required. This is just to showcase visually how the IInteractable methods would work.
-    [SerializeField] Rigidbody _rigidbody = null;
-    [SerializeField] Renderer _meshRenderer;
-    [SerializeField] Material _highlightMaterial;
-    [SerializeField] Material _normalMaterial;
+    [SerializeField] private Rigidbody _rigidbody = null;
+    [SerializeField] private Renderer _meshRenderer;
+    [SerializeField] private Material _highlightMaterial;
+    [SerializeField] private Material _normalMaterial;
 
     //These are just sample visual feedback methods.
     #region VisualFeedback
@@ -23,7 +23,7 @@ public class Test_Crates : InteractableBase
     //    }
     //}
 
-    void MoveVerticalBackwards()
+    private void MoveVerticalBackwards()
     {
         Quaternion turnOffset = Quaternion.Euler(-30f, 0, -20f);
         if (_rigidbody != null)
@@ -32,7 +32,7 @@ public class Test_Crates : InteractableBase
         }
     }
 
-    void MoveVerticalForwards()
+    private void MoveVerticalForwards()
     {
         Quaternion turnOffset = Quaternion.Euler(30f, 0, 20f);
         if (_rigidbody != null)

@@ -6,7 +6,7 @@ namespace Mechanics.Animations
     [RequireComponent(typeof(Animator))]
     public class AnimationBehavior : MonoBehaviour
     {
-        Animator _anim;
+        private Animator _anim;
         public Animator _animator => _anim;
 
         private void Awake()

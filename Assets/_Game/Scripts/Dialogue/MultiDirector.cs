@@ -7,11 +7,10 @@ using UnityEngine.Timeline;
 [RequireComponent(typeof(PlayableDirector))]
 public class MultiDirector : MonoBehaviour
 {
-    [SerializeField]
-    List<TimelineAsset> _timelines = null;
-    PlayableDirector _director;
+    [SerializeField] private List<TimelineAsset> _timelines = null;
+    private PlayableDirector _director;
 
-    void Awake()
+    private void Awake()
     {
         _director = GetComponent<PlayableDirector>();    
     }
@@ -43,7 +42,7 @@ public class MultiDirector : MonoBehaviour
     /// </summary>
     /// <param name="timelineName"></param>
     /// <returns> reference to the timeline or null </returns>
-    TimelineAsset GetTimeline(string timelineName)
+    private TimelineAsset GetTimeline(string timelineName)
     {
         foreach (TimelineAsset timeline in _timelines)
         {

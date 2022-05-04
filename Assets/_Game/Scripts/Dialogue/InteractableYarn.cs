@@ -3,8 +3,8 @@ using Yarn.Unity;
 
 public class InteractableYarn : InteractableBase
 {
-    static DialogueRunner _dialogueRunner;
-    static DialogueRunner DialogueRunner
+    private static DialogueRunner _dialogueRunner;
+    private static DialogueRunner DialogueRunner
     {
         get
         {
@@ -16,8 +16,7 @@ public class InteractableYarn : InteractableBase
         }
     }
 
-    [SerializeField]
-    string yarnNode = "";
+    [SerializeField] private string yarnNode = "";
 
     public override void OnLeftClick()
     {

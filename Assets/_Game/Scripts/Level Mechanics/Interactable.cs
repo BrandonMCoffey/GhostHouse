@@ -58,8 +58,8 @@ namespace Mechanics.Level_Mechanics
         public int CousinEndingPoints => _cousinEndingPoints;
         public int TrueEndingPoints => _trueEndingPoints;
 
-        static DialogueRunner _dialogueRunner;
-        static DialogueRunner DialogueRunner {
+        private static DialogueRunner _dialogueRunner;
+        private static DialogueRunner DialogueRunner {
             get {
                 if (_dialogueRunner == null) {
                     _dialogueRunner = FindObjectOfType<DialogueRunner>();

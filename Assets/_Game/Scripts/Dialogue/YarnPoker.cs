@@ -2,16 +2,13 @@
 
 public class YarnPoker : MonoBehaviour
 {
-    [SerializeField]
-    Yarn.Unity.DialogueRunner _dialogueRunner = null;
+    [SerializeField] private Yarn.Unity.DialogueRunner _dialogueRunner = null;
 
-    [SerializeField]
-    string _nodeName = "";
+    [SerializeField] private string _nodeName = "";
 
-    [SerializeField]
-    KeyCode _continueKey = KeyCode.Return;
+    [SerializeField] private KeyCode _continueKey = KeyCode.Return;
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(_continueKey))
         {
@@ -19,7 +16,7 @@ public class YarnPoker : MonoBehaviour
         }
     }
 
-    void Poke()
+    private void Poke()
     {
         if (_dialogueRunner != null && _nodeName != "")
         {

@@ -9,15 +9,14 @@ public class Journal : MonoBehaviour
 
     public List<Page> pages = new List<Page>();
 
-    [SerializeField]
-    Page activePage, pausePage = null, lastPage = null;
+    [SerializeField] private Page activePage, pausePage = null, lastPage = null;
 
     public Button nextBtn = null, previousBtn = null;
 
     [SerializeField] private SfxUiLibrary _sfxUiLibrary = null;
     public SfxUiLibrary SfxUiLibrary => _sfxUiLibrary;
 
-    int tabIndex;
+    private int tabIndex;
 
     private void Start()
     {
@@ -75,7 +74,7 @@ public class Journal : MonoBehaviour
         UpdateTabs();
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         ActivatePage(pausePage);
     }
@@ -98,7 +97,7 @@ public class Journal : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (activePage == pausePage)
         {

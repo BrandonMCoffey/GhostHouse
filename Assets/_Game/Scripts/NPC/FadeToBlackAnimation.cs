@@ -11,30 +11,37 @@ public class FadeToBlackAnimation : MonoBehaviour
 {
     #region private variables
     [Header("UI References")]
-    [SerializeField] bool _addYarnCommand = false;
-    [SerializeField] Yarn.Unity.DialogueRunner _dialogueRunner = null;
+    [SerializeField]
+    private bool _addYarnCommand = false;
+    [SerializeField] private Yarn.Unity.DialogueRunner _dialogueRunner = null;
 
     [Header("Animation Configurations")]
     [Tooltip("Time for linear fade in.")]
-    [SerializeField] float _fadeIn = 1f;
+    [SerializeField]
+    private float _fadeIn = 1f;
 
     [Tooltip("Time for linear fade out.")]
-    [SerializeField] float _fadeOut = 1f;
+    [SerializeField]
+    private float _fadeOut = 1f;
 
     [Tooltip("Initial color of fade in.")]
-    [SerializeField] Color _initColor = Color.clear;
+    [SerializeField]
+    private Color _initColor = Color.clear;
 
     [Tooltip("Final color of fade in and initial color of fade out.")]
-    [SerializeField] Color _peakColor = Color.black;
+    [SerializeField]
+    private Color _peakColor = Color.black;
 
     [Tooltip("Final color of fade out.")]
-    [SerializeField] Color _finlColor = Color.clear;
+    [SerializeField]
+    private Color _finlColor = Color.clear;
 
-    Image _img;
+    private Image _img;
     #endregion
 
     #region Monobehaviour
-    void Awake()
+
+    private void Awake()
     {
         if (_addYarnCommand)
         {
@@ -45,7 +52,7 @@ public class FadeToBlackAnimation : MonoBehaviour
         _img.enabled = false;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         _img.enabled = false;
         StopAllCoroutines();
@@ -55,7 +62,7 @@ public class FadeToBlackAnimation : MonoBehaviour
     /// <summary>
     /// Adds YarnCommands to <see cref="_dialogueRunner"/>
     /// </summary>
-    void AddYarnCommands()
+    private void AddYarnCommands()
     {
         if (_dialogueRunner == null)
         {
@@ -141,7 +148,7 @@ public class FadeToBlackAnimation : MonoBehaviour
     /// Wrapper coroutine of <see cref="FadeIn"/> and <see cref="FadeOut"/>
     /// </summary>
     /// <returns></returns>
-    IEnumerator FadeInOutCouroutine(float @in, float @out)
+    private IEnumerator FadeInOutCouroutine(float @in, float @out)
     {
         yield return FadeIn(@in);
         yield return FadeOut(@out);
@@ -158,7 +165,7 @@ public class FadeToBlackAnimation : MonoBehaviour
     /// <param name="duration"></param>
     /// <param name="OnComplete"></param>
     /// <returns></returns>
-    static IEnumerator LerpColor(MaskableGraphic graphic, Color initColor, Color finalColor, float duration, System.Action OnComplete = null)
+    private static IEnumerator LerpColor(MaskableGraphic graphic, Color initColor, Color finalColor, float duration, System.Action OnComplete = null)
     {
         // set initial color
         graphic.enabled = true;
@@ -188,15 +195,15 @@ public class FadeToBlackAnimation : MonoBehaviour
     #region editor
 #if UNITY_EDITOR
     [CustomEditor(typeof(FadeToBlackAnimation))]
-    class FadeToBlackEditor : Editor
+    private class FadeToBlackEditor : Editor
     {
-        SerializedProperty _addYarnCommandProperty;
-        SerializedProperty _dialogueRunnerProperty;
-        SerializedProperty _fadeInProperty;
-        SerializedProperty _fadeOutProperty;
-        SerializedProperty _initColorProperty;
-        SerializedProperty _peakColorProperty;
-        SerializedProperty _finlColorProperty;
+        private SerializedProperty _addYarnCommandProperty;
+        private SerializedProperty _dialogueRunnerProperty;
+        private SerializedProperty _fadeInProperty;
+        private SerializedProperty _fadeOutProperty;
+        private SerializedProperty _initColorProperty;
+        private SerializedProperty _peakColorProperty;
+        private SerializedProperty _finlColorProperty;
 
         public void OnEnable()
         {
