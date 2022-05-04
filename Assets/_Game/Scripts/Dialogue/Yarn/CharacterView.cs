@@ -370,12 +370,12 @@ namespace Mechanics.Dialog
             _canvasGroup.alpha = 0;
             _canvasGroup.blocksRaycasts = false;
 
-            _leftView.gameObject?.SetActive(false);
-            _rightView.gameObject?.SetActive(false);
+            _leftView.gameObject.SetActive(false);
+            _rightView.gameObject.SetActive(false);
 
             // progress bar
-            _leftView.Sldr_progressbar.gameObject?.SetActive(false);
-            _rightView.Sldr_progressbar.gameObject?.SetActive(false);
+            _leftView.Sldr_progressbar.gameObject.SetActive(false);
+            _rightView.Sldr_progressbar.gameObject.SetActive(false);
             _lineStartStamp = -1;
         }
 
@@ -387,13 +387,13 @@ namespace Mechanics.Dialog
             _canvasGroup.alpha = 1;
             _canvasGroup.blocksRaycasts = true;
 
-            _currentView?.gameObject.SetActive(true);
+            _currentView.gameObject.SetActive(true);
 
             if (_currentView == _leftView) {
-                _rightView?.gameObject?.SetActive(false);
+                _rightView.gameObject?.SetActive(false);
             }
             else {
-                _leftView?.gameObject?.SetActive(false);
+                _leftView.gameObject?.SetActive(false);
             }
 
             // progress bar

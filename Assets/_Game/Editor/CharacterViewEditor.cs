@@ -18,15 +18,12 @@ namespace _Game.Editor
         SerializedProperty useTypewriterEffectProperty;
         SerializedProperty typewriterEffectSpeedProperty;
 
-        SerializedProperty continueKeyCodeProperty;
-
         SerializedProperty characterDataProperty;
         SerializedProperty characterNameInLineProperty;
         SerializedProperty leftViewProperty;
         SerializedProperty rightViewProperty;
 
-        public void OnEnable()
-        {
+        public void OnEnable() {
             useFadeEffectProperty = serializedObject.FindProperty("_useFadeEffect");
             fadeInTimeProperty = serializedObject.FindProperty("_fadeInTime");
             fadeOutTimeProperty = serializedObject.FindProperty("_fadeOutTime");
@@ -35,22 +32,18 @@ namespace _Game.Editor
             useTypewriterEffectProperty = serializedObject.FindProperty("_useTypewriterEffect");
             typewriterEffectSpeedProperty = serializedObject.FindProperty("_typewriterEffectSpeed");
 
-            continueKeyCodeProperty = serializedObject.FindProperty("_continueKeyCode");
-
             characterDataProperty = serializedObject.FindProperty("_characterData");
             characterNameInLineProperty = serializedObject.FindProperty("_characterNameInLine");
             leftViewProperty = serializedObject.FindProperty("_leftView");
             rightViewProperty = serializedObject.FindProperty("_rightView");
         }
 
-        public override void OnInspectorGUI()
-        {
+        public override void OnInspectorGUI() {
             EditorGUILayout.PropertyField(inBufferTimeProperty);
 
             // fade effect
             EditorGUILayout.PropertyField(useFadeEffectProperty);
-            if (useFadeEffectProperty.boolValue)
-            {
+            if (useFadeEffectProperty.boolValue) {
                 EditorGUI.indentLevel += 1;
                 EditorGUILayout.PropertyField(fadeInTimeProperty);
                 EditorGUILayout.PropertyField(fadeOutTimeProperty);
@@ -59,15 +52,11 @@ namespace _Game.Editor
 
             // typewriter effect
             EditorGUILayout.PropertyField(useTypewriterEffectProperty);
-            if (useTypewriterEffectProperty.boolValue)
-            {
+            if (useTypewriterEffectProperty.boolValue) {
                 EditorGUI.indentLevel += 1;
                 EditorGUILayout.PropertyField(typewriterEffectSpeedProperty);
                 EditorGUI.indentLevel -= 1;
             }
-
-            // continue mode
-            EditorGUILayout.PropertyField(continueKeyCodeProperty);
 
             // UI references
             EditorGUILayout.PropertyField(characterDataProperty);
