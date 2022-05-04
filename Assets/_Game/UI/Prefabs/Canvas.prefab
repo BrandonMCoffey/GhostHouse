@@ -190,8 +190,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 866f2117bdb5a9b40bd53448472ce0ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _independent: 1
   _cursorParent: {fileID: 8658191968921105881}
+  _isCursorVisible: 0
+  _isJournalOpen: 0
+  _independent: 1
+  _usingController: 0
 --- !u!223 &799723103637211734
 Canvas:
   m_ObjectHideFlags: 0
@@ -248,7 +251,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 22, y: -22}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 32, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4203623033068746768
 CanvasRenderer:
