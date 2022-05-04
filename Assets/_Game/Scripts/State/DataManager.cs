@@ -313,28 +313,28 @@ public class DataManager : MonoBehaviour
     }
 
     // Interactables call this on their Start() to initialize themselves in the interactions dictionary
-    public void SetDefaultInteraction(string name) {
-        if (interactions.ContainsKey(name)) return;
-        interactions.Add(name, false);
-        if (!journalUnlocks.ContainsKey(name))
+    public void SetDefaultInteraction(string interactionName) {
+        if (interactions.ContainsKey(interactionName)) return;
+        interactions.Add(interactionName, false);
+        if (!journalUnlocks.ContainsKey(interactionName))
         {
-            journalUnlocks.Add(name, false);
+            journalUnlocks.Add(interactionName, false);
         }
     }
 
     // Set interaction state
-    public void SetInteraction(string name, bool interacted)
+    public void SetInteraction(string interactionName, bool interacted)
     {
-        interactions[name] = interacted;
-        journalUnlocks[name] = interacted;
+        interactions[interactionName] = interacted;
+        journalUnlocks[interactionName] = interacted;
     }
 
     // Get interaction state of an interaction
-    public bool GetInteraction(string name)
+    public bool GetInteraction(string interactionName)
     {
-        if (interactions.ContainsKey(name))
+        if (interactions.ContainsKey(interactionName))
         {
-            return interactions[name];
+            return interactions[interactionName];
         }
         else
         {

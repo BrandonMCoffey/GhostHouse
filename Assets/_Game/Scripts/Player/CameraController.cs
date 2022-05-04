@@ -262,7 +262,7 @@ public class CameraController : MonoBehaviour
         return new Vector3(x, 0, z);
     }
 
-    private void InteractStarted() {
+    private static void InteractStarted() {
         Interacting = true;
     }
 

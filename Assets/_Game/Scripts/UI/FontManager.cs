@@ -62,7 +62,7 @@ public class FontManager : MonoBehaviour
     private void UpdateAllTextInScene(Scene previousScene, Scene nextScene)
     {
         // if this is the first scene loaded, let Start trigger UpdateAllText.
-        if (previousScene == null) return;
+        if (!previousScene.IsValid()) return;
         UpdateAllText(_curFont);
     }
 
@@ -81,6 +81,7 @@ public class FontManager : MonoBehaviour
         _curFont = mode;
 
         // get all text mesh pro components in the scene
+        // BUG: This also finds all objects NOT in scene! 
         TMP_Text[] textInCurScene = Resources.FindObjectsOfTypeAll<TMP_Text>();
         for (int i = 0; i < textInCurScene.Length; i++)
         {

@@ -78,10 +78,7 @@ public class IsometricCameraController : MonoBehaviour
     private Vector3 _difference;
     private Vector3 _resetCamera;
 
-    private Vector2 MouseAxis
-    {
-        get { return new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")); }
-    }
+    private Vector2 MouseAxis => new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
     // Checks if mouse is over UI
     public static bool IsMouseOverUi

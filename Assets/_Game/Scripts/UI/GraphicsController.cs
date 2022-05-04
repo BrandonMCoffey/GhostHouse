@@ -9,7 +9,7 @@ public class GraphicsController : MonoBehaviour
     private static FullScreenMode _screenMode = FullScreenMode.FullScreenWindow;
     public static FullScreenMode ScreenMode
     {
-        get { return _screenMode; }
+        get => _screenMode;
         set
         {
             _screenMode = value;
@@ -20,7 +20,7 @@ public class GraphicsController : MonoBehaviour
     private static float _exposure;
     public static float Exposure
     {
-        get { return _exposure; }
+        get => _exposure;
         set
         {
             _exposure = value;
@@ -31,7 +31,7 @@ public class GraphicsController : MonoBehaviour
     private static float _contrast;
     public static float Contrast
     {
-        get { return _contrast; }
+        get => _contrast;
         set
         {
             _contrast = value;
