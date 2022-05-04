@@ -65,10 +65,10 @@ public class Settings : MonoBehaviour
         if (_instanceReference == null) {
             _instanceReference = this;
             audioMixerController = GetComponent<AudioMixerController>();
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(gameObject);
         }
         else if (_instanceReference != this) {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 

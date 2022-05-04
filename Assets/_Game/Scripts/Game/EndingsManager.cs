@@ -98,7 +98,7 @@ public class EndingsManager : MonoBehaviour
         DataManager.SceneLoader.LoadScene(nextScene);
     }
 
-    [System.Serializable]
+    [Serializable]
     class Ending
     {
         [Min(0)]

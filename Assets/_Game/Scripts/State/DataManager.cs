@@ -56,7 +56,7 @@ public class DataManager : MonoBehaviour
         // Singleton pattern, there should only be one of these on the DataManager Prefab
         if (Instance == null) {
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(gameObject);
 
             interactions = new Dictionary<string, bool>();
             journalUnlocks = new Dictionary<string, bool>();
@@ -87,7 +87,7 @@ public class DataManager : MonoBehaviour
         }
         else
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 
@@ -460,7 +460,7 @@ public class DataManager : MonoBehaviour
     // Return whether or not the save file exists
     public bool SaveFileExists()
     {
-        return System.IO.File.Exists(filePath);
+        return File.Exists(filePath);
     }
 
 

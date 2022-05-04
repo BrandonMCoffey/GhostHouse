@@ -6,7 +6,7 @@ using Utility.ReadOnly;
 public class PauseMenu : MonoBehaviour
 {
     public static PauseMenu Singleton;
-    public static System.Action<bool> PauseUpdated;
+    public static Action<bool> PauseUpdated;
 
     [SerializeField] private JournalController _journal = null;
     [SerializeField, ReadOnly] private bool _canPause = true;

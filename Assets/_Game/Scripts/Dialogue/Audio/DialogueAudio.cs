@@ -62,13 +62,13 @@ namespace Mechanics.Dialog
         {
             if (_characterView == null)
             {
-                this.enabled = false;
+                enabled = false;
                 return;
             }
             else if (_characterAudioPool == null)
             {
                 Debug.LogWarning($"\"{name}\" is unable to play dialogue audio. No SOCharacterAudioPool was provided to _characterAudioPool.");
-                this.enabled = false;
+                enabled = false;
                 return;
             }
 
