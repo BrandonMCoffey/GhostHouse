@@ -51,6 +51,7 @@ namespace Game
 
             // Intro Sequence
             if (_raycastBlock != null) _raycastBlock.gameObject.SetActive(true);
+            CameraController.IsTransitioning = true;
             if (_fadeIn) {
                 FadeFromBlack();
                 PauseGame(true);
@@ -111,7 +112,8 @@ namespace Game
         }
 
         private void StartDialogue() {
-            _raycastBlock.gameObject.SetActive(false);
+            CameraController.IsTransitioning = false;
+            if (_raycastBlock != null) _raycastBlock.gameObject.SetActive(false);
             if (_interactionOnStart != null)
             {
                 _interactionOnStart.Interact();
@@ -119,10 +121,7 @@ namespace Game
             PauseGame(false);
         }
 
-        private void PauseGame(bool paused) {
-            if (IsometricCameraController.Singleton != null) {
-                IsometricCameraController.Singleton.gamePaused = paused;
-            }
+        private static void PauseGame(bool paused) {
             if (PauseMenu.Singleton != null) {
                 PauseMenu.Singleton.PreventPausing(!paused);
             }
@@ -130,17 +129,13 @@ namespace Game
 
         private IEnumerator FadeToBlack(float time) {
             if (_raycastBlock != null) _fadeToBlack.gameObject.SetActive(true);
-            if (IsometricCameraController.Singleton != null) {
-                IsometricCameraController.Singleton._fadeToBlackLock = true;
-            }
+            CameraController.IsTransitioning = true;
             for (float t = 0; t < time; t += Time.deltaTime) {
                 float delta = t / time;
                 _fadeToBlack.color = new Color(0, 0, 0, delta);
                 yield return null;
             }
-            if (IsometricCameraController.Singleton != null) {
-                IsometricCameraController.Singleton._fadeToBlackLock = false;
-            }
+            CameraController.IsTransitioning = false;
             OnLevelComplete?.Invoke();
             NextScene();
         }

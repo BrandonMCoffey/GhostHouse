@@ -8,6 +8,9 @@ using Yarn.Unity;
 
 public class IsometricCameraController : MonoBehaviour
 {
+    public static IsometricCameraController Singleton { get; private set; }
+
+
     /*This is probably the biggest class out of all the classes. This is just the camera movement controller for an isometric view.*/
 
     [Header("Camera Connections")]
@@ -92,7 +95,6 @@ public class IsometricCameraController : MonoBehaviour
 
 
     #region Singleton Pattern
-    public static IsometricCameraController Singleton { get; private set; }
 
     private void Awake()
     {

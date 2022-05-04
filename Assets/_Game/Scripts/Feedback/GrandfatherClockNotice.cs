@@ -31,7 +31,8 @@ public class GrandfatherClockNotice : MonoBehaviour
         _noticeSound.SetActive(true);
         if (_moveToClock)
         {
-            IsometricCameraController.Singleton.MoveToPosition(transform.position, _moveToClockTime);
+            //IsometricCameraController.Singleton.MoveToPosition(transform.position, _moveToClockTime);
+            CameraController.Singleton.MoveToPosition(transform.position, _moveToClockTime);
         }
     }
 }

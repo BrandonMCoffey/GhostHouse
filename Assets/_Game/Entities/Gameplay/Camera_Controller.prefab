@@ -221,7 +221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 438029163017577698}
   - component: {fileID: 438029163017577696}
-  - component: {fileID: 438029163017577699}
+  - component: {fileID: 3438579921756248922}
   - component: {fileID: 1592772763}
   - component: {fileID: 8812819677435917923}
   m_Layer: 0
@@ -262,7 +262,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &438029163017577699
+--- !u!114 &3438579921756248922
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -271,35 +271,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 438029163017577701}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3a6ebbdbf48c3c44847850e94f88e7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 992890cd1448bb744a8d3b53b9835c0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainCamera: {fileID: 438029161094277100}
-  _rigidbody: {fileID: 438029163017577696}
-  gamePaused: 0
-  _enableWASDMovement: 1
-  _cameraMoveSpeed: 20
-  _interacting: 0
-  _enableClickDragMovement: 0
-  _panningSpeed: 75
+  _cam: {fileID: 438029161094277100}
+  _camZoom: 0
+  _camZoomSpeed: 5
+  _camZoomInMax: 0.7
+  _camZoomOutMax: 6.37
+  _wasdMovement: 1
+  _wasdSpeed: 20
+  _wasdSprint: 0
+  _wasdSprintMultiplier: 1.5
+  _mouseMotivatedMovement: 0
+  _mouseMotivatedBorderMin: 50
+  _mouseMotivatedBorderMax: 250
+  _mouseMotivatedSpeed: 25
+  _mouseMotivatedSprint: 0
+  _mouseMotivatedSprintMultiplier: 1.4
+  _clickAndDrag: 0
+  _clickDragSmooth: 0.8
   _groundLayer:
     serializedVersion: 2
     m_Bits: 1048576
-  _clickDragSmooth: 0.8
   _dragging: 0
-  _enableMouseBorderMovement: 0
-  _mMPanningSpeed: 25
-  _panBorderThickness: 10
-  _enableSlidingMovement: 0
-  _cameraZoomEnabled: 0
-  _cameraZoomSpeed: 5
-  _maxZoomInValue: 5
-  _maxZoomOutValue: 20
-  _enableSprintSpeed: 0
-  _cameraSprintSpeed: 40
-  _mouseMotivatedSprintSpeed: 35
+  _sprintKey: 304
+  _sprintKeyHeld: 0
+  _smoothCameraMovement: 1
+  _smoothSpeed: 20
   _maxXValue: 44
-  _minXValue: -38
+  _minXValue: -37
   _maxZValue: 35
   _minZValue: -40
 --- !u!114 &1592772763

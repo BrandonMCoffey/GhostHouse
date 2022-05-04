@@ -131,7 +131,8 @@ public class SimpleFadeToBlack : MonoBehaviour
     }
 
     private static void LockCameraController(bool lockCamera) {
-        if (IsometricCameraController.Singleton == null) return;
-        IsometricCameraController.Singleton._fadeToBlackLock = lockCamera;
+        if (CameraController.Singleton == null) return;
+        //IsometricCameraController.Singleton._fadeToBlackLock = lockCamera;
+        CameraController.FadeToBlackPlaying = lockCamera;
     }
 }

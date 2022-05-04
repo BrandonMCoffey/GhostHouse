@@ -104,7 +104,8 @@ public class ModalWindowController : MonoBehaviour
         if (_playerHud != null) _playerHud.UpdateSpiritPoints(maxPointsToSpend);
 
         // Enable Modal Window
-        IsometricCameraController.Singleton._interacting = true;
+        CameraController.Interacting = true;
+        //IsometricCameraController.Singleton._interacting = true;
         OnInteractStart?.Invoke();
 
         if (callback != null) {
@@ -160,9 +161,8 @@ public class ModalWindowController : MonoBehaviour
         if (_raycastBlock != null) _raycastBlock.SetActive(false);
         _enabled = false;
         if (updateCanPause) StartCoroutine(CanPauseNextFrame());
-        if (IsometricCameraController.Singleton != null) {
-            IsometricCameraController.Singleton._interacting = false;
-        }
+        CameraController.Interacting = false;
+        //IsometricCameraController.Singleton._interacting = false;
         if (playSound) _cancelOrCloseWindow.Play();
     }
 

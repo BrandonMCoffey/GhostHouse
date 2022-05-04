@@ -47,7 +47,7 @@ public class Settings : MonoBehaviour
     [Range(0, 2)]
     public int textFont = 2;
 
-    // Lazy load the Camera Controller
+    /* Lazy load the Camera Controller
     private IsometricCameraController cameraController;
     private IsometricCameraController CameraController
     {
@@ -56,7 +56,7 @@ public class Settings : MonoBehaviour
             if(cameraController == null) cameraController = FindObjectOfType<IsometricCameraController>();
             return cameraController;
         }
-    }
+    }*/
 
     // Reference to AudioMixerController to control volume levels
     AudioMixerController audioMixerController = null;
@@ -137,12 +137,14 @@ public class Settings : MonoBehaviour
     private void SetControlSettings()
     {
         // Set Control settings on camera controller
-        if (CameraController == null) {
+        //if (CameraController == null) {
             //Debug.LogWarning("No Camera Controller", gameObject);
-            return;
-        }
+            //return;
+        //}
         //CameraController._enableWASDMovement = useWASD;
-        CameraController._enableClickDragMovement = useClickNDrag;
+        if (CameraController.Singleton != null) {
+            CameraController.Singleton.SetClickDragEnabled(useClickNDrag);
+        }
     }
 
     // Update audio mixer controller with audio values
