@@ -538,12 +538,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1918795044}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 967434387}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -378, y: -81.609985}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 450, y: 160.6}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &333321624
@@ -740,8 +740,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 866f2117bdb5a9b40bd53448472ce0ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _independent: 1
   _cursorParent: {fileID: 0}
+  _isCursorVisible: 0
+  _isJournalOpen: 0
+  _independent: 1
+  _usingController: 0
 --- !u!1 &342180850
 GameObject:
   m_ObjectHideFlags: 0
@@ -2312,7 +2315,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
@@ -2713,6 +2716,11 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2375905184566677305, guid: 1ab40820d14372148abae8f310b88820,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2608811868008496021, guid: 1ab40820d14372148abae8f310b88820,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -2852,6 +2860,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446418668006602855, guid: 1ab40820d14372148abae8f310b88820,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4879320550090813236, guid: 1ab40820d14372148abae8f310b88820,
         type: 3}
@@ -3358,6 +3371,12 @@ PrefabInstance:
 --- !u!224 &967434386 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4908046325817735320, guid: 1ab40820d14372148abae8f310b88820,
+    type: 3}
+  m_PrefabInstance: {fileID: 967434385}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &967434387 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 941232298466476711, guid: 1ab40820d14372148abae8f310b88820,
     type: 3}
   m_PrefabInstance: {fileID: 967434385}
   m_PrefabAsset: {fileID: 0}
@@ -3965,7 +3984,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1158066106
 GameObject:
@@ -4655,7 +4674,7 @@ RectTransform:
   - {fileID: 53091780}
   - {fileID: 341852006}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5488,7 +5507,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1623666870
 GameObject:
@@ -5865,7 +5884,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1824072111
 GameObject:
@@ -6286,13 +6305,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1918795045}
-    characterCount: 0
+    characterCount: 10
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 0
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
-    lineCount: 0
-    pageCount: 0
+    lineCount: 1
+    pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -6920,7 +6939,7 @@ PrefabInstance:
     - target: {fileID: 6381942450208291166, guid: 616b7d06604a3bb4dac67e2db0526abd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6381942450208291166, guid: 616b7d06604a3bb4dac67e2db0526abd,
         type: 3}
