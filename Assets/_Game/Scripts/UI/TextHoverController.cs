@@ -40,7 +40,7 @@ namespace Mechanics.UI
         }
 
         private void SetPosition() {
-            var pos = Input.mousePosition;
+            var pos = CameraController.Singleton.MousePos;
             _parent.transform.position = pos;
         }
     }

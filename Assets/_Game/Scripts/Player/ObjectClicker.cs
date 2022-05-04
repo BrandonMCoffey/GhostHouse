@@ -5,7 +5,7 @@ namespace Mechanics.Player
 {
     public class ObjectClicker : MonoBehaviour
     {
-        private Camera _mainCamera;
+        private CameraController _controller;
         private IInteractable _previousInteractable;
 
         #region Properties
@@ -27,19 +27,18 @@ namespace Mechanics.Player
         #region Unity Functions
 
         private void Start() {
-            // Store the main camera for a very minor performance increase
-            _mainCamera = Camera.main;
+            _controller = CameraController.Singleton;
         }
 
         private void Update() {
-            RaycastCheck();
+            RaycastCheck(_controller.MousePos);
         }
 
         #endregion
 
         #region Hovering and Clicking
 
-        private void RaycastCheck() {
+        private void RaycastCheck(Vector3 mousePos) {
             // Ignore raycast if mouse is over UI
             if (IsMouseOverUi) {
                 ResetHover();
@@ -47,7 +46,7 @@ namespace Mechanics.Player
             }
 
             // Get mouse position and raycast
-            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = _controller.Camera.ScreenPointToRay(mousePos);
 
             // Raycast and hit
             if (Physics.Raycast(ray, out var hit)) {
@@ -67,8 +66,7 @@ namespace Mechanics.Player
         private void OnHover(RaycastHit hit) {
             IInteractable interactable = hit.transform.GetComponent<IInteractable>();
 
-            if (interactable == null)
-            {
+            if (interactable == null) {
                 interactable = hit.transform.GetComponentInParent<IInteractable>();
             }
 

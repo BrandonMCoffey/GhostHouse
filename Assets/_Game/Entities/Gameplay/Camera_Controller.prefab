@@ -279,10 +279,15 @@ MonoBehaviour:
   _camZoomSpeed: 5
   _camZoomInMax: 0.7
   _camZoomOutMax: 6.37
+  _controllerSpeed: 400
+  _controllerSprint: 1
+  _controllerSprintMultiplier: 2
+  _controllerBorderMultiplier: 1.5
   _wasdMovement: 1
   _wasdSpeed: 20
   _wasdSprint: 0
   _wasdSprintMultiplier: 1.5
+  _sprintKeyHeld: 0
   _mouseMotivatedMovement: 0
   _mouseMotivatedBorderMin: 50
   _mouseMotivatedBorderMax: 250
@@ -295,8 +300,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1048576
   _dragging: 0
-  _sprintKey: 304
-  _sprintKeyHeld: 0
   _smoothCameraMovement: 1
   _smoothSpeed: 20
   _maxXValue: 44

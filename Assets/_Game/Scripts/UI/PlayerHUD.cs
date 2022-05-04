@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using Yarn.Unity;
 
 namespace UI
 {
@@ -23,6 +22,9 @@ namespace UI
         [Header("Journal Icon")]
         [SerializeField] private Button _journalNormal = null;
         [SerializeField] private Button _journalNotification = null;
+
+        [Header("Cursor")]
+        [SerializeField] private Transform _cursorParent = null;
 
         private Coroutine _alphaRoutine;
         private float _alpha;
@@ -52,6 +54,14 @@ namespace UI
             SetJournalNotification(false);
             _lampOn.gameObject.SetActive(true);
             _lampOff.gameObject.SetActive(false);
+        }
+
+        public void ToggleCustomCursor(bool show) {
+            _cursorParent.gameObject.SetActive(show);
+        }
+
+        public void SetCursorPosition(Vector3 pos) {
+            _cursorParent.position = pos;
         }
 
         public void Hide(bool hide) {

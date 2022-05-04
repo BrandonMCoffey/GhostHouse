@@ -26,8 +26,14 @@ public class UserInput : MonoBehaviour
     // End or Back
     public static event Action CheatMenu = delegate { };
 
+    public static bool Sprinting;
+
     public static float Horizontal => Input.GetAxis("Horizontal");
     public static float Vertical => Input.GetAxis("Vertical");
+    public static float HorizontalController => Input.GetAxis("HorizontalController");
+    public static float VerticalController => Input.GetAxis("VerticalController");
+    public static float MouseScrollWheel => Input.GetAxis("Mouse ScrollWheel");
+    public static Vector3 MousePosition => Input.mousePosition;
 
     private void Update() {
         if (Input.GetButtonDown("Submit")) {
@@ -57,6 +63,12 @@ public class UserInput : MonoBehaviour
         if (Input.GetButtonDown("CheatMenu")) {
             CheatMenu?.Invoke();
             Log("CheatMenu");
+        }
+        if (Input.GetButtonDown("Sprint")) {
+            Sprinting = true;
+        }
+        if (Input.GetButtonUp("Sprint")) {
+            Sprinting = false;
         }
     }
 

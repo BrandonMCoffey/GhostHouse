@@ -1,4 +1,5 @@
 ﻿using Mechanics.Level_Mechanics;
+using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Utility.ReadOnly;
@@ -16,11 +17,18 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _camZoomInMax = 0.7f;
     [SerializeField] private float _camZoomOutMax = 6.37f;
 
+    [Header("Controller Movement")]
+    [SerializeField] private float _controllerSpeed = 100f;
+    [SerializeField] private bool _controllerSprint = true;
+    [SerializeField, Range(0, 5)] private float _controllerSprintMultiplier = 2f;
+    [SerializeField, Range(0, 5)] private float _controllerBorderMultiplier = 2f;
+
     [Header("WASD Movement")]
     [SerializeField] private bool _wasdMovement = true;
     [SerializeField] private float _wasdSpeed = 10f;
     [SerializeField] private bool _wasdSprint = false;
     [SerializeField, Range(0, 5)] private float _wasdSprintMultiplier = 2f;
+    [SerializeField, ReadOnly] private bool _sprintKeyHeld;
 
     [Header("Mouse Motivated Movement")]
     [SerializeField] private bool _mouseMotivatedMovement = false;
@@ -36,10 +44,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer = 0;
     [SerializeField, ReadOnly] private bool _dragging;
 
-    [Header("Sprinting")]
-    [SerializeField] private KeyCode _sprintKey = KeyCode.LeftShift;
-    [SerializeField, ReadOnly] private bool _sprintKeyHeld;
-
     [Header("Smooth Camera Movement")]
     [SerializeField] private bool _smoothCameraMovement = true;
     [SerializeField] private float _smoothSpeed = 5f;
@@ -51,11 +55,18 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _minZValue = -40f;
 
     private DialogueRunner _dialogueRunner;
+    private PlayerHUD _playerHud;
 
     // Input Values
     private float _horizontal;
     private float _vertical;
     private float _mouseWheel;
+    private Vector3 _mousePos;
+
+    public Camera Camera => _cam;
+    public bool UsingController { get; private set; }
+    public static bool Dragging => Singleton._dragging;
+    public Vector3 MousePos => UsingController ? (Vector3)_controllerPos : UserInput.MousePosition;
 
     // Input Lock Variables
     public static bool Interacting { get; set; }
@@ -63,7 +74,6 @@ public class CameraController : MonoBehaviour
     public static bool IsTransitioning { get; set; }
     private static bool GamePaused => PauseMenu.Singleton.IsPaused;
     private bool DialoguePlaying => _dialogueRunner.IsDialogueRunning;
-    public static bool Dragging => Singleton._dragging;
 
     // Camera Transform Data
     private Vector3 _goalPosition;
@@ -78,6 +88,7 @@ public class CameraController : MonoBehaviour
 
     // Movement variables
     private Vector3 _clickDragStart;
+    private Vector2 _controllerPos;
 
     private void Awake() {
         if (Singleton == null) {
@@ -86,11 +97,12 @@ public class CameraController : MonoBehaviour
         else {
             Destroy(gameObject);
         }
-
-        _dialogueRunner = FindObjectOfType<DialogueRunner>();
     }
 
     private void OnEnable() {
+        if (_dialogueRunner == null) _dialogueRunner = FindObjectOfType<DialogueRunner>();
+        if (_playerHud == null) _playerHud = FindObjectOfType<PlayerHUD>();
+
         ModalWindowController.OnInteractStart += InteractStarted;
         ModalWindowController.OnInteractEnd += InteractEnded;
     }
@@ -125,15 +137,20 @@ public class CameraController : MonoBehaviour
         if (_camZoom) {
             HandleCameraZoom();
         }
-        if (_clickAndDrag) {
-            HandleClickAndDragMovement();
+        if (UsingController) {
+            HandleControllerMovement();
         }
-        if (!_dragging) {
-            if (_wasdMovement) {
-                HandleWasdMovement();
+        else {
+            if (_clickAndDrag) {
+                HandleClickAndDragMovement();
             }
-            if (_mouseMotivatedMovement) {
-                HandleMouseMotivatedMovement();
+            if (!_dragging) {
+                if (_wasdMovement) {
+                    HandleWasdMovement();
+                }
+                if (_mouseMotivatedMovement) {
+                    HandleBorderMotivatedMovement(_mousePos);
+                }
             }
         }
         _goalPosition = CameraBounds(_goalPosition);
@@ -163,16 +180,74 @@ public class CameraController : MonoBehaviour
     }
 
     private void GatherInput() {
-        _mouseWheel = Input.GetAxis("Mouse ScrollWheel");
-        _horizontal = Input.GetAxisRaw("Horizontal");
-        _vertical = Input.GetAxisRaw("Vertical");
-        _sprintKeyHeld = Input.GetKey(_sprintKey);
+        _mouseWheel = UserInput.MouseScrollWheel;
+        _sprintKeyHeld = UserInput.Sprinting;
+        var mousePos = UserInput.MousePosition;
+        bool mouseMoved = mousePos != _mousePos;
+        _mousePos = mousePos;
+
+        if (UsingController) {
+            _horizontal = UserInput.Horizontal;
+            _vertical = UserInput.Vertical;
+
+            if (_horizontal + _vertical != 0 || mouseMoved) {
+                // Now using keyboard / mouse
+                ToggleController(false);
+                return;
+            }
+            _horizontal = UserInput.HorizontalController;
+            _vertical = UserInput.VerticalController;
+        }
+        else {
+            _horizontal = UserInput.HorizontalController;
+            _vertical = UserInput.VerticalController;
+
+            if (_horizontal + _vertical != 0) {
+                // Now using controller
+                ToggleController(true);
+                return;
+            }
+            _horizontal = UserInput.Horizontal;
+            _vertical = UserInput.Vertical;
+        }
+    }
+
+    private void ToggleController(bool controller) {
+        Cursor.visible = !controller;
+        if (_playerHud != null) {
+            _playerHud.ToggleCustomCursor(controller);
+            if (controller) {
+                _controllerPos = _mousePos;
+                _playerHud.SetCursorPosition(_mousePos);
+            }
+        }
+        UsingController = controller;
     }
 
     private void HandleCameraZoom() {
         if (_cam == null) return;
         var zoomDelta = _mouseWheel * _camZoomSpeed;
         _cam.orthographicSize = Mathf.Clamp(zoomDelta, _camZoomInMax, _camZoomOutMax);
+    }
+
+    private void HandleControllerMovement() {
+        float rightMovement = _horizontal * _controllerSpeed * Time.deltaTime;
+        float upMovement = _vertical * _controllerSpeed * Time.deltaTime;
+
+        if (_sprintKeyHeld && _controllerSprint) {
+            rightMovement *= _controllerSprintMultiplier;
+            upMovement *= _controllerSprintMultiplier;
+        }
+
+        _controllerPos.x += rightMovement;
+        _controllerPos.y += upMovement;
+
+        _controllerPos.x = Mathf.Clamp(_controllerPos.x, 0, Screen.width);
+        _controllerPos.y = Mathf.Clamp(_controllerPos.y, 0, Screen.height);
+
+        HandleBorderMotivatedMovement(_controllerPos, _controllerBorderMultiplier);
+
+        _playerHud.SetCursorPosition(_controllerPos);
     }
 
     private void HandleWasdMovement() {
@@ -191,36 +266,38 @@ public class CameraController : MonoBehaviour
         return Mathf.Clamp01((value - min) / (max - min));
     }
 
-    private void HandleMouseMotivatedMovement() {
+    private void HandleBorderMotivatedMovement(Vector2 mousePos, float multiplier = 1) {
         Vector3 rightMovement = Vector3.zero;
         Vector3 upMovement = Vector3.zero;
 
-        var mousePos = Input.mousePosition;
-        if (mousePos.x >= Screen.width - _mouseMotivatedBorderMax) {
+        float borderMax = _mouseMotivatedBorderMax * multiplier;
+        float borderMin = _mouseMotivatedBorderMin * multiplier;
+
+        if (mousePos.x >= Screen.width - borderMax) {
             // Right border, move right
-            float inside = Screen.width - _mouseMotivatedBorderMax;
-            float outside = Screen.width - _mouseMotivatedBorderMin;
+            float inside = Screen.width - borderMax;
+            float outside = Screen.width - borderMin;
             float delta = Map01(mousePos.x, inside, outside);
             rightMovement = _right * _mouseMotivatedSpeed * delta * Time.deltaTime;
         }
-        else if (mousePos.x <= _mouseMotivatedBorderMax) {
+        else if (mousePos.x <= borderMax) {
             // Left border, move left
-            float inside = _mouseMotivatedBorderMax;
-            float outside = _mouseMotivatedBorderMin;
+            float inside = borderMax;
+            float outside = borderMin;
             float delta = Map01(mousePos.x, inside, outside);
             rightMovement = -_right * _mouseMotivatedSpeed * delta * Time.deltaTime;
         }
-        if (mousePos.y >= Screen.height - _mouseMotivatedBorderMax) {
+        if (mousePos.y >= Screen.height - borderMax) {
             // Top border, move up
-            float inside = Screen.height - _mouseMotivatedBorderMax;
-            float outside = Screen.height - _mouseMotivatedBorderMin;
+            float inside = Screen.height - borderMax;
+            float outside = Screen.height - borderMin;
             float delta = Map01(mousePos.y, inside, outside);
             upMovement = _forward * _mouseMotivatedSpeed * delta * Time.deltaTime;
         }
-        else if (mousePos.y <= _mouseMotivatedBorderMax) {
+        else if (mousePos.y <= borderMax) {
             // Bottom border, move down
-            float inside = _mouseMotivatedBorderMax;
-            float outside = _mouseMotivatedBorderMin;
+            float inside = borderMax;
+            float outside = borderMin;
             float delta = Map01(mousePos.y, inside, outside);
             upMovement = -_forward * _mouseMotivatedSpeed * delta * Time.deltaTime;
         }
@@ -235,7 +312,7 @@ public class CameraController : MonoBehaviour
 
     private void HandleClickAndDragMovement() {
         if (Input.GetMouseButtonDown(0) && !IsMouseOverUi) {
-            Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
+            Ray ray = _cam.ScreenPointToRay(_mousePos);
             if (Physics.Raycast(ray, out var hit)) {
                 var interactable = hit.transform.parent.GetComponent<StoryInteractable>();
                 if (interactable != null) return;
@@ -247,7 +324,7 @@ public class CameraController : MonoBehaviour
             _dragging = false;
         }
         else if (_dragging && Input.GetMouseButton(0)) {
-            Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
+            Ray ray = _cam.ScreenPointToRay(_mousePos);
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, _groundLayer)) {
                 Vector3 diff = _clickDragStart - Vector3.Lerp(_clickDragStart, hit.point, _clickDragSmooth);
                 diff.y = 0;
