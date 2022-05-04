@@ -114,8 +114,7 @@ namespace Game
         private void StartDialogue() {
             CameraController.IsTransitioning = false;
             if (_raycastBlock != null) _raycastBlock.gameObject.SetActive(false);
-            if (_interactionOnStart != null)
-            {
+            if (_interactionOnStart != null) {
                 _interactionOnStart.Interact();
             }
             PauseGame(false);
@@ -123,7 +122,7 @@ namespace Game
 
         private static void PauseGame(bool paused) {
             if (PauseMenu.Singleton != null) {
-                PauseMenu.Singleton.PreventPausing(!paused);
+                PauseMenu.Singleton.PreventPausing(paused);
             }
         }
 

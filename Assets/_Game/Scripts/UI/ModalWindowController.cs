@@ -138,7 +138,7 @@ public class ModalWindowController : MonoBehaviour
         _modalWindow.SetActive(true);
         if (_raycastBlock != null) _raycastBlock.SetActive(true);
         _enabled = true;
-        PauseMenu.Singleton.PreventPausing(false);
+        PauseMenu.Singleton.PreventPausing(true);
         _openWindow.Play();
     }
 
@@ -169,7 +169,7 @@ public class ModalWindowController : MonoBehaviour
     public IEnumerator CanPauseNextFrame() {
         yield return null;
         if (PauseMenu.Singleton != null) {
-            PauseMenu.Singleton.PreventPausing(true);
+            PauseMenu.Singleton.PreventPausing(false);
         }
     }
 

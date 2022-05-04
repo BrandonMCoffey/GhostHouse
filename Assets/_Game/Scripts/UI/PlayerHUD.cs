@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
+using Yarn.Unity;
 
 namespace UI
 {
@@ -19,8 +21,8 @@ namespace UI
         [SerializeField] private List<Animator> _spiritPoints = new List<Animator>();
 
         [Header("Journal Icon")]
-        [SerializeField] private GameObject _journalNormal = null;
-        [SerializeField] private GameObject _journalNotification = null;
+        [SerializeField] private Button _journalNormal = null;
+        [SerializeField] private Button _journalNotification = null;
 
         private Coroutine _alphaRoutine;
         private float _alpha;
@@ -35,6 +37,14 @@ namespace UI
 
         private void Awake() {
             _spiritPoints = _spiritPoints.Where(image => image != null).ToList();
+        }
+
+        private void OnEnable() {
+            PauseMenu.UpdateCanPause += UpdateCanPause;
+        }
+
+        private void OnDisable() {
+            PauseMenu.UpdateCanPause -= UpdateCanPause;
         }
 
         private void Start() {
@@ -139,12 +149,17 @@ namespace UI
         }
 
         private void SetJournalNotification(bool notification) {
-            _journalNormal.SetActive(!notification);
-            _journalNotification.SetActive(notification);
+            if (_journalNormal != null) _journalNormal.gameObject.SetActive(!notification);
+            if (_journalNotification != null) _journalNotification.gameObject.SetActive(notification);
         }
 
         public void OpenJournal() {
             PauseMenu.Singleton.PauseGame();
+        }
+
+        private void UpdateCanPause(bool canPause) {
+            if (_journalNormal != null) _journalNormal.interactable = canPause;
+            if (_journalNotification != null) _journalNotification.interactable = canPause;
         }
     }
 }

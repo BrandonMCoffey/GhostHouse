@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Mechanics.Level_Mechanics;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using Utility.ReadOnly;
 using Yarn.Unity;
@@ -235,7 +236,9 @@ public class CameraController : MonoBehaviour
     private void HandleClickAndDragMovement() {
         if (Input.GetMouseButtonDown(0) && !IsMouseOverUi) {
             Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, _groundLayer)) {
+            if (Physics.Raycast(ray, out var hit)) {
+                var interactable = hit.transform.parent.GetComponent<StoryInteractable>();
+                if (interactable != null) return;
                 _dragging = true;
                 _clickDragStart = hit.point;
             }
