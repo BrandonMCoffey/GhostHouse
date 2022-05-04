@@ -6,20 +6,16 @@ public class YarnPoker : MonoBehaviour
 
     [SerializeField] private string _nodeName = "";
 
-    [SerializeField] private KeyCode _continueKey = KeyCode.Return;
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(_continueKey))
-        {
-            Poke();
-        }
+    private void OnEnable() {
+        UserInput.ConfirmOrInteract += Poke;
     }
 
-    private void Poke()
-    {
-        if (_dialogueRunner != null && _nodeName != "")
-        {
+    private void OnDisable() {
+        UserInput.ConfirmOrInteract -= Poke;
+    }
+
+    private void Poke() {
+        if (_dialogueRunner != null && _nodeName != "") {
             _dialogueRunner.StartDialogue(_nodeName);
         }
     }

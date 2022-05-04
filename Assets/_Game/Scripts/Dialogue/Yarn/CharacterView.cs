@@ -13,6 +13,7 @@ namespace Mechanics.Dialog
     public class CharacterView : Yarn.Unity.DialogueViewBase
     {
         #region events
+
         /// <summary>
         /// (LocalizedLine line): line is the dialogue being displayed.
         /// Fires when at the beginning of a line of dialogue if <see cref="_useTypewriterEffect"/> is true.
@@ -31,43 +32,31 @@ namespace Mechanics.Dialog
         /// </summary>
         public event Action OnLineEnd;
 
-        public event Action OnLineInterrupted; 
+        public event Action OnLineInterrupted;
+
         #endregion
 
         #region serialized variables
+
         // CharacterViewEditor depends on serialized variable names
         [Header("Continue Mode")]
-        [SerializeField]
-        private KeyCode _continueKeyCode = KeyCode.None;
+        [SerializeField] private KeyCode _continueKeyCode = KeyCode.None;
 
         [Header("Effects")]
-        [SerializeField]
-        private float _inBufferTime = .2f;
-
+        [SerializeField] private float _inBufferTime = .2f;
         [SerializeField] private bool _useFadeEffect = false;
-
-        [SerializeField]
-        [Min(0)]
-        private float _fadeInTime = 0.25f;
-
-        [SerializeField]
-        [Min(0)]
-        private float _fadeOutTime = 0.05f;
-
+        [SerializeField] [Min(0)] private float _fadeInTime = 0.25f;
+        [SerializeField] [Min(0)] private float _fadeOutTime = 0.05f;
         [SerializeField] private bool _useTypewriterEffect = false;
 
         [SerializeField]
-        [Min(0)]
-        [Tooltip("Typewrite effect speed in characters per second.")]
+        [Min(0)] [Tooltip("Typewrite effect speed in characters per second.")]
         private float _typewriterEffectSpeed = 120f;
-
         [SerializeField] private SOCharacterPool _characterData = null;
-
         [SerializeField] private bool _characterNameInLine = false;
-
         [SerializeField] private DialogView _leftView = null;
-
         [SerializeField] private DialogView _rightView = null;
+
         #endregion
 
         #region private variables
@@ -80,34 +69,43 @@ namespace Mechanics.Dialog
 
         private DialogView _currentView;
         private float _lineStartStamp = -1;
+        private bool _confirmedDialogue;
+
         #endregion
 
         #region Monobehaviour
-        public void Start()
-        {
+
+        private void OnEnable() {
+            UserInput.ConfirmOrInteract += ConfirmDialogue;
+        }
+
+        private void OnDisable() {
+            UserInput.ConfirmOrInteract -= ConfirmDialogue;
+        }
+
+        private void ConfirmDialogue() {
+            _confirmedDialogue = true;
+        }
+
+        public void Start() {
             _canvasGroup = GetComponent<CanvasGroup>();
 
-            if (_characterData == null)
-            {
+            if (_characterData == null) {
                 Debug.LogWarning($"{name} was not provided _characterData");
             }
 
             HideView();
         }
 
-        public void Update()
-        {
+        public void Update() {
             // update progress bar
-            if (_currentView?.Sldr_progressbar != null && _lineStartStamp != -1 && _currentLine != null)
-            {
-                if (_currentLine.Status == Yarn.Unity.LineStatus.Presenting)
-                {
+            if (_currentView?.Sldr_progressbar != null && _lineStartStamp != -1 && _currentLine != null) {
+                if (_currentLine.Status == Yarn.Unity.LineStatus.Presenting) {
                     float duration = _currentView.Txt_dialog.text.Length / _typewriterEffectSpeed;
                     float elapsedTime = Time.time - _lineStartStamp;
                     _currentView.Sldr_progressbar.value = elapsedTime / duration;
                 }
-                else if (_currentLine.Status == Yarn.Unity.LineStatus.Interrupted || _currentLine.Status == Yarn.Unity.LineStatus.FinishedPresenting)
-                {
+                else if (_currentLine.Status == Yarn.Unity.LineStatus.Interrupted || _currentLine.Status == Yarn.Unity.LineStatus.FinishedPresenting) {
                     _currentView.Sldr_progressbar.value = _currentView.Sldr_progressbar.maxValue;
                 }
             }
@@ -116,50 +114,37 @@ namespace Mechanics.Dialog
             // interrupt/continue a line? We need to pass a number of
             // checks.
 
-            // We need to be configured to use a keycode to interrupt/continue
-            // lines.
-            if (_continueKeyCode == KeyCode.None)
-            {
+            // The keycode needs to have been pressed this frame.
+            if (!_confirmedDialogue) {
                 return;
             }
 
-            // That keycode needs to have been pressed this frame.
-            if (!Input.GetKeyDown(_continueKeyCode))
-            {
-                return;
-            }
-            
             // The line must not be in the middle of being dismissed.
-            if ((_currentLine?.Status) == Yarn.Unity.LineStatus.Dismissed)
-            {
+            if ((_currentLine?.Status) == Yarn.Unity.LineStatus.Dismissed) {
                 return;
             }
 
             // We're good to indicate that we want to skip/continue.
             OnContinueClicked();
         }
+
         #endregion
 
-        public override void DismissLine(Action onDismissalComplete)
-        {
+        public override void DismissLine(Action onDismissalComplete) {
             _currentLine = null;
 
-            if (_useFadeEffect)
-            {
+            if (_useFadeEffect) {
                 StartCoroutine(Yarn.Unity.Effects.FadeAlpha(_canvasGroup, 1, 0, _fadeOutTime, onDismissalComplete));
             }
-            else
-            {
+            else {
                 HideView();
                 onDismissalComplete();
             }
         }
 
-        public override void OnLineStatusChanged(Yarn.Unity.LocalizedLine dialogueLine)
-        {
+        public override void OnLineStatusChanged(Yarn.Unity.LocalizedLine dialogueLine) {
             if (dialogueLine == null) return;
-            switch (dialogueLine.Status)
-            {
+            switch (dialogueLine.Status) {
                 case Yarn.Unity.LineStatus.Presenting:
                     break;
                 case Yarn.Unity.LineStatus.Interrupted:
@@ -171,12 +156,10 @@ namespace Mechanics.Dialog
                 case Yarn.Unity.LineStatus.FinishedPresenting:
                     // The line has finished being delivered by all views.
                     // Display the Continue button.
-                    if (_currentView.Btn_continue != null)
-                    {
+                    if (_currentView.Btn_continue != null) {
                         _currentView.Btn_continue.SetActive(true);
                         var selectable = _currentView.Btn_continue.GetComponentInChildren<Selectable>();
-                        if (selectable != null)
-                        {
+                        if (selectable != null) {
                             selectable.Select();
                         }
                     }
@@ -186,31 +169,25 @@ namespace Mechanics.Dialog
             }
         }
 
-        public override void DialogueStarted()
-        {
+        public override void DialogueStarted() {
             _currentView = _rightView;
             _currentView.Txt_characterName.text = String.Empty;
         }
 
-        public override void RunLine(Yarn.Unity.LocalizedLine dialogueLine, Action onDialogueLineFinished)
-        {
+        public override void RunLine(Yarn.Unity.LocalizedLine dialogueLine, Action onDialogueLineFinished) {
             _currentLine = dialogueLine;
             SOCharacter character = _characterData.GetCharacter(dialogueLine.CharacterName);
 
             // flip between dialog views
-            if (character != null && character.ShowPortrait)
-            {
+            if (character != null && character.ShowPortrait) {
                 // this is not the previous character
-                if (_currentView == null || !_currentView.Txt_characterName.text.ToLower().Equals(character.name.ToLower()))
-                {
-                    if (_currentView == _rightView)
-                    {
+                if (_currentView == null || !_currentView.Txt_characterName.text.ToLower().Equals(character.name.ToLower())) {
+                    if (_currentView == _rightView) {
                         _rightView.gameObject.SetActive(false);
                         _leftView.gameObject.SetActive(true);
                         _currentView = _leftView;
                     }
-                    else
-                    {
+                    else {
                         _leftView.gameObject.SetActive(false);
                         _rightView.gameObject.SetActive(true);
                         _currentView = _rightView;
@@ -219,106 +196,96 @@ namespace Mechanics.Dialog
             }
 
             #region MARKUP: [interaction/]
+
             bool skipThisView = dialogueLine.Text.TryGetAttributeWithName("interaction", out _markup);
-            if (skipThisView)
-            {
+            if (skipThisView) {
                 HideView();
                 onDialogueLineFinished();
                 StartCoroutine(ContinueNextFrame());
                 return;
             }
+
             #endregion
 
             ShowView();
 
             // show the character sprite
+
             #region MARKUP: [sprite=str/]
-            if (_currentView.Img_portrait != null)
-            {
-                if (_characterData != null)
-                {
+
+            if (_currentView.Img_portrait != null) {
+                if (_characterData != null) {
                     bool characterNotFound = character == null;
-                    if (characterNotFound || !character.ShowPortrait)
-                    {
+                    if (characterNotFound || !character.ShowPortrait) {
                         // hide portrait
                         _currentView.Img_portrait.enabled = false;
                     }
-                    else
-                    {
+                    else {
                         Sprite characterSprite;
 
                         // select appropriate sprite
                         bool emotiveSprite = dialogueLine.Text.TryGetAttributeWithName("sprite", out _markup);
-                        if (emotiveSprite)
-                        {
+                        if (emotiveSprite) {
                             CharacterEmotion emote = SOCharacter.StringToEmotion(_markup.Properties["sprite"].StringValue);
                             characterSprite = character.GetSprite(emote);
                         }
-                        else
-                        {
+                        else {
                             // use default sprite
                             characterSprite = character.GetSprite(CharacterEmotion.Idle);
                         }
 
                         // configure portrait
-                        if (characterSprite != null)
-                        {
+                        if (characterSprite != null) {
                             _currentView.Img_portrait.enabled = true;
                             _currentView.Img_portrait.sprite = characterSprite;
                         }
-                        else
-                        {
+                        else {
                             _currentView.Img_portrait.enabled = false;
                         }
                     }
                 }
-                else
-                {
+                else {
                     _currentView.Img_portrait.enabled = false;
                 }
             }
+
             #endregion
 
             // show the correct dialog box
+
             #region dialog box style
+
             Image img_dialog = _currentView.Img_dialog;
-            if (img_dialog != null)
-            {
-                if (character != null && character.UseAlternateBoxStyle)
-                {
+            if (img_dialog != null) {
+                if (character != null && character.UseAlternateBoxStyle) {
                     img_dialog.sprite = character.AlternateBoxSprite;
                     img_dialog.color = character.AlternateBoxColor;
                 }
-                else
-                {
+                else {
                     img_dialog.sprite = _currentView.DefaultBoxSprite;
                     img_dialog.color = _currentView.DefaultBoxColor;
                 }
             }
+
             #endregion
 
             // show continue button
-            if (_currentView.Btn_continue != null)
-            {
+            if (_currentView.Btn_continue != null) {
                 _currentView.Btn_continue.SetActive(false);
             }
 
             _interruptionFlag.Clear();
 
             // show character name
-            if (_currentView.Txt_characterName == null)
-            {
-                if (_characterNameInLine)
-                {
+            if (_currentView.Txt_characterName == null) {
+                if (_characterNameInLine) {
                     _currentView.Txt_dialog.text = dialogueLine.Text.Text;
                 }
-                else
-                {
+                else {
                     _currentView.Txt_dialog.text = dialogueLine.TextWithoutCharacterName.Text;
                 }
             }
-            else
-            {
+            else {
                 _currentView.P_characterName.SetActive(character != null ? character.ShowName : true);
                 if (TextBubbleController.Instance != null) {
                     TextBubbleController.Instance.Disable();
@@ -328,72 +295,53 @@ namespace Mechanics.Dialog
                 _currentView.Txt_dialog.text = dialogueLine.TextWithoutCharacterName.Text;
             }
 
-            if (_useFadeEffect)
-            {
-                if (_useTypewriterEffect)
-                {
+            if (_useFadeEffect) {
+                if (_useTypewriterEffect) {
                     // If we're also using a typewriter effect, ensure that
                     // there are no visible characters so that we don't
                     // fade in on the text fully visible
                     _currentView.Txt_dialog.maxVisibleCharacters = 0;
                 }
-                else
-                {
+                else {
                     // Ensure that the max visible characters is effectively unlimited.
                     _currentView.Txt_dialog.maxVisibleCharacters = int.MaxValue;
                 }
 
                 StartCoroutine(Tweens.LerpAlpha(_canvasGroup, 0, 1, _fadeInTime, interruption: _interruptionFlag,
-                onComplete: () =>
-                {
-                    StartCoroutine(Tweens.WaitBefore(_inBufferTime, () => InEffectComplete()));
-                }));
+                    onComplete: () => { StartCoroutine(Tweens.WaitBefore(_inBufferTime, () => InEffectComplete())); }));
             }
-            else
-            {
-                if (_useTypewriterEffect)
-                {
+            else {
+                if (_useTypewriterEffect) {
                     StartTypewriter();
                 }
-                else
-                {
+                else {
                     // no effects were used, so just display the view
                     onDialogueLineFinished();
                 }
             }
 
             // called when the in-animation is complete
-            void InEffectComplete()
-            {
-                if (_useTypewriterEffect)
-                {
+            void InEffectComplete() {
+                if (_useTypewriterEffect) {
                     StartTypewriter();
                 }
-                else
-                {
+                else {
                     onDialogueLineFinished();
                 }
             }
 
-            void StartTypewriter()
-            {
-                if (character != null && !character.PlayAudio)
-                {
+            void StartTypewriter() {
+                if (character != null && !character.PlayAudio) {
                     StartCoroutine(Tweens.SimpleTypewriter(_currentView.Txt_dialog, _typewriterEffectSpeed, interruption: _interruptionFlag,
-                    onComplete: () =>
-                    {
-                        onDialogueLineFinished();
-                    }));
+                        onComplete: () => { onDialogueLineFinished(); }));
                 }
-                else
-                {
+                else {
                     OnLineStarted?.Invoke(dialogueLine);
                     StartCoroutine(Tweens.SimpleTypewriter(_currentView.Txt_dialog, _typewriterEffectSpeed, OnCharacterTyped, interruption: _interruptionFlag,
-                    onComplete: () =>
-                    {
-                        OnLineEnd?.Invoke();
-                        onDialogueLineFinished();
-                    }));
+                        onComplete: () => {
+                            OnLineEnd?.Invoke();
+                            onDialogueLineFinished();
+                        }));
                 }
             }
         }
@@ -401,15 +349,13 @@ namespace Mechanics.Dialog
         /// <summary>
         /// Waits till the next frame to call <see cref="OnContinueClicked"/>
         /// </summary>
-        private IEnumerator ContinueNextFrame()
-        {
+        private IEnumerator ContinueNextFrame() {
             yield return null;
             OnContinueClicked();
         }
 
         public void OnContinueClicked() {
-            if (_currentLine == null)
-            {
+            if (_currentLine == null) {
                 // We're not actually displaying a line. No-op.
                 return;
             }
@@ -419,8 +365,7 @@ namespace Mechanics.Dialog
         /// <summary>
         /// Hides UI references in scene
         /// </summary>
-        private void HideView()
-        {
+        private void HideView() {
             _canvasGroup.interactable = false;
             _canvasGroup.alpha = 0;
             _canvasGroup.blocksRaycasts = false;
@@ -437,27 +382,23 @@ namespace Mechanics.Dialog
         /// <summary>
         /// Shows UI references in scene
         /// </summary>
-        private void ShowView()
-        {
+        private void ShowView() {
             _canvasGroup.interactable = true;
             _canvasGroup.alpha = 1;
             _canvasGroup.blocksRaycasts = true;
 
             _currentView?.gameObject.SetActive(true);
 
-            if (_currentView == _leftView)
-            {
+            if (_currentView == _leftView) {
                 _rightView?.gameObject?.SetActive(false);
             }
-            else
-            {
+            else {
                 _leftView?.gameObject?.SetActive(false);
             }
 
             // progress bar
             Slider progressbar = _currentView.Sldr_progressbar;
-            if (progressbar != null)
-            {
+            if (progressbar != null) {
                 progressbar.gameObject.SetActive(true);
                 progressbar.value = 0;
                 _lineStartStamp = Time.time;
@@ -468,7 +409,10 @@ namespace Mechanics.Dialog
 
         private enum Direction
         {
-            Bottom, Left, Top, Right
+            Bottom,
+            Left,
+            Top,
+            Right
         }
     }
 }

@@ -59,11 +59,13 @@ public class DataManagerDebug : MonoBehaviour
     private void OnEnable() {
         Application.logMessageReceived += Log;
         TransitionManager.OnLevelComplete += SaveSplit;
+        UserInput.CheatMenu += ToggleDebug;
     }
 
     private void OnDisable() {
         Application.logMessageReceived -= Log;
         TransitionManager.OnLevelComplete -= SaveSplit;
+        UserInput.CheatMenu -= ToggleDebug;
     }
 
     private void Update() {
@@ -86,10 +88,6 @@ public class DataManagerDebug : MonoBehaviour
         else {
             if (_timerMain != null) _timerMain.text = TimeMain(_holdTime);
             if (_timerMil != null) _timerMil.text = TimeMil(_holdTime);
-        }
-
-        if (Input.GetKeyDown(KeyCode.End)) {
-            SetDebugActive(!_debugActive);
         }
 
         if (_debugActive && _debugText != null) {
@@ -169,6 +167,10 @@ public class DataManagerDebug : MonoBehaviour
         if (DataManager.Instance.remainingSpiritPoints >= 10) return;
         DataManager.Instance.remainingSpiritPoints += 1;
         ModalWindowController.Singleton.ForceUpdateHudSpiritPoints();
+    }
+
+    public void ToggleDebug() {
+        SetDebugActive(!_debugActive);
     }
 
     private void SetDebugActive(bool active) {

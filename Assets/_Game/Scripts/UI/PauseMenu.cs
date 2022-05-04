@@ -27,23 +27,33 @@ public class PauseMenu : MonoBehaviour
         if (_journal == null) Debug.LogError("Missing Journal Connection!", gameObject);
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape)) {
-            if (IsPaused) {
-                ResumeGame();
-            }
-            else {
-                PauseGame();
-            }
+    private void OnEnable() {
+        UserInput.OpenJournal += SwapPaused;
+        UserInput.TurnPageLeft += PageLeft;
+        UserInput.TurnPageRight += PageRight;
+    }
+
+    private void OnDisable() {
+        UserInput.OpenJournal -= SwapPaused;
+        UserInput.TurnPageLeft -= PageLeft;
+        UserInput.TurnPageRight -= PageRight;
+    }
+
+    private void SwapPaused() {
+        if (IsPaused) {
+            ResumeGame();
         }
-        else if (IsPaused) {
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-                _journal.PreviousPage();
-            }
-            else if (Input.GetKeyDown(KeyCode.RightArrow)) {
-                _journal.NextPage();
-            }
+        else {
+            PauseGame();
         }
+    }
+
+    private void PageLeft() {
+        _journal.PreviousPage();
+    }
+
+    private void PageRight() {
+        _journal.NextPage();
     }
 
     private void UpdatePaused() {

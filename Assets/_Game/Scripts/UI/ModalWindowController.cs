@@ -43,6 +43,7 @@ public class ModalWindowController : MonoBehaviour
     public static event Action OnInteractStart = delegate { };
     public static event Action OnInteractEnd = delegate { };
     private Action _callback;
+    private Action _callbackAlt;
 
     private bool _enabled;
 
@@ -66,17 +67,36 @@ public class ModalWindowController : MonoBehaviour
         DisableModalWindow(false, false);
     }
 
-    private void Update() {
+    private void OnEnable() {
+        UserInput.Cancel += UserInputDisableWindow;
+        UserInput.ConfirmOrInteract += UserInputInteract;
+        UserInput.InteractAlt += UserInputAltInteract;
+    }
+
+    private void OnDisable() {
+        UserInput.Cancel -= UserInputDisableWindow;
+        UserInput.ConfirmOrInteract -= UserInputInteract;
+        UserInput.InteractAlt -= UserInputAltInteract;
+    }
+
+    private void UserInputDisableWindow() {
         if (_enabled) {
-            if (Input.GetKeyDown(KeyCode.Escape)) {
-                DisableModalWindow();
-            }
-            else if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) && _callback != null) {
-                _callback.Invoke();
-                _callback = null;
-                DisableModalWindow();
-            }
+            DisableModalWindow();
         }
+    }
+
+    private void UserInputInteract() {
+        if (!_enabled || _callback == null) return;
+        _callback.Invoke();
+        _callback = null;
+        DisableModalWindow();
+    }
+
+    private void UserInputAltInteract() {
+        if (!_enabled || _callbackAlt == null) return;
+        _callbackAlt.Invoke();
+        _callbackAlt = null;
+        DisableModalWindow();
     }
 
     public void EnableModalWindow(string closeButtonText, Action callback, string interactButtonText, Action altCallback, string altInteractButtonText, int pointsToSpend, int altPointsToSpend) {
@@ -108,11 +128,11 @@ public class ModalWindowController : MonoBehaviour
         //IsometricCameraController.Singleton._interacting = true;
         OnInteractStart?.Invoke();
 
+        _callback = callback;
         if (callback != null) {
             _mainInteractionButton.gameObject.SetActive(true);
             _mainInteractionButton.interactable = canSpendPoints;
             if (canSpendPoints) {
-                _callback = callback;
                 _mainInteractionButton.onClick.AddListener(callback.Invoke);
                 _mainInteractionButton.onClick.AddListener(InteractionCloseWindow);
             }
@@ -123,6 +143,7 @@ public class ModalWindowController : MonoBehaviour
 
         _closeButton.text = closeButtonText;
 
+        _callbackAlt = altCallback;
         if (altCallback != null) {
             _alternateInteractionButton.gameObject.SetActive(true);
             _alternateInteractionButton.interactable = canSpendAltPoints;
