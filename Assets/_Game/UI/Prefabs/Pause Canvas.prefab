@@ -17777,7 +17777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4f0acd727cf2bc4095b13cb32a71ecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  journal: {fileID: 8829867994011560598}
+  _journal: {fileID: 8829867994011560598}
 --- !u!114 &8308525297605361879
 MonoBehaviour:
   m_ObjectHideFlags: 0
