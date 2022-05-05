@@ -1932,7 +1932,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8007561478453852946
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7773,7 +7773,7 @@ GameObject:
   - component: {fileID: 8183457304497343043}
   - component: {fileID: 3990035903242367588}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8163,7 +8163,7 @@ GameObject:
   - component: {fileID: 8258542981045167976}
   - component: {fileID: 1941907180499086649}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10312,7 +10312,7 @@ GameObject:
   - component: {fileID: 4116983937753075491}
   - component: {fileID: 7423131999219934590}
   m_Layer: 5
-  m_Name: Text (TMP) (2)
+  m_Name: Locked_Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10335,7 +10335,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -359, y: 400}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4116983937753075491
 CanvasRenderer:
@@ -10364,7 +10364,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '? ? ? '
+  m_text: Sisters?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6b88c93e2b6441b45b966c64ad5f36fa, type: 2}
   m_sharedMaterial: {fileID: 101269190234465363, guid: 6b88c93e2b6441b45b966c64ad5f36fa,
@@ -10401,7 +10401,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_textAlignment: 514
-  m_characterSpacing: 0
+  m_characterSpacing: 25
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -10434,9 +10434,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 7423131999219934590}
-    characterCount: 7
+    characterCount: 8
     spriteCount: 0
-    spaceCount: 3
+    spaceCount: 0
     wordCount: 1
     linkCount: 0
     lineCount: 1
@@ -10810,7 +10810,7 @@ GameObject:
   - component: {fileID: 9100419579682420445}
   - component: {fileID: 3468304716752949813}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Locked_Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10833,7 +10833,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 260, y: 400}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9100419579682420445
 CanvasRenderer:
@@ -10862,7 +10862,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '? ? ? '
+  m_text: True?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6b88c93e2b6441b45b966c64ad5f36fa, type: 2}
   m_sharedMaterial: {fileID: 101269190234465363, guid: 6b88c93e2b6441b45b966c64ad5f36fa,
@@ -10899,7 +10899,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_textAlignment: 514
-  m_characterSpacing: 0
+  m_characterSpacing: 25
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -10932,9 +10932,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 3468304716752949813}
-    characterCount: 7
+    characterCount: 3
     spriteCount: 0
-    spaceCount: 3
+    spaceCount: 0
     wordCount: 1
     linkCount: 0
     lineCount: 1
@@ -12451,7 +12451,7 @@ GameObject:
   - component: {fileID: 4585064078899538181}
   - component: {fileID: 6059163390155537589}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12812,7 +12812,7 @@ GameObject:
   - component: {fileID: 5320842347491340313}
   - component: {fileID: 8988829890675017739}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Locked_Title_Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16303,7 +16303,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &515672056852756727
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17286,7 +17286,7 @@ GameObject:
   - component: {fileID: 408181959036329386}
   - component: {fileID: 2366145357133033967}
   m_Layer: 5
-  m_Name: Image
+  m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17974,7 +17974,7 @@ GameObject:
   - component: {fileID: 7372586749037770676}
   - component: {fileID: 3164316306709039022}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18073,7 +18073,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 130
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -19044,7 +19044,7 @@ GameObject:
   - component: {fileID: 6080415021027856633}
   - component: {fileID: 9095881881992881267}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Locked_Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19067,7 +19067,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -386, y: 400}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6080415021027856633
 CanvasRenderer:
@@ -19096,7 +19096,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '? ? ? '
+  m_text: Bad?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6b88c93e2b6441b45b966c64ad5f36fa, type: 2}
   m_sharedMaterial: {fileID: 101269190234465363, guid: 6b88c93e2b6441b45b966c64ad5f36fa,
@@ -19133,7 +19133,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_textAlignment: 514
-  m_characterSpacing: 0
+  m_characterSpacing: 25
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -19166,9 +19166,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 9095881881992881267}
-    characterCount: 7
+    characterCount: 3
     spriteCount: 0
-    spaceCount: 3
+    spaceCount: 0
     wordCount: 1
     linkCount: 0
     lineCount: 1
@@ -20157,7 +20157,7 @@ GameObject:
   - component: {fileID: 6707030263938427544}
   - component: {fileID: 6463430095186467415}
   m_Layer: 5
-  m_Name: Image
+  m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20458,7 +20458,7 @@ GameObject:
   - component: {fileID: 4888424589959399722}
   - component: {fileID: 6653032174997212807}
   m_Layer: 5
-  m_Name: Image
+  m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21351,7 +21351,7 @@ GameObject:
   - component: {fileID: 4852212530910158092}
   - component: {fileID: 5228552482174879839}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23181,7 +23181,7 @@ GameObject:
   - component: {fileID: 6805417274897068030}
   - component: {fileID: 6045230089852945232}
   m_Layer: 5
-  m_Name: Text (TMP) (3)
+  m_Name: Locked_Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23204,7 +23204,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 275, y: 388}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6805417274897068030
 CanvasRenderer:
@@ -23233,7 +23233,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '? ? ? '
+  m_text: Cousins?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6b88c93e2b6441b45b966c64ad5f36fa, type: 2}
   m_sharedMaterial: {fileID: 101269190234465363, guid: 6b88c93e2b6441b45b966c64ad5f36fa,
@@ -23270,7 +23270,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_textAlignment: 514
-  m_characterSpacing: 0
+  m_characterSpacing: 25
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -23303,9 +23303,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 6045230089852945232}
-    characterCount: 7
+    characterCount: 8
     spriteCount: 0
-    spaceCount: 3
+    spaceCount: 0
     wordCount: 1
     linkCount: 0
     lineCount: 1
@@ -23714,7 +23714,7 @@ GameObject:
   - component: {fileID: 6365524672866257306}
   - component: {fileID: 4371758990460379408}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Locked_Title_Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24411,7 +24411,7 @@ GameObject:
   - component: {fileID: 5049464513545923680}
   - component: {fileID: 2567106858618791866}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Locked_Title_Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25452,7 +25452,7 @@ GameObject:
   - component: {fileID: 7293220783794160680}
   - component: {fileID: 3440614436378715532}
   m_Layer: 5
-  m_Name: Image
+  m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25526,7 +25526,7 @@ GameObject:
   - component: {fileID: 2051524181370510235}
   - component: {fileID: 7783419522221668855}
   m_Layer: 5
-  m_Name: Image
+  m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26855,7 +26855,7 @@ GameObject:
   - component: {fileID: 635385576565251819}
   - component: {fileID: 5760107394058184641}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27071,7 +27071,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7304635708572463266
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29957,7 +29957,7 @@ GameObject:
   - component: {fileID: 4055647316838765378}
   - component: {fileID: 2467260073310146142}
   m_Layer: 5
-  m_Name: Text (TMP) (2)
+  m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31097,7 +31097,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2420616071513796811
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32671,7 +32671,7 @@ GameObject:
   - component: {fileID: 6981776815187116330}
   - component: {fileID: 4615705243458627698}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Locked_Title_Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
