@@ -180,6 +180,11 @@ PrefabInstance:
       propertyPath: _season
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4821668390371762888, guid: b340429bc6867704483f537336c29556,
+        type: 3}
+      propertyPath: _end
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4821668390371762889, guid: b340429bc6867704483f537336c29556,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -957,8 +962,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 866f2117bdb5a9b40bd53448472ce0ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _independent: 1
   _cursorParent: {fileID: 0}
+  _isCursorVisible: 0
+  _isJournalOpen: 0
+  _independent: 1
+  _usingController: 0
 --- !u!1001 &1122967053
 PrefabInstance:
   m_ObjectHideFlags: 0

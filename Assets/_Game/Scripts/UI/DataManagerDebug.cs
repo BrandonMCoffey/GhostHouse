@@ -9,11 +9,13 @@ public class DataManagerDebug : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _debugText = null;
     [SerializeField] private TextMeshProUGUI _outputLog = null;
     [SerializeField] private GameObject _parent = null;
-    [SerializeField] private Season _season = Season.None;
     [SerializeField] private TextMeshProUGUI _timerMain = null;
     [SerializeField] private TextMeshProUGUI _timerMil = null;
     [SerializeField] private TextMeshProUGUI _fpsText = null;
     [SerializeField] private TextMeshProUGUI _perspButtonText = null;
+    [SerializeField] private bool _end;
+
+    private Season _season;
 
     // Debugging
     private static bool _debugActive;
@@ -38,19 +40,15 @@ public class DataManagerDebug : MonoBehaviour
     private static float _persp2Len = 16;
     private static Vector3 _persp3Pos = new Vector3(0, 2, -16);
     private static float _persp3Len = 65;
-    private static AmbientOcclusion _origAO;
-    private static AmbientOcclusion _perspAO;
 
-    private void Awake() {
-        if (_season == Season.End) {
+    private void Start() {
+        _season = DataManager.Instance.GetSeason();
+        if (_end) {
             var endManager = FindObjectOfType<EndingsManager>();
             if (endManager != null) {
                 endManager.OnEnd += SetEndTime;
             }
         }
-    }
-
-    private void Start() {
         _currentTime = 0;
         SetDebugActive(_debugActive);
         CheckPerspectiveLevel();
