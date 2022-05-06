@@ -49,11 +49,15 @@ public class PauseMenu : MonoBehaviour
     }
 
     private void PageLeft() {
-        _journal.PreviousPage();
+        if (IsPaused) {
+            _journal.PreviousPage();
+        }
     }
 
     private void PageRight() {
-        _journal.NextPage();
+        if (IsPaused) {
+            _journal.NextPage();
+        }
     }
 
     private void UpdatePaused() {
