@@ -8,6 +8,7 @@ public class CameraController : MonoBehaviour
 {
     public static CameraController Singleton { get; private set; }
 
+    [SerializeField] private bool _debug = false;
     [SerializeField] private Camera _cam;
 
     [Header("Camera Zoom")]
@@ -73,7 +74,7 @@ public class CameraController : MonoBehaviour
     public static bool UsingController { get; set; }
     public static bool Dragging => Singleton._dragging;
     public Vector3 MousePos => UsingController ? (Vector3)_controllerPos : UserInput.MousePosition;
-    private static Vector2 ScreenCenter => new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+    private static Vector2 ScreenCenter => new Vector2(Screen.width * 0.5f, Screen.height * 0.5f + 25);
 
     // Input Lock Variables
     public static bool Interacting { get; set; }
@@ -133,6 +134,7 @@ public class CameraController : MonoBehaviour
             _controllerPos = ScreenCenter;
             _mousePos = UserInput.MousePosition;
             if (_controllerVisuals != null) {
+                Debug.Log("Controller Active. Setting to Screen Center");
                 _controllerVisuals.ToggleCustomCursor(true);
                 _controllerVisuals.SetCursorPosition(ScreenCenter);
                 _controllerVisuals.SetIndependent(false);
@@ -196,7 +198,8 @@ public class CameraController : MonoBehaviour
         float movementPercentage = _finalLerpTime / _finalLerpEndTime;
         _goalPosition = Vector3.Lerp(_goalPosition, _finalLerpPosition, movementPercentage);
         if (UsingController) {
-            _controllerPos = Vector2.Lerp(_controllerPos, ScreenCenter, movementPercentage);
+            _controllerPos = Vector3.Lerp(_controllerPos, ScreenCenter, movementPercentage);
+            _controllerVisuals.SetCursorPosition(_controllerPos);
         }
 
         if (_goalPosition == _finalLerpPosition) {
@@ -229,6 +232,7 @@ public class CameraController : MonoBehaviour
     }
 
     private void ToggleController(bool controller) {
+        if (_debug) Debug.Log("Controller " + (controller ? "Active" : "Disabled"));
         if (_controllerVisuals != null) {
             if (controller) {
                 _controllerPos = UserInput.MousePosition;
