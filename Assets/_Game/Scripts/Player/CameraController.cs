@@ -19,6 +19,7 @@ public class CameraController : MonoBehaviour
 
     [Header("Controller Movement")]
     [SerializeField] private float _controllerSpeed = 400f;
+    [SerializeField, ReadOnly] private float _controllerSpeedBoost = 1;
     [SerializeField] private bool _controllerSprint = true;
     [SerializeField, Range(0, 5)] private float _controllerSprintMultiplier = 2f;
     [SerializeField] private bool _controllerBorder = true;
@@ -140,6 +141,8 @@ public class CameraController : MonoBehaviour
                 _controllerVisuals.SetIndependent(false);
             }
         }
+
+        _controllerSpeedBoost = Screen.width / 1920f;
     }
 
     private void Update() {
@@ -263,8 +266,8 @@ public class CameraController : MonoBehaviour
     }
 
     private void HandleControllerMovement() {
-        float rightMovement = _horizontal * _controllerSpeed * Time.deltaTime;
-        float upMovement = _vertical * _controllerSpeed * Time.deltaTime;
+        float rightMovement = _horizontal * _controllerSpeed * _controllerSpeedBoost * Time.deltaTime;
+        float upMovement = _vertical * _controllerSpeed * _controllerSpeedBoost * Time.deltaTime;
 
         if (_sprintKeyHeld && _controllerSprint) {
             rightMovement *= _controllerSprintMultiplier;
