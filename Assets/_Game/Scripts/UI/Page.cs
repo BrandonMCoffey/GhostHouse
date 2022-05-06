@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Page : MonoBehaviour
@@ -6,21 +7,24 @@ public class Page : MonoBehaviour
     [SerializeField] private bool _debug = false;
     [SerializeField] private GameObject _firstSelected = null;
 
-    private GameObject _current;
+    private bool _usingController;
 
     public void OnEnable() {
+        SetFirstSelected();
+        StartCoroutine(Wait());
+    }
+
+    private IEnumerator Wait() {
+        yield return null;
         SetFirstSelected();
     }
 
     private void Update() {
-        var current = EventSystem.current.currentSelectedGameObject;
-        if (_current != current) {
-            if (current == null) {
-                SetMenu(_current);
-                return;
-            }
-            _current = current;
-            if (_debug) Debug.Log("Selected: " + current, current);
+        if (_usingController == CameraController.UsingController) return;
+        _usingController = CameraController.UsingController;
+        if (_usingController) {
+            if (_debug) Debug.Log("Switched to controller, set first selected");
+            SetFirstSelected();
         }
     }
 
@@ -32,8 +36,11 @@ public class Page : MonoBehaviour
         SetMenu(selected);
     }
 
-    private static void SetMenu(GameObject firstSelected) {
+    private void SetMenu(GameObject firstSelected) {
         if (firstSelected == null) return;
+        if (_debug) Debug.Log("Set Selected: " + firstSelected.name, firstSelected);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstSelected);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstSelected);
     }

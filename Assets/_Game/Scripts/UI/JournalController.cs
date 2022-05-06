@@ -30,7 +30,9 @@ public class JournalController : MonoBehaviour
 
     [Header("Navigation Buttons")]
     [SerializeField] private Button _previousButton = null;
+    [SerializeField] private GameObject _previousButtonC = null;
     [SerializeField] private Button _nextButton = null;
+    [SerializeField] private GameObject _nextButtonC = null;
 
     [Header("Current")]
     [SerializeField, ReadOnly] private PageEnum _currentPage = PageEnum.PauseMenu;
@@ -151,9 +153,11 @@ public class JournalController : MonoBehaviour
     private void SetNavigationButtons() {
         bool pageCheck = !(_hideButtonsOnPausePage && _currentPage == PageEnum.PauseMenu);
         bool firstCheck = !(_currentPage == PageEnum.Settings && _currentPageNum == 0);
-        _previousButton.gameObject.SetActive(pageCheck && firstCheck);
+        if (_previousButton != null) _previousButton.gameObject.SetActive(pageCheck && firstCheck);
+        if (_previousButtonC != null) _previousButtonC.SetActive(pageCheck && firstCheck);
         bool lastCheck = !(_currentPage == PageEnum.Endings && _currentPageNum >= GetPageList(_currentPage).Count - 1);
-        _nextButton.gameObject.SetActive(pageCheck && lastCheck);
+        if (_nextButton != null) _nextButton.gameObject.SetActive(pageCheck && lastCheck);
+        if (_nextButtonC != null) _nextButtonC.SetActive(pageCheck && lastCheck);
     }
 
     private List<GameObject> GetPageList(PageEnum pageEnum) {
