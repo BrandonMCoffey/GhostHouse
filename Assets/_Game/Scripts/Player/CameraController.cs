@@ -64,7 +64,7 @@ public class CameraController : MonoBehaviour
     [SerializeField, ReadOnly] private float _vertical;
     [SerializeField, ReadOnly] private float _mouseWheel;
     [SerializeField, ReadOnly] private Vector3 _mousePos;
-    [SerializeField, ReadOnly] private Vector2 _controllerPos;
+    [SerializeField, ReadOnly] private Vector3 _controllerPos;
 
     private DialogueRunner _dialogueRunner;
     private ControllerVisuals _controllerVisuals;
@@ -230,11 +230,11 @@ public class CameraController : MonoBehaviour
 
     private void ToggleController(bool controller) {
         if (_controllerVisuals != null) {
-            _controllerVisuals.ToggleCustomCursor(controller);
             if (controller) {
-                _controllerPos = _mousePos;
-                _controllerVisuals.SetCursorPosition(_mousePos);
+                _controllerPos = UserInput.MousePosition;
+                _controllerVisuals.SetCursorPosition(_controllerPos);
             }
+            _controllerVisuals.ToggleCustomCursor(controller);
         }
         UsingController = controller;
     }

@@ -193,7 +193,7 @@ MonoBehaviour:
   _cursorParent: {fileID: 8658191968921105881}
   _isCursorVisible: 0
   _isJournalOpen: 0
-  _independent: 1
+  _independent: 0
   _usingController: 0
 --- !u!223 &799723103637211734
 Canvas:
