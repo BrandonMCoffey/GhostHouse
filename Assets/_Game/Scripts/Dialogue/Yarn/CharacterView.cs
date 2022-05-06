@@ -121,6 +121,11 @@ namespace Mechanics.Dialog
             // Reset pressed this frame
             _confirmedDialogue = false;
 
+            // Must not be paused
+            if (PauseMenu.IsPaused) {
+                return;
+            }
+
             // The line must not be in the middle of being dismissed.
             if ((_currentLine?.Status) == Yarn.Unity.LineStatus.Dismissed) {
                 return;

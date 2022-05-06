@@ -13,7 +13,7 @@ public class DataManagerDebug : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _timerMil = null;
     [SerializeField] private TextMeshProUGUI _fpsText = null;
     [SerializeField] private TextMeshProUGUI _perspButtonText = null;
-    [SerializeField] private bool _end;
+    [SerializeField] private bool _end = false;
 
     private Season _season;
 
