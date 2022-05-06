@@ -563,7 +563,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 927654922}
     m_SelectOnDown: {fileID: 1117859547}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 1333579466}
+    m_SelectOnRight: {fileID: 1193076058}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -2606,6 +2606,11 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1248062715523631808, guid: 1ab40820d14372148abae8f310b88820,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 333321624}
     - target: {fileID: 1409466696263779565, guid: 1ab40820d14372148abae8f310b88820,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -4244,6 +4249,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186205058}
   m_CullTransparentMesh: 0
+--- !u!114 &1193076058 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1248062715523631808, guid: 1ab40820d14372148abae8f310b88820,
+    type: 3}
+  m_PrefabInstance: {fileID: 967434385}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1196681925
 GameObject:
   m_ObjectHideFlags: 0
@@ -4558,18 +4575,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1259399591}
   m_CullTransparentMesh: 0
---- !u!114 &1333579466 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4554373407417701727, guid: 1ab40820d14372148abae8f310b88820,
-    type: 3}
-  m_PrefabInstance: {fileID: 967434385}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1358684677
 GameObject:
   m_ObjectHideFlags: 0
@@ -7040,7 +7045,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
+    m_Mode: 2
     m_SelectOnUp: {fileID: 6921230704534595805}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -7437,7 +7442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
+    m_Mode: 2
     m_SelectOnUp: {fileID: 6921230705150667708}
     m_SelectOnDown: {fileID: 6921230703300259939}
     m_SelectOnLeft: {fileID: 0}
@@ -7858,7 +7863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
+    m_Mode: 2
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 6921230705150667708}
     m_SelectOnLeft: {fileID: 0}
@@ -8113,7 +8118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
+    m_Mode: 2
     m_SelectOnUp: {fileID: 6921230705149234552}
     m_SelectOnDown: {fileID: 6921230704534595805}
     m_SelectOnLeft: {fileID: 0}
