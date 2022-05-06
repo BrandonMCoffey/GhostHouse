@@ -30,6 +30,9 @@ public class EventOnKey : MonoBehaviour
             case Keys.CancelOnlyController:
                 UserInput.CancelController += InvokeEvent;
                 break;
+            case Keys.CheatMenuActivate:
+                UserInput.CheatMenuActivate += InvokeEvent;
+                break;
         }
     }
 
@@ -56,6 +59,9 @@ public class EventOnKey : MonoBehaviour
             case Keys.CancelOnlyController:
                 UserInput.CancelController -= InvokeEvent;
                 break;
+            case Keys.CheatMenuActivate:
+                UserInput.CheatMenuActivate -= InvokeEvent;
+                break;
         }
     }
 
@@ -73,5 +79,6 @@ public enum Keys
     AltInteract,
     OpenJournal,
     Cancel,
-    CancelOnlyController
+    CancelOnlyController,
+    CheatMenuActivate
 }

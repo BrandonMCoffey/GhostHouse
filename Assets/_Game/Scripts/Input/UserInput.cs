@@ -32,6 +32,9 @@ public class UserInput : MonoBehaviour
     // End or Back
     public static event Action CheatMenu = delegate { };
 
+    // Start
+    public static event Action CheatMenuActivate = delegate { };
+
     public static bool Sprinting;
 
     public static float Horizontal => Input.GetAxisRaw("HorizontalKeyboard");
@@ -85,6 +88,10 @@ public class UserInput : MonoBehaviour
         }
         if (Input.GetButtonUp("Sprint")) {
             Sprinting = false;
+        }
+        if (Input.GetButtonDown("CheatMenuActivate")) {
+            CheatMenuActivate?.Invoke();
+            Log("CheatMenuActivate");
         }
     }
 

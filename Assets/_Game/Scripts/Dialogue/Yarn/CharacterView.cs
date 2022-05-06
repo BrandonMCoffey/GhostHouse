@@ -75,10 +75,12 @@ namespace Mechanics.Dialog
 
         private void OnEnable() {
             UserInput.ConfirmOrInteract += ConfirmDialogue;
+            UserInput.CancelController += ConfirmDialogue;
         }
 
         private void OnDisable() {
             UserInput.ConfirmOrInteract -= ConfirmDialogue;
+            UserInput.CancelController -= ConfirmDialogue;
         }
 
         private void ConfirmDialogue() {

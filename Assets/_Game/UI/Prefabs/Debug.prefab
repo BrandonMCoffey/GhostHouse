@@ -526,6 +526,7 @@ GameObject:
   - component: {fileID: 236419454538563736}
   - component: {fileID: 132419366373850706}
   - component: {fileID: 8219711068277706480}
+  - component: {fileID: 6482243324928650216}
   m_Layer: 5
   m_Name: SpiritPoint_btn
   m_TagString: Untagged
@@ -631,6 +632,33 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 132419366373850706}
   m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6482243324928650216}
+        m_MethodName: InvokeEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6482243324928650216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969745647102059553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 988d060925278b74bb114d8a02d220a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _keyCode: 8
+  _event:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4821668390371762888}
